@@ -1,4 +1,4 @@
-- 👋 Hi, I’m @Thanoon12k
+- 👋 Hi, I’m @Thanoon
 - 👀 I’m interested in WebSites Programming
 - 🌱 I’m currently learning Advanced Django
 - 💞️ I’m looking to collaborate on WebSite Devloping
