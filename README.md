@@ -1,5 +1,4 @@
 # Hi there, I’m Thanoon Younes! 👋
-!Profile Views
 
 ## Introduction
 I’m a passionate Full Stack Developer with expertise in both Flutter and Django. Whether it’s creating stunning mobile apps or building robust backend systems, I love turning ideas into reality. Let’s dive into my tech stack:
