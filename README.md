@@ -20,47 +20,14 @@
 
 ---
 
-## 👋 About me
+<a href="https://make1it.pythonanywhere.com">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/about-dark.png">
+  <img src="assets/about-light.png" width="100%" alt="About me: I build complete apps, connect AI and hardware, train university students and publish research. Visit make1it.pythonanywhere.com">
+</picture>
+</a>
 
-I'm a **computer-technology engineer** (networks & communication) who has been shipping software since **2019**:
-**Flutter** apps on the phone, **Django / Flask** systems behind them, and **AI models and hardware** — ESP32, Arduino, fingerprint readers, medical devices — wired into both.
-
-I don't only build. I **train university students**, act as a **technical assistant** on graduation projects, and I'm a **researcher with papers published in international journals**. I also help **doctors and professors** with research, simulation and publishing.
-
-<p dir="rtl">مهندس تقنيات حاسوب من الموصل — أبني تطبيقات وأنظمة كاملة، أدرّب طلاب الجامعات، وعندي بحوث منشورة بمجلات عالمية. 🇮🇶</p>
-
-<br>
-
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### 📱 I build
-Complete products, from the mobile app to the server: Flutter · Django REST · PostgreSQL. Delivered, deployed and supported.
-
-</td>
-<td width="50%" valign="top">
-
-### 🤖 I connect
-OCR, text-to-speech, computer vision, LSTM + GA models, and hardware: **ESP32, Arduino, ZKTeco, IoT/MQTT**.
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### 🎓 I teach
-Training **university students** in programming and modern tech. I guide them through their graduation projects step by step.
-
-</td>
-<td width="50%" valign="top">
-
-### 📚 I research
-**Published papers in international journals.** Research, network and cloud simulation (OMNeT++, CloudSim), and publishing services for **doctors and professors**.
-
-</td>
-</tr>
-</table>
+<p align="center"><b>🌐 My website: <a href="https://make1it.pythonanywhere.com">make1it.pythonanywhere.com</a></b> — all 63 projects with screenshots, my experience and how to reach me.</p>
 
 ---
 
