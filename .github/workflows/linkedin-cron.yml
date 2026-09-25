@@ -1,0 +1,16 @@
+name: LinkedIn autopost
+
+# Wakes the LinkedIn Autopost app on PythonAnywhere. The app publishes at most
+# one queued post per posting day, so the backup runs are harmless.
+on:
+  schedule:
+    - cron: "7 6 * * *"   # 09:07 Iraq time
+    - cron: "37 9 * * *"  # backup, in case the first run is delayed or fails
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger scheduled post
+        run: curl -fsS --max-time 120 https://apps1monitor.pythonanywhere.com/cron
