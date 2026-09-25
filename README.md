@@ -12,7 +12,7 @@
 <a href="https://make1it.pythonanywhere.com"><img src="https://img.shields.io/badge/🌐_Portfolio-make1it.pythonanywhere.com-FFC93C?style=for-the-badge&labelColor=16130D" alt="Portfolio"></a>
 <br>
 <a href="mailto:engthanoon1@gmail.com"><img src="https://img.shields.io/badge/Email-engthanoon1@gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white" alt="Email"></a>
-<a href="https://wa.me/9647702790915"><img src="https://img.shields.io/badge/WhatsApp-+964_770_279_0915-25D366?style=flat-square&logo=whatsapp&logoColor=white" alt="WhatsApp"></a>
+<a href="https://wa.me/9657702790915"><img src="https://img.shields.io/badge/WhatsApp-+965_770_279_0915-25D366?style=flat-square&logo=whatsapp&logoColor=white" alt="WhatsApp"></a>
 <img src="https://img.shields.io/badge/📍-Mosul,_Iraq_·_remote_or_on--site-4361EE?style=flat-square" alt="Mosul, Iraq">
 <img src="https://img.shields.io/badge/status-open_to_work-12B99C?style=flat-square" alt="Open to work">
 
@@ -27,14 +27,14 @@
 </picture>
 </a>
 
-<p align="center"><b>🌐 My website: <a href="https://make1it.pythonanywhere.com">make1it.pythonanywhere.com</a></b> — all 64 projects with screenshots, my experience and how to reach me.</p>
+<p align="center"><b>🌐 My website: <a href="https://make1it.pythonanywhere.com">make1it.pythonanywhere.com</a></b> — all 65 projects with screenshots, my experience and how to reach me.</p>
 
 ---
 
 ## ⚙️ My portfolio builds itself
 
 I didn't screenshot or upload a single project by hand. I wrote **[`showcase`](https://github.com/Thanoon12k/My-Work)**, a tool that:
-- clones **all 64 of my repositories**
+- clones **all 65 of my repositories**
 - **runs each one** (it migrates the database for Django apps, creates a demo user and logs in)
 - crawls every app in a headless browser and takes desktop and mobile screenshots
 - draws a mock-up from the source code of apps that can't run in a browser (Flutter screens, desktop windows, Arduino serial output)
@@ -46,7 +46,7 @@ It all runs from one command, with **zero manual steps**.
 
 <p align="center"><a href="https://www.facebook.com/goldencode114"><img src="assets/work/golden-code-page.webp" width="90%" alt="Golden Code — self-running Facebook page"></a></p>
 
-<p align="center"><a href="https://github.com/Thanoon12k/My-Work"><img src="assets/pipeline.svg" width="100%" alt="Pipeline: 64 repos → run each app → screenshot → build site → deploy → live portfolio"></a></p>
+<p align="center"><a href="https://github.com/Thanoon12k/My-Work"><img src="assets/pipeline.svg" width="100%" alt="Pipeline: 65 repos → run each app → screenshot → build site → deploy → live portfolio"></a></p>
 
 <p align="center">
 <a href="https://make1it.pythonanywhere.com"><b>🌐 See the live result</b></a> ·
@@ -74,7 +74,7 @@ It all runs from one command, with **zero manual steps**.
 - 📣 **[Golden Code page](https://www.facebook.com/goldencode114)**: a Facebook page that runs itself. The code designs the post cards, and an AI agent publishes and tracks stats through the Graph API.
 - 🕌 **[Mosul Tourism](https://github.com/Thanoon12k/mosul1tourism)** and 💡 **[Fikra](https://github.com/Thanoon12k/Ideas-Store)**: bilingual Flask and Django web apps.
 
-<p align="center"><a href="https://make1it.pythonanywhere.com"><img src="https://img.shields.io/badge/All_64_projects_with_screenshots-→-16130D?style=for-the-badge&labelColor=FFC93C" alt="All projects"></a></p>
+<p align="center"><a href="https://make1it.pythonanywhere.com"><img src="https://img.shields.io/badge/All_65_projects_with_screenshots-→-16130D?style=for-the-badge&labelColor=FFC93C" alt="All projects"></a></p>
 
 ---
 
@@ -120,7 +120,7 @@ It all runs from one command, with **zero manual steps**.
 **Need an app, a management system, device integration, or help with research?**
 <br>
 
-<a href="https://wa.me/9647702790915"><img src="https://img.shields.io/badge/WhatsApp-Chat_now-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp"></a>
+<a href="https://wa.me/9657702790915"><img src="https://img.shields.io/badge/WhatsApp-Chat_now-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp"></a>
 <a href="mailto:engthanoon1@gmail.com"><img src="https://img.shields.io/badge/Email-Write_to_me-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"></a>
 <a href="https://make1it.pythonanywhere.com"><img src="https://img.shields.io/badge/Portfolio-See_my_work-FFC93C?style=for-the-badge&labelColor=16130D" alt="Portfolio"></a>
 

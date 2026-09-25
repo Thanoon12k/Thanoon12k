@@ -16,7 +16,7 @@
 <path class="flow" d="M778 140 H818"/><path class="flow" d="M978 140 H1018"/>
 </g>
 <g class="pulse" style="animation-delay:0s"><rect class="box" x="28" y="70" width="150" height="140" rx="22" fill="#FFC93C"/>
-<text x="103" y="122" class="e">📦</text><text x="103" y="160" class="t">64 repos</text><text x="103" y="184" class="s">cloned</text></g>
+<text x="103" y="122" class="e">📦</text><text x="103" y="160" class="t">65 repos</text><text x="103" y="184" class="s">cloned</text></g>
 <g class="pulse" style="animation-delay:.4s"><rect class="box" x="218" y="70" width="160" height="140" rx="22" fill="#fff"/>
 <text x="298" y="122" class="e">▶️</text><text x="298" y="160" class="t">run each app</text><text x="298" y="184" class="s">Django · Flask · React</text></g>
 <g class="pulse" style="animation-delay:.8s"><rect class="box" x="418" y="70" width="160" height="140" rx="22" fill="#12B99C"/>
