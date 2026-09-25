@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Overview{% endblock %}
+{% block heading %}Hi {{ (cfg.person_name or 'there').split(' ')[0] }} 👋{% endblock %}
+{% block sub %}<p>{% if next_post and next_post.slot %}Next post goes out <b>{{ next_post.slot.strftime('%A %-d %b, %H:%M') }}</b> (Iraq time).{% elif not queue %}Your queue is empty. Write something!{% else %}Pick posting days in Setup to start the schedule.{% endif %}</p>{% endblock %}
+{% block content %}
+{% if days_left is none or days_left < 0 %}
+<div class="card row between" style="border-color:var(--bad)">
+  <div><h2>{{ 'Connect' if days_left is none else 'Reconnect' }} LinkedIn to start posting</h2><p class="muted small" style="margin:0">One click. LinkedIn asks you to approve, then you're back here.</p></div>
+  <form method="post" action="{{ url_for('connect') }}"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="li">Connect LinkedIn</button></form>
+</div>
+{% endif %}
+<div class="grid g3">
+  <div class="card stat"><div class="lbl"><span class="dot" style="background:var(--brand)"></span>In queue</div><div class="num">{{ queue|length }}</div><div class="muted small">{% if queue and queue[-1].slot %}Planned until {{ queue[-1].slot.strftime('%-d %b') }}{% else %}&nbsp;{% endif %}</div></div>
+  <div class="card stat"><div class="lbl"><span class="dot" style="background:var(--teal)"></span>Published</div><div class="num">{{ published|length }}</div><div class="muted small">{% if published %}Last on {{ published[0].meta.published }}{% else %}Nothing yet{% endif %}</div></div>
+  <div class="card stat"><div class="lbl"><span class="dot" style="background:var(--gold)"></span>Schedule</div><div class="num" style="font-size:24px;margin-top:14px">{{ (cfg.post_days or ['—'])|join(' · ') }}</div><div class="muted small">at {{ '%02d'|format(post_hour) }}:00 Iraq time · <a href="{{ url_for('setup') }}#schedule">change</a></div></div>
+</div>
+<div class="grid g2">
+  <div class="card">
+    <div class="row between"><h2>Up next</h2>{% if next_post %}<a class="btn ghost sm" href="{{ url_for('compose', name=next_post.name) }}">Edit</a>{% endif %}</div>
+    {% if next_post %}
+      <p class="muted small" style="margin:2px 0 14px">{{ next_post.meta.title }}</p>
+      <div class="lipost" data-body="{{ next_post.body }}" data-link="{{ next_post.meta.comment }}" data-name="{{ cfg.person_name }}"
+           data-headline="{{ cfg.headline or 'Full-Stack Developer · Flutter & Django' }}" data-avatar="{{ cfg.picture or '' }}"
+           data-img="{{ url_for('image', name=next_post.meta.image.split('/')[-1]) if next_post.meta.image }}"
+           data-when="{{ next_post.slot.strftime('%a %-d %b') if next_post.slot else 'Not scheduled' }}"></div>
+      <form method="post" action="{{ url_for('publish_now') }}" class="row" style="margin-top:14px" onsubmit="return confirm('Publish this post to LinkedIn now?')">
+        <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="name" value="{{ next_post.name }}">
+        <button class="brand">Publish now</button>
+        <a class="btn ghost" href="{{ url_for('posts') }}">See the whole queue</a>
+      </form>
+    {% else %}
+      <div class="empty"><p>Nothing queued.</p><a class="btn brand" href="{{ url_for('compose') }}">Write a post</a></div>
+    {% endif %}
+  </div>
+  <div class="card">
+    <div class="row between"><h2>Recently published</h2><a class="small" href="{{ url_for('posts', tab='published') }}">All</a></div>
+    {% if published %}
+    <ul class="plist" style="margin-top:8px">
+      {% for p in published[:5] %}
+      <li style="grid-template-columns:56px minmax(0,1fr)">
+        {% if p.meta.image %}<img class="thumb" style="width:56px;height:40px" src="{{ url_for('image', name=p.meta.image.split('/')[-1]) }}" alt="">{% else %}<div class="thumb" style="width:56px;height:40px">text</div>{% endif %}
+        <div><div class="t"><a href="https://www.linkedin.com/feed/update/{{ p.meta.post_urn }}/" target="_blank" rel="noopener">{{ p.meta.title }}</a></div><div class="d">{{ p.meta.published }}</div></div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}<div class="empty">Your published posts will show here.</div>{% endif %}
+    <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+    <h3>Profile makeover</h3>
+    <p class="muted small">13 copy-paste steps to make recruiters stop scrolling.</p>
+    <a class="btn ghost sm" href="{{ url_for('profile') }}">Open the checklist →</a>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='preview.js') }}?v=3"></script>{% endblock %}

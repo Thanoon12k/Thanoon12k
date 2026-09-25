@@ -2,6 +2,8 @@
 title: My portfolio builds itself
 image: images/pipeline.png
 comment: https://github.com/Thanoon12k/My-Work
+post_urn: urn:li:share:7509374867117608960
+published: 2026-09-25
 ---
 I have 65 projects on GitHub. I didn't screenshot a single one by hand.
 

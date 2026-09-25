@@ -1,20 +1,21 @@
 """LinkedIn Autopost: a small Flask dashboard for PythonAnywhere.
 
 First visit → set an admin password and paste the LinkedIn app's Client ID and
-Secret. Then click "Connect LinkedIn" once (repeat every 60 days), and manage
-the post queue from the browser. A PythonAnywhere scheduled task running
-`post.py --scheduled` publishes on the chosen weekdays.
+Secret (Setup). Click "Connect LinkedIn" once (repeat every 60 days), then write
+and order posts from the browser. GitHub Actions calls /cron hourly and the app
+publishes at most one post on each posting day, at the chosen hour.
 """
+import json
 import re
 import secrets
 import time
 import urllib.parse
 import urllib.request
-import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from functools import wraps
 
-from flask import Flask, abort, flash, redirect, render_template_string, request, session, url_for
+from flask import (Flask, abort, flash, redirect, render_template, request, send_from_directory,
+                   session, url_for)
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
@@ -22,51 +23,41 @@ import post as lp
 import profile_kit
 
 app = Flask(__name__)
-cfg = lp.load_config()
-if not cfg.get("secret_key"):
-    cfg["secret_key"] = secrets.token_hex(32)
-    lp.save_config(cfg)
-app.secret_key = cfg["secret_key"]
+_cfg = lp.load_config()
+if not _cfg.get("secret_key"):
+    _cfg["secret_key"] = secrets.token_hex(32)
+    lp.save_config(_cfg)
+app.secret_key = _cfg["secret_key"]
 app.config.update(SESSION_COOKIE_SECURE=True, SESSION_COOKIE_HTTPONLY=True,
                   SESSION_COOKIE_SAMESITE="Lax", MAX_CONTENT_LENGTH=8 * 1024 * 1024)
 
 SCOPES = "openid profile w_member_social"
-
-PAGE = """<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>LinkedIn Autopost</title>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="theme-color" content="#0A66C2">
-<style>
-:root{--bg:#f6f3ee;--card:#fff;--ink:#16130d;--muted:#6b645a;--line:#e4ddd2;--accent:#0a66c2;--ok:#12805c;--bad:#c0392b}
-@media (prefers-color-scheme:dark){:root{--bg:#16130d;--card:#221e17;--ink:#f3eee6;--muted:#a79f92;--line:#3a342a;--accent:#70b5f9;--ok:#4cc38a;--bad:#ff7b6b}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
-main{max-width:860px;margin:0 auto;padding:24px 16px}h1{font-size:22px;margin:0 0 16px}h2{font-size:17px;margin:0 0 10px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
-input,textarea,select{width:100%;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
-textarea{min-height:320px}label{display:block;font-weight:600;margin:10px 0 4px}
-button,.btn{display:inline-block;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
-.btn.light,button.light{background:transparent;color:var(--accent);border:1px solid var(--accent)}button.danger{background:var(--bad)}
-.muted{color:var(--muted);font-size:13px}.ok{color:var(--ok)}.bad{color:var(--bad)}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.flash{padding:10px 14px;border-radius:8px;margin-bottom:12px;background:var(--card);border-left:4px solid var(--accent)}
-pre{white-space:pre-wrap;font:inherit;margin:8px 0}ol{padding-left:20px}li{margin:6px 0}code{word-break:break-all}
-img.prev{max-width:100%;border-radius:8px;border:1px solid var(--line)}.days label{display:inline-flex;gap:4px;font-weight:400;margin-right:10px}.days input{width:auto}
-</style></head><body><main>
-<div class="row" style="justify-content:space-between"><h1>LinkedIn Autopost</h1>
-{% if session.get('admin') %}<form method="post" action="{{ url_for('logout') }}"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="light">Log out</button></form>{% endif %}</div>
-{% for cat, msg in get_flashed_messages(with_categories=true) %}<div class="flash {{ cat }}">{{ msg }}</div>{% endfor %}
-{{ body|safe }}
-</main></body></html>"""
+IRAQ = timezone(timedelta(hours=3))
+DEFAULT_HEADLINE = "Full-Stack Developer · Flutter & Django"
 
 
-def render(template, **ctx):
-    ctx["csrf"] = csrf_token()
-    inner = render_template_string(template, **ctx)
-    return render_template_string(PAGE, body=inner, csrf=ctx["csrf"])
+# ---------- helpers ----------
+
+@app.template_filter("linkify")
+def linkify(text):
+    """Escape text, then turn https:// URLs into links."""
+    from markupsafe import Markup, escape
+    return Markup(re.sub(r"(https://[^\s<]+)", r'<a href="\1" target="_blank" rel="noopener">open ↗</a>',
+                         str(escape(text))))
 
 
 def csrf_token():
     if "csrf" not in session:
         session["csrf"] = secrets.token_urlsafe(24)
     return session["csrf"]
+
+
+@app.context_processor
+def inject():
+    c = lp.load_config()
+    days_left = int((c.get("expires_at", 0) - time.time()) // 86400) if c.get("access_token") else None
+    return {"csrf": csrf_token(), "cfg": c, "days_left": days_left,
+            "queue_count": len(lp.queued()), "endpoint": request.endpoint}
 
 
 @app.before_request
@@ -99,47 +90,113 @@ def safe_queue_path(name):
     return path
 
 
+def post_hour(c):
+    """Posting hour in Iraq time."""
+    return int(c.get("post_hour_local", 9))
+
+
+def upcoming_slots(c, count):
+    """The next `count` posting times (Iraq time), skipping today if it's used or past."""
+    days = c.get("post_days", ["Tue", "Thu"])
+    if not days:
+        return [None] * count
+    # Today still counts until a post goes out: the hourly cron publishes at or after the hour.
+    slot = datetime.now(IRAQ).replace(hour=post_hour(c), minute=0, second=0, microsecond=0)
+    if lp.published_today():
+        slot += timedelta(days=1)
+    slots = []
+    while len(slots) < count:
+        if lp.WEEKDAYS[slot.weekday()] in days:
+            slots.append(slot)
+        slot += timedelta(days=1)
+    return slots
+
+
+def queue_items(c):
+    paths = lp.queued()
+    items = []
+    for path, slot in zip(paths, upcoming_slots(c, len(paths))):
+        meta, body = lp.read_post(path)
+        items.append({"name": path.name, "meta": meta, "body": body, "slot": slot})
+    return items
+
+
+def published_items():
+    if not lp.PUBLISHED.exists():
+        return []
+    items = []
+    for path in lp.PUBLISHED.glob("*.md"):
+        meta, body = lp.read_post(path)
+        items.append({"name": path.name, "meta": meta, "body": body})
+    return sorted(items, key=lambda i: (i["meta"].get("published", ""), i["name"]), reverse=True)
+
+
+def renumber(paths):
+    """Rename queue files to 01-, 02-, … in the given order."""
+    temp = []
+    for i, path in enumerate(paths):
+        tmp = path.with_name(f".tmp{i}-{path.name}")
+        path.rename(tmp)
+        temp.append(tmp)
+    for i, tmp in enumerate(temp, 1):
+        slug = re.sub(r"^\.tmp\d+-(\d+-)?", "", tmp.name)
+        tmp.rename(lp.QUEUE / f"{i:02d}-{slug}")
+
+
+def try_publish(path):
+    try:
+        url, warning = lp.publish(path)
+        flash(f"Published to LinkedIn ✓ {url}", "ok")
+        if warning:
+            flash(warning, "bad")
+        return True
+    except lp.LinkedInError as err:
+        flash(str(err), "bad")
+    except Exception as err:  # never show a bare 500 page
+        app.logger.exception("publish failed")
+        flash(f"Unexpected error: {err!r}", "bad")
+    return False
+
+
 # ---------- setup and login ----------
 
 @app.route("/setup", methods=["GET", "POST"])
 def setup():
     c = lp.load_config()
-    if c.get("admin_hash") and not session.get("admin"):
-        return redirect(url_for("login"))
     first_run = not c.get("admin_hash")
+    if not first_run and not session.get("admin"):
+        return redirect(url_for("login"))
     if request.method == "POST":
         if first_run and c.get("setup_code") and request.form.get("setup_code", "").strip() != c["setup_code"]:
             time.sleep(1)
             flash("Wrong setup code.", "bad")
             return redirect(url_for("setup"))
         pw = request.form.get("password", "")
-        if not c.get("admin_hash") and len(pw) < 8:
+        if first_run and len(pw) < 8:
             flash("Choose a password of at least 8 characters.", "bad")
             return redirect(url_for("setup"))
         if pw:
+            if len(pw) < 8:
+                flash("Passwords need at least 8 characters.", "bad")
+                return redirect(url_for("setup"))
             c["admin_hash"] = generate_password_hash(pw)
         for key in ("client_id", "client_secret", "api_version"):
             value = request.form.get(key, "").strip()
             if value:
                 c[key] = value
-        c["post_days"] = request.form.getlist("days") or ["Tue", "Thu"]
+        c["headline"] = request.form.get("headline", "").strip() or c.get("headline", "")
+        if "days_form" in request.form:
+            c["post_days"] = request.form.getlist("days")
+            hour = request.form.get("hour", "9")
+            c["post_hour_local"] = int(hour) if hour.isdigit() and 0 <= int(hour) <= 23 else 9
+            c["post_hour_utc"] = (c["post_hour_local"] - 3) % 24
         c.pop("setup_code", None)
         lp.save_config(c)
         session["admin"] = True
-        flash("Settings saved.", "ok")
-        return redirect(url_for("dashboard"))
-    return render("""
-<div class="card"><h2>{{ 'Settings' if c.admin_hash else 'First-time setup' }}</h2>
-<p class="muted">In your LinkedIn app → <b>Auth</b> tab → <b>Authorized redirect URLs</b>, add exactly:<br><code>{{ redirect }}</code></p>
-<form method="post"><input type="hidden" name="csrf" value="{{ csrf }}">
-{% if not c.admin_hash and c.setup_code %}<label>Setup code (you got it from Claude)</label><input name="setup_code" autocomplete="off">{% endif %}
-<label>Admin password for this dashboard{% if c.admin_hash %} (leave empty to keep){% endif %}</label><input type="password" name="password" autocomplete="new-password">
-<label>LinkedIn Client ID{% if c.client_id %} (saved, leave empty to keep){% endif %}</label><input name="client_id" autocomplete="off">
-<label>LinkedIn Client Secret{% if c.client_secret %} (saved, leave empty to keep){% endif %}</label><input type="password" name="client_secret" autocomplete="off">
-<label>Posting days (the scheduled task publishes 1 post on each)</label>
-<div class="days">{% for d in days %}<label><input type="checkbox" name="days" value="{{ d }}" {{ 'checked' if d in c.get('post_days', ['Tue','Thu']) }}>{{ d }}</label>{% endfor %}</div>
-<label>LinkedIn API version (optional, YYYYMM; leave empty for automatic)</label><input name="api_version" placeholder="{{ c.get('api_version') or 'automatic' }}">
-<p><button>Save</button></p></form></div>""", c=c, redirect=redirect_uri(), days=lp.WEEKDAYS)
+        flash("Settings saved ✓", "ok")
+        return redirect(url_for("setup") if not first_run else url_for("overview"))
+    return render_template("setup.html", first_run=first_run, redirect_uri=redirect_uri(),
+                           weekdays=lp.WEEKDAYS, default_headline=DEFAULT_HEADLINE)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -151,10 +208,9 @@ def login():
         time.sleep(1)  # slow down password guessing
         if check_password_hash(c["admin_hash"], request.form.get("password", "")):
             session["admin"] = True
-            return redirect(url_for("dashboard"))
+            return redirect(url_for("overview"))
         flash("Wrong password.", "bad")
-    return render("""<div class="card"><h2>Log in</h2><form method="post"><input type="hidden" name="csrf" value="{{ csrf }}">
-<label>Password</label><input type="password" name="password" autofocus><p><button>Log in</button></p></form></div>""")
+    return render_template("login.html")
 
 
 @app.route("/logout", methods=["POST"])
@@ -170,7 +226,7 @@ def logout():
 def connect():
     c = lp.load_config()
     if not (c.get("client_id") and c.get("client_secret")):
-        flash("Add the Client ID and Secret in Settings first.", "bad")
+        flash("Add the Client ID and Secret first.", "bad")
         return redirect(url_for("setup"))
     session["oauth_state"] = secrets.token_urlsafe(16)
     return redirect("https://www.linkedin.com/oauth/v2/authorization?" + urllib.parse.urlencode({
@@ -183,10 +239,10 @@ def connect():
 def callback():
     if request.args.get("error"):
         flash(f"LinkedIn refused: {request.args.get('error_description') or request.args['error']}", "bad")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("setup"))
     if not request.args.get("state") or request.args.get("state") != session.pop("oauth_state", None):
         flash("Login expired, please click Connect LinkedIn again.", "bad")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("setup"))
     c = lp.load_config()
     data = urllib.parse.urlencode({
         "grant_type": "authorization_code", "code": request.args["code"], "redirect_uri": redirect_uri(),
@@ -201,84 +257,82 @@ def callback():
     except Exception as err:  # show LinkedIn's reason instead of a 500 page
         detail = err.read().decode(errors="replace") if hasattr(err, "read") else str(err)
         flash(f"Connecting failed: {detail}", "bad")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("setup"))
     c.update(access_token=token["access_token"], expires_at=time.time() + token.get("expires_in", 0),
-             person_urn=f"urn:li:person:{me['sub']}", person_name=me.get("name", ""))
+             person_urn=f"urn:li:person:{me['sub']}", person_name=me.get("name", ""),
+             picture=me.get("picture", ""))
     lp.save_config(c)
-    flash(f"Connected as {c['person_name']}.", "ok")
-    return redirect(url_for("dashboard"))
+    flash(f"Connected as {c['person_name']} ✓", "ok")
+    return redirect(url_for("overview"))
 
 
-# ---------- dashboard and queue ----------
+# ---------- pages ----------
 
 @app.route("/")
 @admin_required
-def dashboard():
+def overview():
     c = lp.load_config()
-    days_left = int((c.get("expires_at", 0) - time.time()) // 86400) if c.get("access_token") else None
-    queue = [(p.name, *lp.read_post(p)) for p in lp.queued()]
-    published = sorted(lp.PUBLISHED.glob("*.md"), reverse=True) if lp.PUBLISHED.exists() else []
-    published = [lp.read_post(p)[0] for p in published]
-    return render("""
-<div class="card"><h2>LinkedIn connection</h2>
-{% if days_left is none %}<p class="bad">Not connected.</p>
-{% elif days_left < 0 %}<p class="bad">Login expired. Reconnect to keep posting.</p>
-{% else %}<p class="{{ 'bad' if days_left < 7 else 'ok' }}">Connected as <b>{{ c.person_name }}</b>, valid for {{ days_left }} more days (until {{ until }}).</p>{% endif %}
-<div class="row"><form method="post" action="{{ url_for('connect') }}"><input type="hidden" name="csrf" value="{{ csrf }}">
-<button>{{ 'Reconnect' if c.access_token else 'Connect' }} LinkedIn</button></form>
-<a class="btn light" href="{{ url_for('setup') }}">Settings</a>
-<a class="btn light" href="{{ url_for('profile') }}">✨ Profile makeover</a></div>
-<p class="muted">Posting days: {{ c.get('post_days', ['Tue','Thu'])|join(', ') }}. On those days, the first post in the queue is published automatically after 09:00 Iraq time.</p></div>
-
-<div class="card"><div class="row" style="justify-content:space-between"><h2>Queue ({{ queue|length }})</h2>
-<a class="btn light" href="{{ url_for('edit', name='new') }}">+ New post</a></div>
-{% if queue %}<form method="post" action="{{ url_for('publish_now') }}" onsubmit="return confirm('Publish the next post to LinkedIn now?')">
-<input type="hidden" name="csrf" value="{{ csrf }}"><button>Publish next post now</button></form>{% endif %}
-<ol>{% for name, meta, body in queue %}<li><a href="{{ url_for('edit', name=name) }}"><b>{{ meta.title or name }}</b></a>
-<span class="muted">· {{ 'image' if meta.image else 'no image' }}{{ ' · comment link' if meta.comment }}</span>
-{% if loop.first %}<pre class="muted">{{ body[:280] }}…</pre>{% endif %}</li>{% else %}<p class="muted">Empty. Add a post.</p>{% endfor %}</ol></div>
-
-<div class="card"><h2>Published ({{ published|length }})</h2><ul>{% for m in published %}
-<li>{{ m.published }} · <a href="https://www.linkedin.com/feed/update/{{ m.post_urn }}/" target="_blank" rel="noopener">{{ m.title }}</a></li>
-{% else %}<p class="muted">Nothing yet.</p>{% endfor %}</ul></div>""",
-                  c=c, days_left=days_left, queue=queue, published=published,
-                  until=datetime.fromtimestamp(c.get("expires_at", 0)).strftime("%Y-%m-%d"))
+    queue = queue_items(c)
+    return render_template("overview.html", queue=queue, next_post=queue[0] if queue else None,
+                           published=published_items(), post_hour=post_hour(c))
 
 
-@app.route("/publish", methods=["POST"])
+@app.route("/posts")
+@admin_required
+def posts():
+    return render_template("posts.html", queue=queue_items(lp.load_config()), published=published_items(),
+                           tab=request.args.get("tab", "queue"))
+
+
+@app.route("/posts/move", methods=["POST"])
+@admin_required
+def move():
+    paths = lp.queued()
+    names = [p.name for p in paths]
+    name, direction = request.form.get("name"), request.form.get("dir")
+    if name not in names:
+        abort(404)
+    i = names.index(name)
+    j = {"up": i - 1, "down": i + 1, "top": 0}.get(direction, i)
+    if 0 <= j < len(paths) and j != i:
+        paths.insert(j, paths.pop(i))
+        renumber(paths)
+    return redirect(url_for("posts"))
+
+
+@app.route("/posts/publish", methods=["POST"])
 @admin_required
 def publish_now():
+    name = request.form.get("name")
     queue = lp.queued()
     if not queue:
-        flash("Queue is empty.", "bad")
-        return redirect(url_for("dashboard"))
-    try:
-        url, warning = lp.publish(queue[0])
-        flash(f"Published! {url}", "ok")
-        if warning:
-            flash(warning, "bad")
-    except lp.LinkedInError as err:
-        flash(str(err), "bad")
-    except Exception as err:  # never show a bare 500 page
-        app.logger.exception("publish failed")
-        flash(f"Unexpected error: {err!r}", "bad")
-    return redirect(url_for("dashboard"))
+        flash("The queue is empty.", "bad")
+        return redirect(url_for("overview"))
+    path = safe_queue_path(name) if name else queue[0]
+    try_publish(path)
+    renumber(lp.queued())
+    return redirect(request.form.get("next") or url_for("overview"))
 
 
-@app.route("/post/<name>", methods=["GET", "POST"])
+@app.route("/compose", defaults={"name": None}, methods=["GET", "POST"])
+@app.route("/compose/<name>", methods=["GET", "POST"])
 @admin_required
-def edit(name):
-    is_new = name == "new"
-    path = None if is_new else safe_queue_path(name)
-    meta, body = ({"title": "", "image": "", "comment": ""}, "") if is_new else lp.read_post(path)
+def compose(name):
+    path = safe_queue_path(name) if name else None
+    meta, body = lp.read_post(path) if path else ({"title": "", "image": "", "comment": ""}, "")
     if request.method == "POST":
-        if request.form.get("action") == "delete" and path:
+        action = request.form.get("action", "save")
+        if action == "delete" and path:
             path.unlink()
+            renumber(lp.queued())
             flash("Post deleted.", "ok")
-            return redirect(url_for("dashboard"))
-        meta["title"] = request.form.get("title", "").strip().replace("\n", " ") or "Untitled"
-        meta["comment"] = request.form.get("comment", "").strip().replace("\n", " ")
-        body = request.form.get("body", "").replace("\r\n", "\n")
+            return redirect(url_for("posts"))
+        body = request.form.get("body", "").replace("\r\n", "\n").strip()
+        if not body:
+            flash("Write something first.", "bad")
+            return redirect(request.url)
+        meta["title"] = request.form.get("title", "").strip().replace("\n", " ") or body.split("\n")[0][:60]
+        meta["comment"] = request.form.get("link", "").strip().replace("\n", " ")
         if request.form.get("remove_image"):
             meta["image"] = ""
         upload = request.files.get("image")
@@ -291,69 +345,37 @@ def edit(name):
             lp.IMAGES.mkdir(exist_ok=True)
             upload.save(lp.IMAGES / fname)
             meta["image"] = f"images/{fname}"
-        if is_new:
-            nums = [int(p.name[:2]) for p in lp.QUEUE.glob("*.md") if p.name[:2].isdigit()]
-            slug = re.sub(r"[^a-z0-9]+", "-", meta["title"].lower()).strip("-")[:40] or "post"
+        if not path:
             lp.QUEUE.mkdir(exist_ok=True)
-            path = lp.QUEUE / f"{max(nums, default=0) + 1:02d}-{slug}.md"
-        lp.write_post(path, meta, body)
-        flash("Saved.", "ok")
-        return redirect(url_for("dashboard"))
-    return render("""
-<div class="card"><h2>{{ 'New post' if is_new else 'Edit post' }}</h2>
-<form method="post" enctype="multipart/form-data"><input type="hidden" name="csrf" value="{{ csrf }}">
-<label>Title (only for you)</label><input name="title" value="{{ meta.title }}">
-<label>Post text <span class="muted" id="count"></span></label><textarea name="body" id="body">{{ body }}</textarea>
-<label>First comment (put links here)</label><input name="comment" value="{{ meta.comment }}">
-<label>Image (JPG / PNG / GIF)</label>
-{% if meta.image %}<img class="prev" src="{{ url_for('image', name=meta.image.split('/')[-1]) }}" alt="">
-<label style="font-weight:400"><input type="checkbox" name="remove_image" style="width:auto"> Remove image</label>{% endif %}
-<input type="file" name="image" accept=".jpg,.jpeg,.png,.gif">
-<p class="row"><button>Save</button><a class="btn light" href="{{ url_for('dashboard') }}">Cancel</a>
-{% if not is_new %}<button class="danger" name="action" value="delete" onclick="return confirm('Delete this post?')">Delete</button>{% endif %}</p>
-</form></div>
-<script>const b=document.getElementById('body'),c=document.getElementById('count');
-const u=()=>c.textContent=`(${b.value.length} / 3000)`;b.addEventListener('input',u);u();</script>""",
-                  meta=meta, body=body, is_new=is_new)
+            slug = re.sub(r"[^a-z0-9]+", "-", meta["title"].lower()).strip("-")[:40] or "post"
+            path = lp.QUEUE / f"{int(time.time())}-{slug}.md"
+            position = request.form.get("position", "end")
+            lp.write_post(path, meta, body)
+            paths = [p for p in lp.queued() if p != path]
+            paths.insert(0 if position in ("top", "now") else len(paths), path)
+            renumber(paths)
+            path = lp.queued()[0] if position in ("top", "now") else lp.queued()[-1]
+        else:
+            lp.write_post(path, meta, body)
+        if action == "publish":
+            try_publish(path)
+            renumber(lp.queued())
+            return redirect(url_for("overview"))
+        flash("Saved to the queue ✓", "ok")
+        return redirect(url_for("posts"))
+    return render_template("compose.html", name=name, meta=meta, body=body,
+                           image_url=url_for("image", name=meta["image"].split("/")[-1]) if meta.get("image") else "")
 
 
 @app.route("/profile")
 @admin_required
 def profile():
-    return render("""
-<p><a href="{{ url_for('dashboard') }}">← Dashboard</a></p>
-<div class="card"><h2>✨ Profile makeover</h2>
-<p class="muted">LinkedIn doesn't let apps edit profiles, so work through these steps once. Open
-<a href="https://www.linkedin.com/in/me/" target="_blank" rel="noopener">your profile</a> in another tab, copy each block and paste it.
-Tick each step when it's done (the ticks are saved in this browser).</p>
-<p><b id="progress"></b></p></div>
-{% for s in steps %}{% set si = loop.index %}
-<div class="card step" id="s{{ si }}">
-<label class="row" style="margin:0;justify-content:space-between"><h2 style="margin:0">{{ si }}. {{ s.title }}</h2>
-<span class="row" style="font-weight:400"><input type="checkbox" class="done" data-k="{{ si }}" style="width:auto"> done</span></label>
-<p class="muted">📍 {{ s.where }}</p>{% if s.note %}<p>💡 {{ s.note }}</p>{% endif %}
-{% if s.banner %}<img class="prev" src="{{ url_for('image', name='linkedin-banner.png') }}" alt="LinkedIn banner">
-<p><a class="btn" href="{{ url_for('image', name='linkedin-banner.png') }}" download="thanoon-linkedin-banner.png">Download banner</a></p>{% endif %}
-{% for label, text in s.blocks %}<div style="margin-top:12px"><div class="row" style="justify-content:space-between">
-<b>{{ label }}</b><button type="button" class="light copy" data-t="t{{ si }}-{{ loop.index }}">Copy</button></div>
-<pre id="t{{ si }}-{{ loop.index }}" dir="auto" style="background:var(--bg);padding:10px;border-radius:8px;border:1px solid var(--line)">{{ text }}</pre></div>{% endfor %}
-</div>{% endfor %}
-<script>
-document.querySelectorAll('.copy').forEach(b=>b.onclick=async()=>{
-  const t=document.getElementById(b.dataset.t).innerText;
-  try{await navigator.clipboard.writeText(t)}catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById(b.dataset.t));getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand('copy')}
-  b.textContent='Copied ✓';setTimeout(()=>b.textContent='Copy',1500)});
-const boxes=[...document.querySelectorAll('.done')];let st={};try{st=JSON.parse(localStorage.getItem('kit')||'{}')}catch(e){}
-const upd=()=>{const n=boxes.filter(x=>x.checked).length;document.getElementById('progress').textContent=`Progress: ${n} / ${boxes.length} steps done`;
-  boxes.forEach(x=>x.closest('.step').style.opacity=x.checked?.55:1)};
-boxes.forEach(x=>{x.checked=!!st[x.dataset.k];x.onchange=()=>{st[x.dataset.k]=x.checked;try{localStorage.setItem('kit',JSON.stringify(st))}catch(e){};upd()}});upd();
-</script>""", steps=profile_kit.STEPS)
+    return render_template("profile.html", steps=profile_kit.STEPS)
 
 
 @app.route("/image/<name>")
 @admin_required
 def image(name):
-    from flask import send_from_directory
     return send_from_directory(lp.IMAGES, secure_filename(name))
 
 

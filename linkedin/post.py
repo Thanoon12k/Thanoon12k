@@ -121,6 +121,19 @@ def _upload_image(cfg, path):
     return value["image"]
 
 
+def full_text(meta, body):
+    """Post text as published. The API can't add comments without partner access,
+    so the post's link (stored as `comment`) goes at the end of the post."""
+    link = meta.get("comment", "").strip()
+    body = body.strip()
+    if not link:
+        return body
+    paragraphs = body.split("\n\n")
+    if len(paragraphs) > 1 and all(w.startswith("#") for w in paragraphs[-1].split()):
+        return "\n\n".join(paragraphs[:-1] + [f"🔗 {link}", paragraphs[-1]])
+    return f"{body}\n\n🔗 {link}"
+
+
 def publish(path, cfg=None):
     """Publish one queue file. Returns (post_url, warning or None)."""
     cfg = cfg or load_config()
@@ -130,7 +143,7 @@ def publish(path, cfg=None):
         raise LinkedInError("LinkedIn login expired. Click 'Reconnect LinkedIn' in the dashboard.")
 
     meta, body = read_post(path)
-    commentary = to_little_text(body)
+    commentary = to_little_text(full_text(meta, body))
     if len(commentary) > 3000:
         raise LinkedInError(f"{path.name} is {len(commentary)} characters; LinkedIn allows 3000.")
 
@@ -148,15 +161,7 @@ def publish(path, cfg=None):
         post["content"] = {"media": {"id": _upload_image(cfg, image), "altText": meta.get("title", "")}}
     headers, _ = _call(cfg, "POST", f"{API}/posts", post)
     post_urn = headers["x-restli-id"]
-
     warning = None
-    if meta.get("comment"):
-        try:
-            _call(cfg, "POST", f"{API}/socialActions/{urllib.parse.quote(post_urn, safe='')}/comments",
-                  {"actor": cfg["person_urn"], "object": post_urn, "message": {"text": meta["comment"]}})
-        except LinkedInError as err:
-            # The post is already live; don't fail over the comment.
-            warning = f"Post is live, but the first comment failed; add it by hand. {err}"
 
     PUBLISHED.mkdir(exist_ok=True)
     meta.update(post_urn=post_urn, published=str(date.today()))
@@ -178,7 +183,7 @@ def run_scheduled(cfg=None):
     if today not in cfg.get("post_days", ["Tue", "Thu"]):
         return f"{today} is not a posting day."
     if now.hour < cfg.get("post_hour_utc", 6):
-        return "Too early, posting starts at 09:00 Iraq time."
+        return f"Too early, posting starts at {cfg.get('post_hour_local', 9):02d}:00 Iraq time."
     if published_today():
         return "Already published today."
     queue = queued()
@@ -204,7 +209,7 @@ def main():
     if args.dry_run:
         meta, body = read_post(queue[0])
         print(f"Next: {queue[0].name}\nImage: {meta.get('image') or 'none'}\n"
-              f"Comment: {meta.get('comment') or 'none'}\n\n{body}\n\n--- as sent ---\n{to_little_text(body)}")
+              f"Link: {meta.get('comment') or 'none'}\n\n{body}\n\n--- as sent ---\n{to_little_text(full_text(meta, body))}")
         return
     if args.scheduled:
         print(run_scheduled(cfg))

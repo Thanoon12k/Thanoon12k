@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>{% block title %}Autopost{% endblock %} · LinkedIn Autopost</title>
+<link rel="icon" type="image/svg+xml" href="{{ url_for('favicon') }}">
+<meta name="theme-color" content="#16130D">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=4">
+</head>
+<body>
+{% macro icon(n) -%}
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">{% if n == 'home' %}<path d="M3 11.5 12 4l9 7.5M5.5 9.5V20h13V9.5"/>{% elif n == 'pen' %}<path d="M4 20h4L19 9l-4-4L4 16v4ZM13.5 6.5l4 4"/>{% elif n == 'list' %}<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>{% elif n == 'star' %}<path d="m12 3 2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7L12 3Z"/>{% elif n == 'gear' %}<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/>{% elif n == 'send' %}<path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/>{% elif n == 'out' %}<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>{% endif %}</svg>
+{%- endmacro %}
+{% set nav = [('overview','home','Overview'),('compose','pen','Compose'),('posts','list','Posts'),('profile','star','Profile'),('setup','gear','Setup')] %}
+{% if session.get('admin') %}
+<aside class="side">
+  <a class="brand" href="{{ url_for('overview') }}"><img src="{{ url_for('favicon') }}" alt=""><span>Autopost</span></a>
+  <nav>
+  {% for ep, ic, label in nav %}<a href="{{ url_for(ep) }}" class="{{ 'on' if endpoint == ep }}">{{ icon(ic) }}<span>{{ label }}</span>{% if ep == 'posts' and queue_count %}<em>{{ queue_count }}</em>{% endif %}</a>{% endfor %}
+  </nav>
+  <form method="post" action="{{ url_for('logout') }}" class="logout"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="ghost">{{ icon('out') }}<span>Log out</span></button></form>
+</aside>
+<nav class="tabs">
+  {% for ep, ic, label in nav %}<a href="{{ url_for(ep) }}" class="{{ 'on' if endpoint == ep }}">{{ icon(ic) }}<span>{{ label }}</span></a>{% endfor %}
+</nav>
+{% endif %}
+<main class="{{ 'with-side' if session.get('admin') else 'solo' }}">
+  <header class="top">
+    <div><h1>{% block heading %}{% endblock %}</h1>{% block sub %}{% endblock %}</div>
+    {% if session.get('admin') %}
+      {% if days_left is none %}<a class="pill bad" href="{{ url_for('setup') }}"><i></i>Not connected</a>
+      {% elif days_left < 0 %}<a class="pill bad" href="{{ url_for('setup') }}"><i></i>Login expired</a>
+      {% elif days_left < 7 %}<a class="pill warn" href="{{ url_for('setup') }}"><i></i>{{ days_left }} days left</a>
+      {% else %}<span class="pill ok"><i></i>Connected{% if cfg.person_name %} · {{ cfg.person_name.split(' ')[0] }}{% endif %}</span>{% endif %}
+    {% endif %}
+  </header>
+  {% for cat, msg in get_flashed_messages(with_categories=true) %}<div class="flash {{ cat }}">{{ msg|linkify }}</div>{% endfor %}
+  {% block content %}{% endblock %}
+</main>
+{% block scripts %}{% endblock %}
+</body>
+</html>
