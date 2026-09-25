@@ -12,7 +12,7 @@
 <a href="https://make1it.pythonanywhere.com"><img src="https://img.shields.io/badge/🌐_Portfolio-make1it.pythonanywhere.com-FFC93C?style=for-the-badge&labelColor=16130D" alt="Portfolio"></a>
 <br>
 <a href="mailto:engthanoon1@gmail.com"><img src="https://img.shields.io/badge/Email-engthanoon1@gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white" alt="Email"></a>
-<a href="https://wa.me/9657702790915"><img src="https://img.shields.io/badge/WhatsApp-+965_770_279_0915-25D366?style=flat-square&logo=whatsapp&logoColor=white" alt="WhatsApp"></a>
+<a href="https://wa.me/9647702790915"><img src="https://img.shields.io/badge/WhatsApp-+964_770_279_0915-25D366?style=flat-square&logo=whatsapp&logoColor=white" alt="WhatsApp"></a>
 <img src="https://img.shields.io/badge/📍-Mosul,_Iraq_·_remote_or_on--site-4361EE?style=flat-square" alt="Mosul, Iraq">
 <img src="https://img.shields.io/badge/status-open_to_work-12B99C?style=flat-square" alt="Open to work">
 
@@ -120,7 +120,7 @@ It all runs from one command, with **zero manual steps**.
 **Need an app, a management system, device integration, or help with research?**
 <br>
 
-<a href="https://wa.me/9657702790915"><img src="https://img.shields.io/badge/WhatsApp-Chat_now-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp"></a>
+<a href="https://wa.me/9647702790915"><img src="https://img.shields.io/badge/WhatsApp-Chat_now-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp"></a>
 <a href="mailto:engthanoon1@gmail.com"><img src="https://img.shields.io/badge/Email-Write_to_me-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"></a>
 <a href="https://make1it.pythonanywhere.com"><img src="https://img.shields.io/badge/Portfolio-See_my_work-FFC93C?style=for-the-badge&labelColor=16130D" alt="Portfolio"></a>
 
