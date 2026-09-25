@@ -92,7 +92,9 @@ def _call(cfg, method, url, body=None):
         with urllib.request.urlopen(req, timeout=60) as resp:
             payload = resp.read()
             return resp.headers, (json.loads(payload) if payload else {})
-    except urllib.error.HTTPError as err:
+    except urllib.error.URLError as err:
+        if not isinstance(err, urllib.error.HTTPError):
+            raise LinkedInError(f"Could not reach LinkedIn: {err.reason}")
         detail = err.read().decode(errors="replace")
         if err.code == 401:
             raise LinkedInError("LinkedIn login expired. Click 'Reconnect LinkedIn' in the dashboard.")
@@ -106,9 +108,16 @@ def _upload_image(cfg, path):
     _, init = _call(cfg, "POST", f"{API}/images?action=initializeUpload",
                     {"initializeUploadRequest": {"owner": cfg["person_urn"]}})
     value = init["value"]
+    # Without an explicit Content-Type, urllib sends a form type and LinkedIn answers 400.
     req = urllib.request.Request(value["uploadUrl"], data=path.read_bytes(), method="PUT",
-                                 headers={"Authorization": f"Bearer {cfg['access_token']}"})
-    urllib.request.urlopen(req, timeout=120).close()
+                                 headers={"Authorization": f"Bearer {cfg['access_token']}",
+                                          "Content-Type": "application/octet-stream"})
+    try:
+        urllib.request.urlopen(req, timeout=120).close()
+    except urllib.error.HTTPError as err:
+        raise LinkedInError(f"Image upload failed with {err.code}: {err.read().decode(errors='replace')}")
+    except OSError as err:
+        raise LinkedInError(f"Image upload failed: {err}")
     return value["image"]
 
 

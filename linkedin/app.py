@@ -19,6 +19,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
 import post as lp
+import profile_kit
 
 app = Flask(__name__)
 cfg = lp.load_config()
@@ -225,7 +226,8 @@ def dashboard():
 {% else %}<p class="{{ 'bad' if days_left < 7 else 'ok' }}">Connected as <b>{{ c.person_name }}</b>, valid for {{ days_left }} more days (until {{ until }}).</p>{% endif %}
 <div class="row"><form method="post" action="{{ url_for('connect') }}"><input type="hidden" name="csrf" value="{{ csrf }}">
 <button>{{ 'Reconnect' if c.access_token else 'Connect' }} LinkedIn</button></form>
-<a class="btn light" href="{{ url_for('setup') }}">Settings</a></div>
+<a class="btn light" href="{{ url_for('setup') }}">Settings</a>
+<a class="btn light" href="{{ url_for('profile') }}">✨ Profile makeover</a></div>
 <p class="muted">Posting days: {{ c.get('post_days', ['Tue','Thu'])|join(', ') }}. On those days, the first post in the queue is published automatically after 09:00 Iraq time.</p></div>
 
 <div class="card"><div class="row" style="justify-content:space-between"><h2>Queue ({{ queue|length }})</h2>
@@ -257,6 +259,9 @@ def publish_now():
             flash(warning, "bad")
     except lp.LinkedInError as err:
         flash(str(err), "bad")
+    except Exception as err:  # never show a bare 500 page
+        app.logger.exception("publish failed")
+        flash(f"Unexpected error: {err!r}", "bad")
     return redirect(url_for("dashboard"))
 
 
@@ -310,6 +315,39 @@ def edit(name):
 <script>const b=document.getElementById('body'),c=document.getElementById('count');
 const u=()=>c.textContent=`(${b.value.length} / 3000)`;b.addEventListener('input',u);u();</script>""",
                   meta=meta, body=body, is_new=is_new)
+
+
+@app.route("/profile")
+@admin_required
+def profile():
+    return render("""
+<p><a href="{{ url_for('dashboard') }}">← Dashboard</a></p>
+<div class="card"><h2>✨ Profile makeover</h2>
+<p class="muted">LinkedIn doesn't let apps edit profiles, so work through these steps once. Open
+<a href="https://www.linkedin.com/in/me/" target="_blank" rel="noopener">your profile</a> in another tab, copy each block and paste it.
+Tick each step when it's done (the ticks are saved in this browser).</p>
+<p><b id="progress"></b></p></div>
+{% for s in steps %}{% set si = loop.index %}
+<div class="card step" id="s{{ si }}">
+<label class="row" style="margin:0;justify-content:space-between"><h2 style="margin:0">{{ si }}. {{ s.title }}</h2>
+<span class="row" style="font-weight:400"><input type="checkbox" class="done" data-k="{{ si }}" style="width:auto"> done</span></label>
+<p class="muted">📍 {{ s.where }}</p>{% if s.note %}<p>💡 {{ s.note }}</p>{% endif %}
+{% if s.banner %}<img class="prev" src="{{ url_for('image', name='linkedin-banner.png') }}" alt="LinkedIn banner">
+<p><a class="btn" href="{{ url_for('image', name='linkedin-banner.png') }}" download="thanoon-linkedin-banner.png">Download banner</a></p>{% endif %}
+{% for label, text in s.blocks %}<div style="margin-top:12px"><div class="row" style="justify-content:space-between">
+<b>{{ label }}</b><button type="button" class="light copy" data-t="t{{ si }}-{{ loop.index }}">Copy</button></div>
+<pre id="t{{ si }}-{{ loop.index }}" dir="auto" style="background:var(--bg);padding:10px;border-radius:8px;border:1px solid var(--line)">{{ text }}</pre></div>{% endfor %}
+</div>{% endfor %}
+<script>
+document.querySelectorAll('.copy').forEach(b=>b.onclick=async()=>{
+  const t=document.getElementById(b.dataset.t).innerText;
+  try{await navigator.clipboard.writeText(t)}catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById(b.dataset.t));getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand('copy')}
+  b.textContent='Copied ✓';setTimeout(()=>b.textContent='Copy',1500)});
+const boxes=[...document.querySelectorAll('.done')];let st={};try{st=JSON.parse(localStorage.getItem('kit')||'{}')}catch(e){}
+const upd=()=>{const n=boxes.filter(x=>x.checked).length;document.getElementById('progress').textContent=`Progress: ${n} / ${boxes.length} steps done`;
+  boxes.forEach(x=>x.closest('.step').style.opacity=x.checked?.55:1)};
+boxes.forEach(x=>{x.checked=!!st[x.dataset.k];x.onchange=()=>{st[x.dataset.k]=x.checked;try{localStorage.setItem('kit',JSON.stringify(st))}catch(e){};upd()}});upd();
+</script>""", steps=profile_kit.STEPS)
 
 
 @app.route("/image/<name>")

@@ -7,7 +7,8 @@ the posts in `queue/` to your LinkedIn profile. Nothing runs on your PC.
 - `post.py`: LinkedIn Posts API code shared by the dashboard and `/cron`
 - `queue/`: posts waiting to be published, in file-name order
 - `images/`: post images (JPG/PNG/GIF)
-- `profile.md`, `posts.md`: profile text to paste by hand, and the original post drafts
+- `profile_kit.py`: profile makeover steps shown with copy buttons at `/profile`
+- `posts.md`: the original post drafts
 - `../.github/workflows/linkedin-cron.yml`: calls `/cron` daily; the app publishes at most one post per posting day
 
 The live copy on PythonAnywhere (`/home/apps1monitor/linkedin`) is the source of truth for the
