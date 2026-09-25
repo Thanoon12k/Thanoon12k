@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 250" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<style>
+.flow{stroke:#16130D;stroke-width:4;stroke-dasharray:10 10;fill:none;animation:run 1s linear infinite}
+@keyframes run{to{stroke-dashoffset:-20}}
+.box{stroke:#16130D;stroke-width:4}
+.t{font-size:19px;font-weight:800;fill:#16130D;text-anchor:middle}
+.s{font-size:14px;font-weight:600;fill:#16130D;text-anchor:middle;opacity:.75}
+.e{font-size:40px;text-anchor:middle}
+.pulse{animation:p 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes p{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+</style>
+<rect x="2" y="2" width="1196" height="246" rx="26" fill="#FFF6EA" stroke="#16130D" stroke-width="4"/>
+<text x="600" y="40" class="t" style="font-size:18px">⚙️ one command · zero manual steps</text>
+<g>
+<path class="flow" d="M178 140 H218"/><path class="flow" d="M378 140 H418"/><path class="flow" d="M578 140 H618"/>
+<path class="flow" d="M778 140 H818"/><path class="flow" d="M978 140 H1018"/>
+</g>
+<g class="pulse" style="animation-delay:0s"><rect class="box" x="28" y="70" width="150" height="140" rx="22" fill="#FFC93C"/>
+<text x="103" y="122" class="e">📦</text><text x="103" y="160" class="t">63 repos</text><text x="103" y="184" class="s">cloned</text></g>
+<g class="pulse" style="animation-delay:.4s"><rect class="box" x="218" y="70" width="160" height="140" rx="22" fill="#fff"/>
+<text x="298" y="122" class="e">▶️</text><text x="298" y="160" class="t">run each app</text><text x="298" y="184" class="s">Django · Flask · React</text></g>
+<g class="pulse" style="animation-delay:.8s"><rect class="box" x="418" y="70" width="160" height="140" rx="22" fill="#12B99C"/>
+<text x="498" y="122" class="e">📸</text><text x="498" y="160" class="t">screenshot</text><text x="498" y="184" class="s">or mock from code</text></g>
+<g class="pulse" style="animation-delay:1.2s"><rect class="box" x="618" y="70" width="160" height="140" rx="22" fill="#9B7EDE"/>
+<text x="698" y="122" class="e">🏗️</text><text x="698" y="160" class="t">build site</text><text x="698" y="184" class="s">RTL · dark mode</text></g>
+<g class="pulse" style="animation-delay:1.6s"><rect class="box" x="818" y="70" width="160" height="140" rx="22" fill="#FF5C39"/>
+<text x="898" y="122" class="e">🚀</text><text x="898" y="160" class="t" style="fill:#fff">deploy</text><text x="898" y="184" class="s" style="fill:#fff">PythonAnywhere</text></g>
+<g class="pulse" style="animation-delay:2s"><rect class="box" x="1018" y="70" width="154" height="140" rx="22" fill="#4361EE"/>
+<text x="1095" y="122" class="e">🌐</text><text x="1095" y="160" class="t" style="fill:#fff">live portfolio</text><text x="1095" y="184" class="s" style="fill:#fff">+ admin panel</text></g>
+</svg>
