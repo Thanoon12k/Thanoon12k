@@ -27,14 +27,14 @@
 </picture>
 </a>
 
-<p align="center"><b>🌐 My website: <a href="https://make1it.pythonanywhere.com">make1it.pythonanywhere.com</a></b> — all 63 projects with screenshots, my experience and how to reach me.</p>
+<p align="center"><b>🌐 My website: <a href="https://make1it.pythonanywhere.com">make1it.pythonanywhere.com</a></b> — all 64 projects with screenshots, my experience and how to reach me.</p>
 
 ---
 
 ## ⚙️ My portfolio builds itself
 
 I didn't screenshot or upload a single project by hand. I wrote **[`showcase`](https://github.com/Thanoon12k/My-Work)**, a tool that:
-- clones **all 63 of my repositories**
+- clones **all 64 of my repositories**
 - **runs each one** (it migrates the database for Django apps, creates a demo user and logs in)
 - crawls every app in a headless browser and takes desktop and mobile screenshots
 - draws a mock-up from the source code of apps that can't run in a browser (Flutter screens, desktop windows, Arduino serial output)
@@ -42,7 +42,11 @@ I didn't screenshot or upload a single project by hand. I wrote **[`showcase`](h
 
 It all runs from one command, with **zero manual steps**.
 
-<p align="center"><a href="https://github.com/Thanoon12k/My-Work"><img src="assets/pipeline.svg" width="100%" alt="Pipeline: 63 repos → run each app → screenshot → build site → deploy → live portfolio"></a></p>
+**My Facebook page runs itself too.** [Golden Code](https://www.facebook.com/goldencode114) is fully automated: the code designs every post card, an AI agent schedules and publishes through the Graph API, and a script tracks growth and archives every post.
+
+<p align="center"><a href="https://www.facebook.com/goldencode114"><img src="assets/work/golden-code-page.webp" width="90%" alt="Golden Code — self-running Facebook page"></a></p>
+
+<p align="center"><a href="https://github.com/Thanoon12k/My-Work"><img src="assets/pipeline.svg" width="100%" alt="Pipeline: 64 repos → run each app → screenshot → build site → deploy → live portfolio"></a></p>
 
 <p align="center">
 <a href="https://make1it.pythonanywhere.com"><b>🌐 See the live result</b></a> ·
@@ -67,9 +71,10 @@ It all runs from one command, with **zero manual steps**.
 - 🏢 **[Employee Manager](https://github.com/Thanoon12k/Employee-Manager)**: surveys, official letters and a director's dashboard for a government department.
 - 💉 **[Smart Syringe Pump](https://github.com/Thanoon12k/flutter-arduino-based-syringe-pump)**: a Flutter app that controls an Arduino medical pump, with safety checks and a live 3D syringe.
 - 📝 **[Bubble Sheet Scanner](https://github.com/Thanoon12k/BubbleSheetScanner)**: marks exam answer sheets offline with OpenCV and exports the results to Excel.
+- 📣 **[Golden Code page](https://www.facebook.com/goldencode114)**: a Facebook page that runs itself. The code designs the post cards, and an AI agent publishes and tracks stats through the Graph API.
 - 🕌 **[Mosul Tourism](https://github.com/Thanoon12k/mosul1tourism)** and 💡 **[Fikra](https://github.com/Thanoon12k/Ideas-Store)**: bilingual Flask and Django web apps.
 
-<p align="center"><a href="https://make1it.pythonanywhere.com"><img src="https://img.shields.io/badge/All_63_projects_with_screenshots-→-16130D?style=for-the-badge&labelColor=FFC93C" alt="All projects"></a></p>
+<p align="center"><a href="https://make1it.pythonanywhere.com"><img src="https://img.shields.io/badge/All_64_projects_with_screenshots-→-16130D?style=for-the-badge&labelColor=FFC93C" alt="All projects"></a></p>
 
 ---
 
