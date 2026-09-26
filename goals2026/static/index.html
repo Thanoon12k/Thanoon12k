@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/style.css?v=3">
+<link rel="stylesheet" href="/static/style.css?v=6">
 </head>
 <body>
 
@@ -25,32 +25,29 @@
       <p class="tag">Every goal is a box. Fill it, seal it, ship it.</p>
     </div>
   </div>
+  <nav class="tabs" role="tablist">
+    <a href="#" class="tab" data-view="boxes" role="tab">📦 Boxes</a>
+    <a href="#progress" class="tab" data-view="progress" role="tab">📈 Progress</a>
+  </nav>
   <div class="top-actions">
     <button class="icon-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">◐</button>
     <button class="btn ghost" id="lockBtn">🔒 Owner</button>
   </div>
 </header>
 
-<section class="hero" id="hero">
-  <div class="big-ring" id="bigRing"></div>
-  <div class="stats" id="stats"></div>
-</section>
-
-<section class="toolbar">
-  <div class="chips" id="filters" role="tablist">
-    <button class="chip on" data-f="all">All</button>
-    <button class="chip" data-f="active">In progress</button>
-    <button class="chip" data-f="todo">Not started</button>
-    <button class="chip" data-f="done">Achieved</button>
-  </div>
-  <button class="btn primary owner-only" id="addGoalBtn">＋ New goal box</button>
-</section>
-
 <main class="grid" id="grid" aria-live="polite"></main>
 
-<section class="wins" id="wins"></section>
-
-<footer class="foot">Made for the 2026 run · <span id="today"></span></footer>
+<main class="progress" id="progressView" hidden>
+  <section class="hero">
+    <div class="big-ring" id="bigRing"></div>
+    <div class="stats" id="stats"></div>
+  </section>
+  <section class="plist-wrap">
+    <h2>Goal by goal</h2>
+    <div class="plist" id="plist"></div>
+  </section>
+  <section class="wins" id="wins"></section>
+</main>
 
 <!-- goal detail -->
 <dialog id="goalDlg" class="dlg goal-dlg"></dialog>
@@ -91,6 +88,6 @@
 
 <div class="toast" id="toast" role="status"></div>
 <canvas id="confetti" aria-hidden="true"></canvas>
-<script src="/static/app.js?v=3"></script>
+<script src="/static/app.js?v=6"></script>
 </body>
 </html>

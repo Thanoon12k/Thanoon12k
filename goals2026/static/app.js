@@ -5,7 +5,6 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   let board = { goals: [], owner: false, colors: [], textures: [] };
-  let filter = "all";
   let openGoal = null;       // id of the goal shown in the detail dialog
   let editing = null;        // id of goal being edited, or null for a new one
   let pick = { color: "ember" };
@@ -91,49 +90,15 @@
     if (days === 0) return "due today";
     return days > 60 ? `${Math.round(days / 30)} mo left` : `${days}d left`;
   }
-  const fmtDate = (iso) => new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric" });
 
   // ---------- render ----------
   function render() {
     document.body.classList.toggle("owner", board.owner);
     $("#lockBtn").textContent = board.owner ? "🔓 Log out" : "🔒 Owner";
-    renderHero();
     renderGrid();
-    renderWins();
+    renderProgress();
     if (openGoal != null) renderDetail();
     if (refocus) { const el = $(refocus); if (el) el.focus(); refocus = null; }
-  }
-
-  function ring(pct, size = 128, stroke = 12) {
-    const r = (size - stroke) / 2, c = 2 * Math.PI * r;
-    return `<svg viewBox="0 0 ${size} ${size}">
-      <defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#ff6b3d"/><stop offset="1" stop-color="#ffc93c"/></linearGradient></defs>
-      <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="var(--line)" stroke-width="${stroke}"/>
-      <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="url(#rg)" stroke-width="${stroke}" stroke-linecap="round"
-        stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - pct / 100)}" style="transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)"/>
-    </svg>`;
-  }
-
-  function renderHero() {
-    let total = 0, done = 0, missions = 0, mDone = 0, gDone = 0;
-    board.goals.forEach((g) => {
-      const s = gStats(g); total += s.total; done += s.done; missions += s.missions; mDone += s.mDone; if (s.complete) gDone++;
-    });
-    const pct = total ? Math.round((done / total) * 100) : 0;
-    const ringEl = $("#bigRing");
-    if (!ringEl.firstChild) ringEl.innerHTML = ring(0) + `<div class="lbl"><div><b>0%</b><span>overall</span></div></div>`;
-    requestAnimationFrame(() => {
-      const arc = ringEl.querySelectorAll("circle")[1];
-      const c = parseFloat(arc.getAttribute("stroke-dasharray"));
-      arc.setAttribute("stroke-dashoffset", c * (1 - pct / 100));
-      ringEl.querySelector("b").textContent = pct + "%";
-    });
-    $("#stats").innerHTML = [
-      [board.goals.length, "goal boxes"],
-      [`${gDone}`, "boxes sealed"],
-      [`${mDone}/${missions}`, "missions done"],
-      [`${done}/${total}`, "steps checked"],
-    ].map(([b, s]) => `<div class="stat"><b>${esc(b)}</b><span>${s}</span></div>`).join("");
   }
 
   function boxHTML(g, i) {
@@ -158,28 +123,77 @@
   }
 
   function renderGrid() {
-    const goals = board.goals.filter((g) => {
-      const s = gStats(g);
-      if (filter === "done") return s.complete;
-      if (filter === "active") return !s.complete && s.done > 0;
-      if (filter === "todo") return s.done === 0 && !s.complete;
-      return true;
-    });
-    let html = goals.map(boxHTML).join("");
-    if (board.owner && filter === "all") html += `<button class="box add" data-add><div><span>＋</span>New goal box</div></button>`;
+    let html = board.goals.map(boxHTML).join("");
+    if (board.owner) html += `<button class="box add" data-add><div><span>＋</span>New goal box</div></button>`;
     if (!html) html = `<div class="empty">No boxes here yet.</div>`;
     $("#grid").innerHTML = html;
   }
 
-  function renderWins() {
-    const wins = [];
-    board.goals.forEach((g) => g.missions.forEach((m) => m.steps.forEach((s) => {
-      if (s.done && s.done_at) wins.push({ s, g });
-    })));
-    wins.sort((a, b) => b.s.done_at.localeCompare(a.s.done_at));
-    $("#wins").innerHTML = wins.length ? `<h2>Recent wins 🏆</h2><ul>${wins.slice(0, 12).map(({ s, g }) =>
-      `<li><b dir="auto">${esc(s.text)}</b><span>${esc(g.emoji)} ${esc(g.title)} · ${fmtDate(s.done_at)}</span></li>`).join("")}</ul>` : "";
+  // ---------- progress tab ----------
+  function ring(pct, size = 128, stroke = 12) {
+    const r = (size - stroke) / 2, c = 2 * Math.PI * r;
+    return `<svg viewBox="0 0 ${size} ${size}">
+      <defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#ff6b3d"/><stop offset="1" stop-color="#ffc93c"/></linearGradient></defs>
+      <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="var(--line)" stroke-width="${stroke}"/>
+      <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="url(#rg)" stroke-width="${stroke}" stroke-linecap="round"
+        stroke-dasharray="${c}" stroke-dashoffset="${c}" style="transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)"/>
+    </svg>`;
   }
+  const fmtDate = (iso) => new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+
+  function renderProgress() {
+    let total = 0, done = 0, missions = 0, mDone = 0, gDone = 0;
+    board.goals.forEach((g) => {
+      const s = gStats(g); total += s.total; done += s.done; missions += s.missions; mDone += s.mDone; if (s.complete) gDone++;
+    });
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    const ringEl = $("#bigRing");
+    if (!ringEl.firstChild) ringEl.innerHTML = ring(0) + `<div class="lbl"><div><b>0%</b><span>overall</span></div></div>`;
+    requestAnimationFrame(() => {
+      const arc = ringEl.querySelectorAll("circle")[1];
+      const c = parseFloat(arc.getAttribute("stroke-dasharray"));
+      arc.setAttribute("stroke-dashoffset", view === "progress" ? c * (1 - pct / 100) : c);
+      ringEl.querySelector("b").textContent = pct + "%";
+    });
+    $("#stats").innerHTML = [
+      [board.goals.length, "goal boxes"],
+      [`${gDone}`, "boxes sealed"],
+      [`${mDone}/${missions}`, "missions done"],
+      [`${done}/${total}`, "steps checked"],
+    ].map(([b, t]) => `<div class="stat"><b>${esc(b)}</b><span>${t}</span></div>`).join("");
+
+    $("#plist").innerHTML = board.goals.map((g) => {
+      const s = gStats(g), due = deadlineText(g.deadline);
+      return `<button class="prow c-${esc(g.color)}" data-goal="${g.id}">
+        <span class="p-emoji">${esc(g.emoji)}</span>
+        <span class="p-main">
+          <span class="p-top"><b dir="auto">${esc(g.title)}</b><span class="p-pct">${s.complete ? "✅ " : ""}${s.pct}%</span></span>
+          <span class="p-bar"><i style="width:${s.pct}%"></i></span>
+          <span class="p-meta">${s.mDone}/${s.missions} missions · ${s.done}/${s.total} steps${due ? " · " + esc(due) : ""}</span>
+        </span>
+      </button>`;
+    }).join("") || `<div class="empty">No goals yet.</div>`;
+
+    const wins = [];
+    board.goals.forEach((g) => g.missions.forEach((m) => m.steps.forEach((st) => {
+      if (st.done && st.done_at) wins.push({ st, g });
+    })));
+    wins.sort((a, b) => b.st.done_at.localeCompare(a.st.done_at));
+    $("#wins").innerHTML = wins.length ? `<h2>Recent wins 🏆</h2><ul>${wins.slice(0, 12).map(({ st, g }) =>
+      `<li><b dir="auto">${esc(st.text)}</b><span>${esc(g.emoji)} ${esc(g.title)} · ${fmtDate(st.done_at)}</span></li>`).join("")}</ul>` : "";
+  }
+
+  // ---------- tabs ----------
+  let view = "boxes";
+  function showView() {
+    view = location.hash === "#progress" ? "progress" : "boxes";
+    $("#grid").hidden = view !== "boxes";
+    $("#progressView").hidden = view !== "progress";
+    $$(".tab").forEach((t) => t.classList.toggle("on", t.dataset.view === view));
+    renderProgress();
+  }
+  addEventListener("hashchange", showView);
+  showView();
 
   const checkSvg = `<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>`;
 
@@ -245,7 +259,7 @@
   }
 
   // ---------- events: grid ----------
-  $("#grid").addEventListener("click", (e) => {
+  const openBox = (e) => {
     const add = e.target.closest("[data-add]");
     if (add) return openEditor(null);
     const box = e.target.closest("[data-goal]");
@@ -255,15 +269,9 @@
       $("#goalDlg").showModal();
       $("#goalDlg .gd-body").scrollTop = 0;
     }
-  });
-  $("#filters").addEventListener("click", (e) => {
-    const chip = e.target.closest(".chip");
-    if (!chip) return;
-    filter = chip.dataset.f;
-    $$(".chip", $("#filters")).forEach((c) => c.classList.toggle("on", c === chip));
-    renderGrid();
-  });
-  $("#addGoalBtn").onclick = () => openEditor(null);
+  };
+  $("#grid").addEventListener("click", openBox);
+  $("#plist").addEventListener("click", openBox);
 
   // ---------- events: detail ----------
   const dlg = $("#goalDlg");
@@ -415,6 +423,5 @@
   }
 
   // ---------- boot ----------
-  $("#today").textContent = new Date().toLocaleDateString(undefined, { weekday: "long", year: "numeric", month: "long", day: "numeric" });
   api("GET", "/api/board").then((b) => { board = b; render(); }).catch((e) => toast(e.message));
 })();
