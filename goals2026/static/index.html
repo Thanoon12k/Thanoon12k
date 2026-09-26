@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goals 2026</title>
+<meta name="description" content="Goals 2026 — every goal is a box, every box holds missions, every mission is a checklist.">
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/static/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/static/icon-180.png">
+<link rel="manifest" href="/static/manifest.webmanifest">
+<meta name="theme-color" content="#ff6b3d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css?v=2">
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="brand">
+    <img class="brand-mark" src="/static/favicon.svg" alt="" width="54" height="54">
+    <div>
+      <h1>Goals <em>2026</em></h1>
+      <p class="tag">Every goal is a box. Fill it, seal it, ship it.</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="icon-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">◐</button>
+    <button class="btn ghost" id="lockBtn">🔒 Owner</button>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <div class="big-ring" id="bigRing"></div>
+  <div class="stats" id="stats"></div>
+</section>
+
+<section class="toolbar">
+  <div class="chips" id="filters" role="tablist">
+    <button class="chip on" data-f="all">All</button>
+    <button class="chip" data-f="active">In progress</button>
+    <button class="chip" data-f="todo">Not started</button>
+    <button class="chip" data-f="done">Achieved</button>
+  </div>
+  <button class="btn primary owner-only" id="addGoalBtn">＋ New goal box</button>
+</section>
+
+<main class="grid" id="grid" aria-live="polite"></main>
+
+<section class="wins" id="wins"></section>
+
+<footer class="foot">Made for the 2026 run · <span id="today"></span></footer>
+
+<!-- goal detail -->
+<dialog id="goalDlg" class="dlg goal-dlg"></dialog>
+
+<!-- goal editor -->
+<dialog id="editDlg" class="dlg small">
+  <form id="editForm" method="dialog">
+    <h2 id="editTitle">New goal box</h2>
+    <label>Title<input name="title" required maxlength="120" dir="auto" placeholder="e.g. Reach 1K followers"></label>
+    <div class="row2">
+      <label>Emoji<input name="emoji" maxlength="16" placeholder="🎯"></label>
+      <label>Category<input name="category" maxlength="40" dir="auto" placeholder="Career"></label>
+    </div>
+    <label>Deadline<input name="deadline" type="date"></label>
+    <label>Why it matters<textarea name="why" maxlength="400" rows="2" dir="auto" placeholder="One line to keep you going"></textarea></label>
+    <div class="pick-label">Color</div>
+    <div class="swatches" id="colorPick"></div>
+    <div class="pick-label">Texture</div>
+    <div class="swatches tex" id="texPick"></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn ghost" data-close>Cancel</button>
+      <button type="submit" class="btn primary">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- login -->
+<dialog id="loginDlg" class="dlg small">
+  <form id="loginForm" method="dialog">
+    <h2>Owner login</h2>
+    <p class="muted">Visitors can look. Only you can edit.</p>
+    <label>Password<input name="password" type="password" required autocomplete="current-password"></label>
+    <p class="err" id="loginErr"></p>
+    <div class="dlg-actions">
+      <button type="button" class="btn ghost" data-close>Cancel</button>
+      <button type="submit" class="btn primary">Unlock</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script src="/static/app.js?v=2"></script>
+</body>
+</html>

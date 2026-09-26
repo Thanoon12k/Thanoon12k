@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff5c39"/><stop offset="1" stop-color="#ffb13d"/>
+    </linearGradient>
+    <pattern id="d" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1" fill="#fff" opacity=".3"/>
+    </pattern>
+    <clipPath id="c"><rect x="3" y="3" width="52" height="52" rx="13"/></clipPath>
+  </defs>
+  <rect x="9" y="9" width="52" height="52" rx="13" fill="#7a2a12"/>
+  <g clip-path="url(#c)">
+    <rect x="3" y="3" width="52" height="52" fill="url(#g)"/>
+    <rect x="3" y="3" width="52" height="52" fill="url(#d)"/>
+    <rect x="3" y="15" width="52" height="2" fill="#000" opacity=".14"/>
+    <rect x="22" y="3" width="14" height="22" fill="#fff3d0" opacity=".5"/>
+  </g>
+  <path d="M17 35l8 8 16-17" fill="none" stroke="#7a2a12" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" transform="translate(1.5 2)"/>
+  <path d="M17 35l8 8 16-17" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
