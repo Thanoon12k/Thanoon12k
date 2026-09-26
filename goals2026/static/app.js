@@ -8,7 +8,7 @@
   let filter = "all";
   let openGoal = null;       // id of the goal shown in the detail dialog
   let editing = null;        // id of goal being edited, or null for a new one
-  let pick = { color: "ember", texture: "grain" };
+  let pick = { color: "ember" };
   let refocus = null;        // selector to focus after re-render
   let justChecked = null;
 
@@ -141,7 +141,6 @@
     const due = deadlineText(g.deadline);
     const segs = g.missions.map((m) => `<i style="--m:${mStats(m).pct}"></i>`).join("") || `<i style="--m:0"></i>`;
     return `<button class="box c-${esc(g.color)}" style="--i:${i};--p:${s.pct}" data-goal="${g.id}" aria-label="${esc(g.title)}, ${s.pct}% complete">
-      <div class="tex t-${esc(g.texture)}"></div>
       <div class="fill"></div>
       <div class="lid-line"></div>
       <div class="tape"></div>
@@ -223,8 +222,7 @@
     dlg.className = `dlg goal-dlg c-${g.color}`;
     dlg.innerHTML = `
       <div class="gd-head c-${esc(g.color)}" style="--p:${s.pct}">
-        <div class="tex t-${esc(g.texture)}"></div>
-        <div class="gd-top">
+          <div class="gd-top">
           <div class="gd-title"><span class="emoji">${esc(g.emoji)}</span>
             <div><h2 dir="auto">${esc(g.title)}</h2>
             <div class="meta">${esc(g.category || "Goal")}${due ? " · " + esc(due) : ""}${g.deadline ? " · " + esc(g.deadline) : ""} · ${s.pct}% · ${s.mDone}/${s.missions} missions</div></div>
@@ -337,8 +335,6 @@
   function swatches() {
     $("#colorPick").innerHTML = board.colors.map((c) =>
       `<button type="button" class="swatch c-${c} ${pick.color === c ? "on" : ""}" data-color="${c}" title="${c}" aria-label="Color ${c}"></button>`).join("");
-    $("#texPick").innerHTML = board.textures.map((t) =>
-      `<button type="button" class="swatch c-${pick.color} ${pick.texture === t ? "on" : ""}" data-tex="${t}" aria-label="Texture ${t}"><span class="tex t-${t}"></span><span style="position:relative">${t}</span></button>`).join("");
   }
   function openEditor(id) {
     editing = id;
@@ -346,8 +342,7 @@
     $("#editTitle").textContent = g ? "Edit goal box" : "New goal box";
     editForm.reset();
     ["title", "emoji", "category", "deadline", "why"].forEach((k) => { editForm.elements[k].value = g ? g[k] : ""; });
-    pick = g ? { color: g.color, texture: g.texture }
-      : { color: board.colors[Math.floor(Math.random() * board.colors.length)], texture: board.textures[Math.floor(Math.random() * board.textures.length)] };
+    pick = { color: g ? g.color : board.colors[Math.floor(Math.random() * board.colors.length)] };
     swatches();
     editDlg.showModal();
   }
@@ -355,7 +350,6 @@
     const b = e.target.closest("button");
     if (!b) return;
     if (b.dataset.color) { pick.color = b.dataset.color; swatches(); }
-    if (b.dataset.tex) { pick.texture = b.dataset.tex; swatches(); }
     if ("close" in b.dataset) editDlg.close();
   });
   editForm.addEventListener("submit", async (e) => {
