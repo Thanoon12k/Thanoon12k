@@ -124,6 +124,9 @@ def close_db(_exc):
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     conn.executescript(SCHEMA)
+    cols = [r[1] for r in conn.execute("PRAGMA table_info(goals)")]
+    if "archived_at" not in cols:  # added after launch: '' = active, timestamp = archived
+        conn.execute("ALTER TABLE goals ADD COLUMN archived_at TEXT NOT NULL DEFAULT ''")
     if conn.execute("SELECT COUNT(*) FROM goals").fetchone()[0] == 0:
         for gi, (title, emoji, color, tex, cat, why, missions) in enumerate(SEED):
             gid = conn.execute(
@@ -214,6 +217,7 @@ def board_data(goal_id=None):
         m["progress"] = progress(m["steps"])
         by_goal.setdefault(m["goal_id"], []).append(m)
     for gl in goals:
+        gl["archived"] = bool(gl["archived_at"])
         gl["missions"] = by_goal.get(gl["id"], [])
         gl["progress"] = progress([s for m in gl["missions"] for s in m["steps"]])
         gl["progress"]["missions_done"] = sum(1 for m in gl["missions"] if m["progress"]["complete"])
@@ -301,8 +305,22 @@ def create_goal(data):
 def update_goal(gid, data):
     require("goals", gid)
     if data.get("move"):
-        move("goals", gid, data["move"])
-    update_row("goals", gid, goal_fields(data, partial=True))
+        # Active goals all share archived_at = '', so moves stay among the visible boxes.
+        move("goals", gid, data["move"], "archived_at")
+    fields = goal_fields(data, partial=True)
+    if "archived" in data and data["archived"] is not None:
+        fields.update(archive_fields(gid, data["archived"]))
+    update_row("goals", gid, fields)
+
+
+def archive_fields(gid, archived):
+    archived = archived if isinstance(archived, bool) else str(archived).lower() in ("1", "true", "yes")
+    if not archived:
+        # Restored goals go back to the end of the board.
+        pos = db().execute("SELECT COALESCE(MAX(position), -1) + 1 FROM goals WHERE archived_at = ''").fetchone()[0]
+        return {"archived_at": "", "position": pos}
+    current = require("goals", gid)["archived_at"]
+    return {"archived_at": current or now()}
 
 
 def delete_goal(gid):
@@ -527,15 +545,24 @@ def _tool(name, description, props=None, required=(), read_only=False, destructi
 
 
 MCP_TOOLS = [
-    _tool("get_board", "List every goal with its missions and steps (ids, done flags, progress).", read_only=True),
+    _tool("get_board", "List the active goals with their missions and steps (ids, done flags, progress), "
+          "plus a short list of archived goals.",
+          {"include_archived": {"type": "boolean", "default": False,
+                                "description": "Also return full details of archived goals."}}, read_only=True),
     _tool("get_goal", "Get one goal with its missions and steps.", {"goal_id": _ID}, ["goal_id"], read_only=True),
     _tool("create_goal", "Create a goal box, optionally with missions and their checklist steps in one call.",
           {**_GOAL_PROPS, "missions": {"type": "array", "items": {
               "type": "object", "properties": {"title": {"type": "string", "maxLength": 160}, "steps": _STEPS},
               "required": ["title"]}}}, ["title"]),
-    _tool("update_goal", "Change a goal's fields and/or move it earlier/later on the board. Omitted fields stay as they are.",
-          {"goal_id": _ID, **_GOAL_PROPS, "move": _MOVE}, ["goal_id"]),
-    _tool("delete_goal", "Delete a goal with all its missions and steps.", {"goal_id": _ID}, ["goal_id"], destructive=True),
+    _tool("update_goal", "Edit a goal's fields, move it earlier/later on the board, or archive/restore it "
+          "(archived=true/false). Omitted fields stay as they are.",
+          {"goal_id": _ID, **_GOAL_PROPS, "move": _MOVE, "archived": {"type": "boolean"}}, ["goal_id"]),
+    _tool("archive_goal", "Archive a goal: it leaves the main board but keeps all its missions and steps, "
+          "and can be restored later. Prefer this over delete_goal for finished or paused goals.",
+          {"goal_id": _ID}, ["goal_id"]),
+    _tool("restore_goal", "Bring an archived goal back onto the main board (at the end).", {"goal_id": _ID}, ["goal_id"]),
+    _tool("delete_goal", "Permanently delete a goal with all its missions and steps.", {"goal_id": _ID}, ["goal_id"],
+          destructive=True),
     _tool("add_mission", "Add a mission (optionally with steps) to the end of a goal.",
           {"goal_id": _ID, "title": {"type": "string", "maxLength": 160}, "steps": _STEPS}, ["goal_id", "title"]),
     _tool("update_mission", "Rename a mission and/or move it within its goal.",
@@ -556,7 +583,8 @@ def _compact(goal):
     """Agent-friendly view of a goal: drop layout-only fields."""
     return {
         "id": goal["id"], "title": goal["title"], "emoji": goal["emoji"], "category": goal["category"],
-        "deadline": goal["deadline"], "why": goal["why"], "color": goal["color"], "progress": goal["progress"],
+        "deadline": goal["deadline"], "why": goal["why"], "color": goal["color"], "archived": goal["archived"],
+        "progress": goal["progress"],
         "missions": [{"id": m["id"], "title": m["title"], "progress": m["progress"],
                       "steps": [{"id": s["id"], "text": s["text"], "done": s["done"]} for s in m["steps"]]}
                      for m in goal["missions"]],
@@ -577,12 +605,26 @@ def _int(args, key):
 
 def run_tool(name, args):
     if name == "get_board":
-        goals = board_data()
+        everything = board_data()
+        goals = [gl for gl in everything if not gl["archived"]]
+        archived = [gl for gl in everything if gl["archived"]]
         total = sum(gl["progress"]["total"] for gl in goals)
         done = sum(gl["progress"]["done"] for gl in goals)
-        return {"overall_pct": round(done * 100 / total) if total else 0,
-                "goals_achieved": sum(1 for gl in goals if gl["progress"]["complete"]),
-                "goals": [_compact(gl) for gl in goals]}
+        result = {"overall_pct": round(done * 100 / total) if total else 0,
+                  "goals_achieved": sum(1 for gl in goals if gl["progress"]["complete"]),
+                  "goals": [_compact(gl) for gl in goals]}
+        if args.get("include_archived"):
+            result["archived_goals"] = [_compact(gl) for gl in archived]
+        else:
+            result["archived_goals"] = [{"id": gl["id"], "title": gl["title"], "emoji": gl["emoji"],
+                                         "pct": gl["progress"]["pct"], "archived_at": gl["archived_at"]}
+                                        for gl in archived]
+        return result
+    if name in ("archive_goal", "restore_goal"):
+        gid = _int(args, "goal_id")
+        update_goal(gid, {"archived": name == "archive_goal"})
+        db().commit()
+        return _goal_result(gid)
     if name == "get_goal":
         goal = board_data(_int(args, "goal_id"))
         if not goal:
@@ -747,11 +789,11 @@ Tools:
 All responses are JSON. Mutations return the whole board (`goals`) plus `created_id`/`created_ids` when
 something was created. Send `Authorization: Bearer <API token>` and `Content-Type: application/json`.
 
-- `GET    /api/board` — all goals with missions, steps and progress (public)
+- `GET    /api/board` — all goals (archived ones have "archived": true) with missions, steps and progress (public)
 - `GET    /api/goals/<id>` — one goal (public)
 - `POST   /api/goals` — {{"title", "emoji"?, "category"?, "deadline"? (YYYY-MM-DD), "why"?, "color"?,
   "missions"?: [{{"title", "steps": [str]}}]}}
-- `PATCH  /api/goals/<id>` — any goal field, and/or {{"move": -1|1}}
+- `PATCH  /api/goals/<id>` — any goal field, {{"move": -1|1}}, and/or {{"archived": true|false}} to archive/restore
 - `DELETE /api/goals/<id>`
 - `POST   /api/goals/<id>/missions` — {{"title", "steps"?: [str]}}
 - `PATCH  /api/missions/<id>` — {{"title"?, "move"?: -1|1}}

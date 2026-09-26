@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/style.css?v=7">
+<link rel="stylesheet" href="/static/style.css?v=8">
 </head>
 <body>
 
@@ -28,6 +28,7 @@
   <nav class="tabs" role="tablist">
     <a href="#" class="tab" data-view="boxes" role="tab">📦 Boxes</a>
     <a href="#progress" class="tab" data-view="progress" role="tab">📈 Progress</a>
+    <a href="#archive" class="tab" data-view="archive" role="tab">🗄 Archive <span class="count" id="archiveCount" hidden></span></a>
   </nav>
   <div class="top-actions">
     <button class="icon-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">◐</button>
@@ -36,6 +37,11 @@
 </header>
 
 <main class="grid" id="grid" aria-live="polite"></main>
+
+<main class="archive" id="archiveView" hidden>
+  <p class="archive-note">Archived boxes are off the board but keep all their missions and steps. Restore one any time.</p>
+  <div class="grid" id="agrid"></div>
+</main>
 
 <main class="progress" id="progressView" hidden>
   <section class="hero">
@@ -88,6 +94,6 @@
 
 <div class="toast" id="toast" role="status"></div>
 <canvas id="confetti" aria-hidden="true"></canvas>
-<script src="/static/app.js?v=7"></script>
+<script src="/static/app.js?v=8"></script>
 </body>
 </html>

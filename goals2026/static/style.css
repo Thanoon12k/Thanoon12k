@@ -95,6 +95,34 @@ body:not(.owner) .owner-only { display: none !important; }
 .tab:hover { color: var(--text); }
 .tab.on { background: var(--text); color: var(--bg); }
 
+.tab .count {
+  display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; margin-left: 2px;
+  border-radius: 99px; font-size: 11px; background: var(--accent); color: #1a0e05;
+}
+
+/* ---------- archive tab ---------- */
+.archive { max-width: 1280px; margin: 0 auto; }
+.archive-note { color: var(--muted); font-size: 14px; margin: 18px 16px 0; }
+.archive .grid { padding-top: 16px; }
+.box.is-archived { filter: grayscale(.8) brightness(.85); }
+.box-wrap:hover .box.is-archived { filter: grayscale(.2); }
+
+/* edit / archive buttons floating on each box (owner only) */
+.box-wrap { position: relative; display: flex; }
+.box-wrap > .box { flex: 1; width: 100%; }
+.box-actions {
+  position: absolute; top: 12px; left: 50%; transform: translate(-50%, -4px); z-index: 4;
+  display: flex; gap: 6px; opacity: 0; transition: opacity .2s, transform .2s;
+}
+.box-wrap:hover .box-actions, .box-actions:focus-within { opacity: 1; transform: translate(-50%, 0); }
+@media (hover: none) { .box-actions { opacity: 1; transform: translate(-50%, 0); } }
+.box-actions button {
+  width: 34px; height: 34px; border-radius: 10px; padding: 0; font-size: 15px; color: #fff;
+  background: rgba(15,12,22,.55); border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(6px);
+  display: grid; place-items: center; transition: background .15s, transform .15s;
+}
+.box-actions button:hover { background: rgba(15,12,22,.85); transform: translateY(-1px); }
+
 /* ---------- progress tab ---------- */
 .progress { max-width: 1280px; margin: 0 auto; padding: 16px 16px 48px; }
 .progress h2 { font-family: var(--display); font-size: 22px; margin: 18px 0 12px; }
@@ -170,7 +198,7 @@ body:not(.owner) .owner-only { display: none !important; }
   animation-delay: calc(var(--i, 0) * 60ms);
 }
 @keyframes drop { from { opacity: 0; transform: translateY(-24px) rotate(-3deg); } }
-.box:hover, .box:focus-visible { transform: translateY(-6px) rotate(-.6deg); box-shadow: 10px 12px 0 var(--edge), 0 30px 50px -14px var(--shadow); outline: none; }
+.box-wrap:hover > .box, .box:hover, .box:focus-visible { transform: translateY(-6px) rotate(-.6deg); box-shadow: 10px 12px 0 var(--edge), 0 30px 50px -14px var(--shadow); outline: none; }
 .box:focus-visible { outline: 3px solid var(--text); outline-offset: 4px; }
 
 /* liquid fill = progress */
@@ -393,7 +421,7 @@ body:not(.owner) .owner-only { display: none !important; }
 @media (max-width: 720px) {
   .top { flex-wrap: wrap; }
   .tabs { order: 3; width: 100%; }
-  .tab { flex: 1; text-align: center; }
+  .tab { flex: 1; text-align: center; padding: 8px 6px; font-size: 13px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .hero { gap: 16px; justify-content: center; }
   .big-ring { width: 110px; height: 110px; }

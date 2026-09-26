@@ -43,9 +43,11 @@
       board = await api(method, url, data);
       render();
       celebrate(before);
+      return true;
     } catch (e) {
       toast(e.message);
       if (/log in/i.test(e.message)) { board.owner = false; render(); }
+      return false;
     }
   }
 
@@ -92,10 +94,14 @@
   }
 
   // ---------- render ----------
+  const active = () => board.goals.filter((g) => !g.archived);
+  const archived = () => board.goals.filter((g) => g.archived);
+
   function render() {
     document.body.classList.toggle("owner", board.owner);
     $("#lockBtn").textContent = board.owner ? "🔓 Log out" : "🔒 Owner";
     renderGrid();
+    renderArchive();
     renderProgress();
     if (openGoal != null) renderDetail();
     if (refocus) { const el = $(refocus); if (el) el.focus(); refocus = null; }
@@ -112,7 +118,14 @@
     }).join("");
     const more = g.missions.length > MAX ? `<li class="more">+${g.missions.length - MAX} more missions</li>` : "";
     const mlist = rows ? `<ul class="mlist">${rows}${more}</ul>` : `<div class="mnone">No missions yet</div>`;
-    return `<button class="box c-${esc(g.color)}" style="--i:${i};--p:${s.pct}" data-goal="${g.id}" aria-label="${esc(g.title)}, ${s.pct}% complete">
+    const actions = g.archived
+      ? `<button data-restore-goal="${g.id}" title="Restore to board" aria-label="Restore ${esc(g.title)}">↩</button>
+         <button data-delete-goal="${g.id}" title="Delete forever" aria-label="Delete ${esc(g.title)}">🗑</button>`
+      : `<button data-edit-goal="${g.id}" title="Edit box" aria-label="Edit ${esc(g.title)}">✎</button>
+         <button data-archive-goal="${g.id}" title="Archive" aria-label="Archive ${esc(g.title)}">🗄</button>`;
+    const archivedOn = g.archived ? "archived " + fmtDate(g.archived_at) : "";
+    return `<div class="box-wrap">
+    <button class="box c-${esc(g.color)} ${g.archived ? "is-archived" : ""}" style="--i:${i};--p:${s.pct}" data-goal="${g.id}" aria-label="${esc(g.title)}, ${s.pct}% complete">
       <div class="fill"></div>
       <div class="lid-line"></div>
       <div class="tape"></div>
@@ -121,18 +134,29 @@
         <div class="head"><span class="emoji">${esc(g.emoji)}</span><span class="pct">${s.pct}<small>%</small></span></div>
         <h3 dir="auto">${esc(g.title)}</h3>
         <div class="label">
-          <div class="l1"><span dir="auto">${esc(g.category || "Goal")}</span><span class="due">${esc(due)}</span></div>
+          <div class="l1"><span dir="auto">${esc(g.category || "Goal")}</span><span class="due">${esc(archivedOn || due)}</span></div>
           ${mlist}
         </div>
       </div>
-    </button>`;
+    </button>
+    <div class="box-actions owner-only">${actions}</div>
+    </div>`;
   }
 
   function renderGrid() {
-    let html = board.goals.map(boxHTML).join("");
+    let html = active().map(boxHTML).join("");
     if (board.owner) html += `<button class="box add" data-add><div><span>＋</span>New goal box</div></button>`;
     if (!html) html = `<div class="empty">No boxes here yet.</div>`;
     $("#grid").innerHTML = html;
+  }
+
+  function renderArchive() {
+    const list = archived();
+    const count = $("#archiveCount");
+    count.textContent = list.length || "";
+    count.hidden = !list.length;
+    $("#agrid").innerHTML = list.map(boxHTML).join("") ||
+      `<div class="empty">Nothing archived. Archive a box to move it here without deleting it.</div>`;
   }
 
   // ---------- progress tab ----------
@@ -149,7 +173,7 @@
 
   function renderProgress() {
     let total = 0, done = 0, missions = 0, mDone = 0, gDone = 0;
-    board.goals.forEach((g) => {
+    active().forEach((g) => {
       const s = gStats(g); total += s.total; done += s.done; missions += s.missions; mDone += s.mDone; if (s.complete) gDone++;
     });
     const pct = total ? Math.round((done / total) * 100) : 0;
@@ -162,13 +186,13 @@
       ringEl.querySelector("b").textContent = pct + "%";
     });
     $("#stats").innerHTML = [
-      [board.goals.length, "goal boxes"],
+      [active().length, "goal boxes"],
       [`${gDone}`, "boxes sealed"],
       [`${mDone}/${missions}`, "missions done"],
       [`${done}/${total}`, "steps checked"],
     ].map(([b, t]) => `<div class="stat"><b>${esc(b)}</b><span>${t}</span></div>`).join("");
 
-    $("#plist").innerHTML = board.goals.map((g) => {
+    $("#plist").innerHTML = active().map((g) => {
       const s = gStats(g), due = deadlineText(g.deadline);
       return `<button class="prow c-${esc(g.color)}" data-goal="${g.id}">
         <span class="p-emoji">${esc(g.emoji)}</span>
@@ -181,7 +205,7 @@
     }).join("") || `<div class="empty">No goals yet.</div>`;
 
     const wins = [];
-    board.goals.forEach((g) => g.missions.forEach((m) => m.steps.forEach((st) => {
+    active().forEach((g) => g.missions.forEach((m) => m.steps.forEach((st) => {
       if (st.done && st.done_at) wins.push({ st, g });
     })));
     wins.sort((a, b) => b.st.done_at.localeCompare(a.st.done_at));
@@ -192,9 +216,10 @@
   // ---------- tabs ----------
   let view = "boxes";
   function showView() {
-    view = location.hash === "#progress" ? "progress" : "boxes";
+    view = { "#progress": "progress", "#archive": "archive" }[location.hash] || "boxes";
     $("#grid").hidden = view !== "boxes";
     $("#progressView").hidden = view !== "progress";
+    $("#archiveView").hidden = view !== "archive";
     $$(".tab").forEach((t) => t.classList.toggle("on", t.dataset.view === view));
     renderProgress();
   }
@@ -210,7 +235,8 @@
     const s = gStats(g);
     const owner = board.owner;
     const due = deadlineText(g.deadline);
-    const idx = board.goals.indexOf(g);
+    const peers = active();
+    const idx = peers.indexOf(g);
     const missions = g.missions.map((m, mi) => {
       const ms = mStats(m);
       const steps = m.steps.map((st, si) => `
@@ -245,7 +271,7 @@
           <div class="gd-top">
           <div class="gd-title"><span class="emoji">${esc(g.emoji)}</span>
             <div><h2 dir="auto">${esc(g.title)}</h2>
-            <div class="meta">${esc(g.category || "Goal")}${due ? " · " + esc(due) : ""}${g.deadline ? " · " + esc(g.deadline) : ""} · ${s.pct}% · ${s.mDone}/${s.missions} missions</div></div>
+            <div class="meta">${g.archived ? "🗄 Archived · " : ""}${esc(g.category || "Goal")}${due ? " · " + esc(due) : ""}${g.deadline ? " · " + esc(g.deadline) : ""} · ${s.pct}% · ${s.mDone}/${s.missions} missions</div></div>
           </div>
           <button class="icon-btn" data-close aria-label="Close">✕</button>
         </div>
@@ -253,8 +279,9 @@
         <div class="gd-bar"><i></i></div>
         ${owner ? `<div class="gd-tools">
           <button class="btn" data-goal-edit>✎ Edit box</button>
-          ${idx > 0 ? `<button class="btn" data-goal-move="-1">← Move earlier</button>` : ""}
-          ${idx < board.goals.length - 1 ? `<button class="btn" data-goal-move="1">Move later →</button>` : ""}
+          ${!g.archived && idx > 0 ? `<button class="btn" data-goal-move="-1">← Move earlier</button>` : ""}
+          ${!g.archived && idx < peers.length - 1 ? `<button class="btn" data-goal-move="1">Move later →</button>` : ""}
+          ${g.archived ? `<button class="btn" data-goal-restore>↩ Restore</button>` : `<button class="btn" data-goal-archive>🗄 Archive</button>`}
           <button class="btn" data-goal-del>🗑 Delete</button></div>` : ""}
       </div>
       <div class="gd-body">
@@ -268,6 +295,14 @@
   const openBox = (e) => {
     const add = e.target.closest("[data-add]");
     if (add) return openEditor(null);
+    const b = e.target.closest(".box-actions button");
+    if (b) {
+      const d = b.dataset;
+      if (d.editGoal) return openEditor(Number(d.editGoal));
+      if (d.archiveGoal) return archiveGoal(Number(d.archiveGoal), true);
+      if (d.restoreGoal) return archiveGoal(Number(d.restoreGoal), false);
+      if (d.deleteGoal) return deleteGoal(Number(d.deleteGoal));
+    }
     const box = e.target.closest("[data-goal]");
     if (box) {
       openGoal = Number(box.dataset.goal);
@@ -277,6 +312,19 @@
     }
   };
   $("#grid").addEventListener("click", openBox);
+  $("#agrid").addEventListener("click", openBox);
+
+  function archiveGoal(id, yes) {
+    const g = board.goals.find((x) => x.id === id);
+    act("PATCH", `/api/goals/${id}`, { archived: yes })
+      .then((ok) => ok && toast(yes ? `🗄 “${g.title}” archived — find it in the Archive tab` : `↩ “${g.title}” is back on the board`));
+  }
+  function deleteGoal(id) {
+    const g = board.goals.find((x) => x.id === id);
+    if (!confirm(`Delete the whole box “${g.title}” with all missions and steps? This can't be undone.`)) return;
+    if (openGoal === id) dlg.close();
+    act("DELETE", `/api/goals/${id}`);
+  }
   $("#plist").addEventListener("click", openBox);
 
   // ---------- events: detail ----------
@@ -302,12 +350,9 @@
     if (d.mEdit) return inlineEdit(t.closest(".m-head").querySelector("h3"), (v) => act("PATCH", `/api/missions/${d.mEdit}`, { title: v }), 160);
     if ("goalEdit" in d) return openEditor(openGoal);
     if (d.goalMove) return act("PATCH", `/api/goals/${openGoal}`, { move: Number(d.goalMove) });
-    if ("goalDel" in d) {
-      const g = board.goals.find((x) => x.id === openGoal);
-      if (confirm(`Delete the whole box “${g.title}” with all missions and steps?`)) {
-        const id = openGoal; dlg.close(); act("DELETE", `/api/goals/${id}`);
-      }
-    }
+    if ("goalArchive" in d) { const id = openGoal; dlg.close(); return archiveGoal(id, true); }
+    if ("goalRestore" in d) { const id = openGoal; dlg.close(); return archiveGoal(id, false); }
+    if ("goalDel" in d) return deleteGoal(openGoal);
   });
   dlg.addEventListener("submit", (e) => {
     e.preventDefault();

@@ -14,7 +14,7 @@ The box fills up as steps get checked, and gets an **ACHIEVED** stamp when every
 Full guide for agents: **https://goals2026.pythonanywhere.com/llms.txt**
 
 **MCP server** — `https://goals2026.pythonanywhere.com/mcp` (Streamable HTTP, stateless JSON).
-Tools: `get_board`, `get_goal`, `create_goal` (with nested missions/steps), `update_goal`, `delete_goal`,
+Tools: `get_board`, `get_goal`, `create_goal` (with nested missions/steps), `update_goal`, `archive_goal`, `restore_goal`, `delete_goal`,
 `add_mission`, `update_mission`, `delete_mission`, `add_steps`, `update_step`, `check_steps`, `delete_step`.
 
 ```bash
