@@ -104,7 +104,14 @@
   function boxHTML(g, i) {
     const s = gStats(g);
     const due = deadlineText(g.deadline);
-    const segs = g.missions.map((m) => `<i style="--m:${mStats(m).pct}"></i>`).join("") || `<i style="--m:0"></i>`;
+    const MAX = 5;
+    const rows = g.missions.slice(0, MAX).map((m) => {
+      const ms = mStats(m);
+      return `<li class="${ms.complete ? "done" : ""}" style="--m:${ms.pct}">
+        <span class="mk">${ms.complete ? "✓" : ""}</span><span class="mn" dir="auto">${esc(m.title)}</span><span class="mc">${ms.done}/${ms.total}</span></li>`;
+    }).join("");
+    const more = g.missions.length > MAX ? `<li class="more">+${g.missions.length - MAX} more missions</li>` : "";
+    const mlist = rows ? `<ul class="mlist">${rows}${more}</ul>` : `<div class="mnone">No missions yet</div>`;
     return `<button class="box c-${esc(g.color)}" style="--i:${i};--p:${s.pct}" data-goal="${g.id}" aria-label="${esc(g.title)}, ${s.pct}% complete">
       <div class="fill"></div>
       <div class="lid-line"></div>
@@ -115,8 +122,7 @@
         <h3 dir="auto">${esc(g.title)}</h3>
         <div class="label">
           <div class="l1"><span dir="auto">${esc(g.category || "Goal")}</span><span class="due">${esc(due)}</span></div>
-          <div class="segs">${segs}</div>
-          <div class="l3"><span>${s.mDone}/${s.missions} missions</span><span>${s.done}/${s.total} steps</span></div>
+          ${mlist}
         </div>
       </div>
     </button>`;
