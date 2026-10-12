@@ -51,7 +51,7 @@ def prompt(settings, angles: list[str]) -> str:
     person = settings.person
     return (
         f"Today is {settings.now:%Y-%m-%d}. Candidate: {person.get('headline', 'Flutter and Django developer')}, "
-        f"living in {person.get('city', 'Mosul, Iraq')}. He can take remote work open to Iraq (worldwide, MENA), "
+        f"living in {person.get('city', 'Mosul, Iraq')}. They can take remote work open to Iraq (worldwide, MENA), "
         "on-site or hybrid work in Iraq, freelance projects and paid tasks.\n"
         "Run one search for each of these angles:\n- " + "\n- ".join(angles) + "\n\n"
         "Keep only postings from the last 21 days. Return up to 8 items as a JSON array of objects with keys: "

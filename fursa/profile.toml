@@ -21,7 +21,7 @@ facts = [
   "Server administrator (2021-2023): Ubuntu, Gunicorn, Redis, security and monitoring",
   "B.Sc. in Computer Technical Engineering (Networks & Communication), Northern Technical University (2018-2022)",
   "Published papers in international journals",
-  "Built 'showcase' (repo My-Work): clones, runs, screenshots and publishes all 65 of his projects with one command",
+  "Built 'showcase' (repo My-Work): clones, runs, screenshots and publishes all 65 projects with one command",
   "Runs the Golden Code Facebook page fully automated: code designs the posts, an AI agent publishes through the Graph API",
 ]
 

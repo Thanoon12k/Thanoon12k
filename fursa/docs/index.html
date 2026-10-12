@@ -199,7 +199,7 @@ footer a { color: var(--muted); }
   </main>
 
   <footer>
-    <div>ماكو ضمان دخل: كل إعلان راجعه بنفسك قبل التقديم. الوكلاء ما يرسلون أي رسالة ولا يقدّمون بدون موافقتك، وما يطلبون منك فلوس.</div>
+    <div>ماكو ضمان دخل: كل إعلان يحتاج مراجعتك قبل التقديم. الوكلاء ما يرسلون أي رسالة ولا يقدّمون بدون موافقتك، وما يطلبون منك فلوس.</div>
     <div>المصادر: <a href="https://remotive.com" rel="noopener" target="_blank">Remotive</a> · <a href="https://remoteok.com" rel="noopener" target="_blank">Remote OK</a> · <a href="https://himalayas.app" rel="noopener" target="_blank">Himalayas</a> · <a href="https://jobicy.com" rel="noopener" target="_blank">Jobicy</a> · <a href="https://weworkremotely.com" rel="noopener" target="_blank">We Work Remotely</a> · <a href="https://news.ycombinator.com" rel="noopener" target="_blank">Hacker News</a> · <a href="https://www.freelancer.com" rel="noopener" target="_blank">Freelancer</a> · <a href="https://mostaql.com" rel="noopener" target="_blank">مستقل</a> · <a href="https://khamsat.com" rel="noopener" target="_blank">خمسات</a> · <a href="https://reliefweb.int" rel="noopener" target="_blank">ReliefWeb</a></div>
   </footer>
 </div>
@@ -210,7 +210,7 @@ footer a { color: var(--muted); }
   const KIND = { job: "وظيفة", freelance: "مشروع حر", gig: "مهمة صغيرة", bounty: "مكافأة bounty" };
   const ELIG = { yes: "متاح للعراق", likely: "غالباً متاح", unclear: "الأهلية غير محسومة", no: "مو متاح للعراق" };
   const STAGE = { new: "بانتظار الكشّاف", screened: "اجتاز الفحص", matched: "تمت المطابقة", drafted: "عند المدير", approved: "معتمدة", rejected: "مرفوضة" };
-  const USER = { todo: "مؤجلة", applied: "قدّمت ✓", interview: "مقابلة", offer: "عرض شغل", rejected: "انرفضت", ignored: "تجاهلتها" };
+  const USER = { todo: "مؤجلة", applied: "تم التقديم ✓", interview: "مقابلة", offer: "عرض شغل", rejected: "انرفضت", ignored: "ما تهم" };
   const CHANNEL = { email: "إيميل", whatsapp: "واتساب", platform: "عرض على المنصة", linkedin: "لينكدإن", form: "استمارة", other: "رسالة تقديم" };
   const $ = (s, el = document) => el.querySelector(s);
   const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -234,7 +234,7 @@ footer a { color: var(--muted); }
   }
   async function copy(text, label) {
     try { await navigator.clipboard.writeText(text); toast(`تم نسخ ${label}`); }
-    catch { const ta = document.createElement("textarea"); ta.value = text; document.body.append(ta); ta.select(); try { document.execCommand("copy"); toast(`تم نسخ ${label}`); } catch { toast("حدد النص وانسخه يدوياً"); } ta.remove(); }
+    catch { const ta = document.createElement("textarea"); ta.value = text; document.body.append(ta); ta.select(); try { document.execCommand("copy"); toast(`تم نسخ ${label}`); } catch { toast("تعذّر النسخ التلقائي، يمكن تحديد النص ونسخه يدوياً"); } ta.remove(); }
   }
   const highlight = (text) => esc(text).replace(/\[[^\]\n]{1,40}\]/g, (m) => `<mark>${m}</mark>`);
 
@@ -267,7 +267,7 @@ footer a { color: var(--muted); }
     const count = (s) => c[s] ?? opp.filter((o) => o.status === s).length;
     const stages = [
       ["new", "الكشّاف", "ينتظر فحص"], ["screened", "المطابق", "اجتاز الفحص"], ["matched", "الكاتب", "مطابَق"],
-      ["drafted", "المدير", "مسودة"], ["approved", "إلك", "معتمدة"],
+      ["drafted", "المدير", "مسودة"], ["approved", "جاهزة", "معتمدة"],
     ];
     $("#line").innerHTML = stages.map(([s, who, what], i) =>
       `<div class="stage${i === 4 ? " final" : ""}"><span class="who">${who}</span><span class="n">${count(s)}</span><span class="what">${what}</span></div>`).join("");
@@ -309,7 +309,7 @@ footer a { color: var(--muted); }
       <div class="actions" style="margin-top:10px">
         <button class="btn primary" data-copy="msg" data-id="${esc(o.id)}">نسخ الرسالة</button>
         ${bullets ? `<button class="btn" data-copy="cv" data-id="${esc(o.id)}">نسخ نقاط السيرة</button>` : ""}
-        ${d.channel === "email" || email ? `<a class="btn" target="_blank" rel="noopener" href="${esc(gmail)}">افتحها بجيميل</a>` : ""}
+        ${d.channel === "email" || email ? `<a class="btn" target="_blank" rel="noopener" href="${esc(gmail)}">فتح بجيميل</a>` : ""}
         ${wa ? `<a class="btn" target="_blank" rel="noopener" href="${esc(wa)}">واتساب</a>` : ""}
       </div>
     </details>`;
@@ -328,11 +328,11 @@ footer a { color: var(--muted); }
       ${o.company ? `<div class="sub" dir="auto">${esc(o.company)}</div>` : ""}</div>
       ${chips(o)}
       ${why ? `<p class="note"><b>ليش تناسبك:</b> ${esc(why)}</p>` : ""}
-      ${repos ? `<div><div class="sub">المشاريع اللي تعرضها:</div><ul class="repos">${repos}</ul></div>` : ""}
+      ${repos ? `<div><div class="sub">المشاريع المقترح عرضها:</div><ul class="repos">${repos}</ul></div>` : ""}
       ${draftBlock(o, i === 0)}
       <div class="actions">
         <a class="btn" href="${esc(safeUrl(o.url))}" target="_blank" rel="noopener">فتح الإعلان الأصلي</a>
-        ${issueLink(o, "applied", "قدّمت")}${issueLink(o, "interview", "عندي مقابلة")}${issueLink(o, "ignored", "تجاهلها")}
+        ${issueLink(o, "applied", "قدّمت")}${issueLink(o, "interview", "عندي مقابلة")}${issueLink(o, "ignored", "ما تهمني")}
       </div>
     </article>`;
   }
@@ -347,8 +347,8 @@ footer a { color: var(--muted); }
       p.innerHTML = `<div class="empty"><b>ماكو فرص معتمدة بعد</b>الوكلاء يشتغلون كل 6 ساعات. أول ما المدير يعتمد فرصة مناسبة تطلع هنا وتوصلك على تلگرام.</div>`;
       return;
     }
-    p.innerHTML = (fresh.length ? fresh.map(card).join("") : `<div class="empty"><b>تابعت كل الفرص المعتمدة</b>الجديدة تطلع هنا أول ما يعتمدها المدير.</div>`) +
-      (followed.length ? `<h2 class="section-title">تابعتها</h2>` + followed.map(card).join("") : "");
+    p.innerHTML = (fresh.length ? fresh.map(card).join("") : `<div class="empty"><b>كل الفرص المعتمدة صارت قيد المتابعة</b>الجديدة تطلع هنا أول ما يعتمدها المدير.</div>`) +
+      (followed.length ? `<h2 class="section-title">قيد المتابعة</h2>` + followed.map(card).join("") : "");
   }
 
   function fillSelect(id, label, values, names) {
@@ -363,7 +363,7 @@ footer a { color: var(--muted); }
       (!stage || o.status === stage || o.user_status === stage) && (!kind || o.kind === kind) && (!elig || o.elig === elig) &&
       (!q || [o.title, o.company, o.source_label, (o.tags || []).join(" ")].join(" ").toLowerCase().includes(q)));
     const box = $("#all-list");
-    if (!list.length) { box.innerHTML = `<div class="empty"><b>ماكو نتائج</b>غيّر البحث أو الفلاتر.</div>`; return; }
+    if (!list.length) { box.innerHTML = `<div class="empty"><b>ماكو نتائج</b>لهذا البحث أو هذه الفلاتر.</div>`; return; }
     box.innerHTML = `<div class="rows">${list.map((o) => {
       const reason = o.status === "rejected" ? (o.reject_reason || "") : (o.scout?.brief || o.summary || "");
       return `<div class="row" data-open="${esc(o.id)}" tabindex="0">

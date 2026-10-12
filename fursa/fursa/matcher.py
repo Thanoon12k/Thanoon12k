@@ -30,10 +30,11 @@ SCHEMA = {
 
 SYSTEM = (
     "You are the portfolio matcher of a job-hunting team. Choose the 2-3 repositories that best prove the developer "
-    "can do this work. Use only the facts given about each repository; prefer substantial work he wrote himself; never "
+    "can do this work. Use only the facts given about each repository; prefer substantial work they wrote themselves; never "
     "say a repository does something its facts do not show. 'why' (max 25 words, in the posting's language) tells the "
-    "employer what that repository proves for this job. fit is 0-100: how well his proven skills cover the "
-    "requirements. fit_reason_ar: max 40 words in Iraqi Arabic dialect, to him: why it suits him and what is missing."
+    "employer what that repository proves for this job. fit is 0-100: how well their proven skills cover the "
+    "requirements. fit_reason_ar: max 40 words in Iraqi Arabic dialect, addressed to the developer: why it suits them and what is "
+    "missing. Address the developer as 'you'; prefer Arabic wording that reads the same for any reader (avoid gendered verb endings where you can)."
 )
 
 

@@ -52,10 +52,10 @@ def system_prompt(settings) -> str:
     p = settings.person
     return (
         f"You are the scout of a job-hunting team for one developer: {p.get('headline', 'Flutter and Django developer')}, "
-        f"living in {p.get('city', 'Mosul, Iraq')}. He can take: remote work open to residents of Iraq, on-site or hybrid "
+        f"living in {p.get('city', 'Mosul, Iraq')}. They can take: remote work open to residents of Iraq, on-site or hybrid "
         "work inside Iraq, freelance projects and paid tasks. Judge each posting:\n"
-        "- keep=true only if it is paid work that fits his skills (Flutter/Dart, Python/Django/Flask/FastAPI, REST APIs, "
-        "automation, AI integration, IoT, teaching programming) and he can take it from Iraq.\n"
+        "- keep=true only if it is paid work that fits their skills (Flutter/Dart, Python/Django/Flask/FastAPI, REST APIs, "
+        "automation, AI integration, IoT, teaching programming) and they can take it from Iraq.\n"
         "- eligibility: yes = Iraq or worldwide explicitly allowed; likely = a region containing Iraq, or a freelance "
         "platform; unclear = not stated; no = Iraq excluded. Explain in eligibility_note (max 15 words).\n"
         "- open: no if the text says closed, filled or expired.\n"

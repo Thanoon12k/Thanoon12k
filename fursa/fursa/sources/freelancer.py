@@ -12,7 +12,7 @@ def from_project(p: dict) -> dict | None:
     if p.get("status") != "active" or p.get("frontend_project_status") not in (None, "open"):
         return None
     if not p.get("seo_url") or p.get("language") not in (None, "en", "ar"):
-        return None  # only postings he can read and answer
+        return None  # only postings in a language the user reads
     budget = p.get("budget") or {}
     hourly = p.get("type") == "hourly"
     pay = money(budget.get("minimum"), budget.get("maximum"), (p.get("currency") or {}).get("code"), "hour" if hourly else None)

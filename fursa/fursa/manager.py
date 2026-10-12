@@ -60,18 +60,22 @@ IDEAS_SCHEMA = {
 }
 
 
+NEUTRAL_AR = ("Address the developer as 'you'; prefer Arabic wording that reads the same for any reader "
+              "(avoid gendered verb endings where you can).")
+
+
 def review_system(settings, max_picks: int) -> str:
     p = settings.person
     return (
         f"You manage a 3-agent job-hunting team (scout, portfolio matcher, writer) for {p.get('name', 'the developer')}, "
         f"{p.get('headline', 'a Flutter and Django developer')} in {p.get('city', 'Mosul, Iraq')}. Review their work like a "
-        f"strict editor. Approve at most {max_picks} postings, and only when: the posting looks real and current, he can "
-        "take it from Iraq (or the doubt is clearly stated), the pay or value is worth his time, and the draft is truthful, "
-        "specific and ready to send. Reject the rest. note_ar: max 60 words in Iraqi Arabic dialect, to him: why it fits, "
+        f"strict editor. Approve at most {max_picks} postings, and only when: the posting looks real and current, the developer can "
+        "take it from Iraq (or the doubt is clearly stated), the pay or value is worth the developer's time, and the draft is truthful, "
+        "specific and ready to send. Reject the rest. note_ar: max 60 words in Iraqi Arabic dialect, addressed to the developer: why it fits, "
         "what to check before applying, which project to show first. If an approved draft has a factual problem or a weak "
         "opening, return the corrected full message in fixed_message (same language, same channel, keep any [placeholders] "
         "and {NAME}-style tokens), otherwise null. rank 1 is best. Never promise income. summary_ar: one line in Iraqi "
-        "Arabic about this batch."
+        "Arabic about this batch. " + NEUTRAL_AR
     )
 
 
@@ -136,17 +140,17 @@ def review(ctx, recs: list[dict]) -> list[dict]:
               and (r.get("match") or {}).get("fit", 0) >= 70]
     ranked = sorted(strong, key=lambda r: (-(r.get("match") or {}).get("fit", 0), -(r.get("score") or 0)))
     for rec in ranked[:max_picks]:
-        note = "اختيار تلقائي بدون مراجعة المدير (ماكو مفتاح API أو انتهت الميزانية) — راجع الإعلان والمسودة قبل الإرسال."
+        note = "اختيار تلقائي بدون مراجعة المدير (ماكو مفتاح API أو انتهت الميزانية)، ويحتاج مراجعة الإعلان والمسودة قبل الإرسال."
         _approve(store, rec, len(approved) + 1, note, False, settings.now)
         approved.append(rec)
     return approved
 
 
 IDEAS_SYSTEM = (
-    "You advise a developer in Mosul, Iraq who needs income soon. Suggest exactly 3 concrete ways to earn money in the "
-    "next 30 days by reusing what he has already built. Be realistic for someone in Iraq (payment methods that work "
+    "You advise a developer in Mosul, Iraq who needs income soon. Address the developer as 'you'; prefer Arabic wording that reads the same for any reader (avoid gendered verb endings where you can). Suggest exactly 3 concrete ways to earn money in the "
+    "next 30 days by reusing what they have already built. Be realistic for someone in Iraq (payment methods that work "
     "there, Arabic and local markets as well as remote clients). No guaranteed income, no crypto trading, no MLM, no "
-    "paid courses he must buy. Each idea: title_ar, why_ar (max 40 words, Iraqi Arabic, cite his repos or the demand "
+    "paid courses they must buy. Each idea: title_ar, why_ar (max 40 words, Iraqi Arabic, cite their repos or the demand "
     "data), steps_ar (3 short first steps), effort, where (platform or channel)."
 )
 

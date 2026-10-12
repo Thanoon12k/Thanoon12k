@@ -24,7 +24,7 @@ SCHEMA = {
 SYSTEM = (
     "You write job applications for one developer. Use ONLY the facts and repositories given. Never invent years, "
     "numbers, clients, certificates, salaries or results; where a needed detail is unknown write a placeholder in "
-    "square brackets, e.g. [expected rate]. Use these tokens exactly where his details belong: {NAME}, {EMAIL}, "
+    "square brackets, e.g. [expected rate]. Use these tokens exactly where the developer's details belong: {NAME}, {EMAIL}, "
     "{PHONE}, {WEBSITE}, {GITHUB}. Write in the requested language (Arabic: clear, polite Modern Standard Arabic; "
     "English: plain and confident, no clichés). Channel rules: email = a subject line and 120-180 words; whatsapp = "
     "no subject, 50-90 friendly words; platform = a freelance proposal with no subject, 90-150 words: show you "

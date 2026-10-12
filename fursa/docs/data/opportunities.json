@@ -69,11 +69,11 @@
     {
      "name": "Pediatric-Clinic-manager",
      "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
-     "why": "تطبيق Flutter على Supabase بثلاث لوحات (مدير وطبيب ومريض): يثبت إنك تبني لوحات أدوار متكاملة."
+     "why": "تطبيق Flutter على Supabase بثلاث لوحات (مدير وطبيب ومريض): يثبت بناء لوحات أدوار متكاملة."
     }
    ],
    "fit": 82,
-   "fit_reason_ar": "صاحب المشروع عراقي ويريد سحب محلي، وإنت سويت نظام مدفوعات ووصولات كامل (مولداتي) بفلاتر وجانغو. الناقص: دمج Unity Ads وTapjoy.",
+   "fit_reason_ar": "صاحب المشروع عراقي ويريد سحب محلي، ومشروع مولداتي (فلاتر وجانغو) نظام مدفوعات ووصولات كامل يثبت نفس المهارة. الناقص: دمج Unity Ads وTapjoy.",
    "ai": true
   },
   "draft": {
@@ -96,12 +96,12 @@
    "rank": 1,
    "rank_score": 99,
    "ai": true,
-   "at": "2026-10-12T19:30:45Z",
-   "note_ar": "أقوى وحدة إلك: الزبون من العراق ويريد طرق سحب محلية، والميزانية 500–1000$ خلال 20 يوم. اعرض مولداتي أول شي لأنها نفس فكرة الرصيد والوصولات. انتبه: لازم تتأكد من سياسات Google Play لتطبيقات المكافآت، واسأله عن عدد المستخدمين المتوقع قبل ما تحدد السعر."
+   "at": "2026-10-12T19:35:08Z",
+   "note_ar": "أقوى فرصة بهالدفعة: الزبون من العراق ويريد طرق سحب محلية، والميزانية 500–1000$ خلال 20 يوم. مولداتي أول مشروع يستاهل ينعرض لأنه نفس فكرة الرصيد والوصولات. قبل التسعير: التأكد من سياسات Google Play لتطبيقات المكافآت، وسؤال الزبون عن عدد المستخدمين المتوقع."
   },
-  "shown_at": "2026-10-12T19:30:45Z",
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "shown_at": "2026-10-12T19:35:08Z",
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "0f7f1722c3cb",
@@ -162,12 +162,12 @@
     {
      "name": "moalidaty-front-end",
      "url": "https://github.com/Thanoon12k/moalidaty-front-end",
-     "why": "تطبيق Flutter عربي كامل مبني ومجرَّب: يثبت إنك تعرف تعدّل الهوية والواجهات وتجهز نسخة النشر."
+     "why": "تطبيق Flutter عربي كامل مبني ومجرَّب: يثبت القدرة على تعديل الهوية والواجهات وتجهيز نسخة النشر."
     },
     {
      "name": "medicine-reminder",
      "url": "https://github.com/Thanoon12k/medicine-reminder",
-     "why": "تطبيق Flutter للأندرويد بإشعارات مجدولة: نفس نوع الإشعارات اللي لازم تختبرها بالطلب الوهمي."
+     "why": "تطبيق Flutter للأندرويد بإشعارات مجدولة: نفس نوع الإشعارات المطلوب اختبارها بالطلب الوهمي."
     },
     {
      "name": "My-Work",
@@ -176,7 +176,7 @@
     }
    ],
    "fit": 74,
-   "fit_reason_ar": "شغل سريع (7 أيام) يناسب خبرتك بفلاتر وإدارة السيرفرات (Ubuntu وGunicorn)، وإنت مدرّب فالفيديو التدريبي سهل عليك. الناقص: لوحة التحكم غالباً PHP/Laravel.",
+   "fit_reason_ar": "شغل سريع (7 أيام) يناسب خبرتك بفلاتر وإدارة السيرفرات (Ubuntu وGunicorn)، وخبرة التدريب تخلي الفيديو التدريبي سهل. الناقص: لوحة التحكم غالباً PHP/Laravel.",
    "ai": true
   },
   "draft": {
@@ -199,12 +199,12 @@
    "rank": 2,
    "rank_score": 98,
    "ai": true,
-   "at": "2026-10-12T19:30:45Z",
-   "note_ar": "شغلة قصيرة ومضمونة أكثر من بناء تطبيق من الصفر: تنصيب وتعريب ونشر. الأغلب الزبون من كردستان، فقربك منه ميزة. قبل العرض اسأله عن نسخة السكربت (StackFood؟) ومنو يدفع رسوم حساب Google Play، وخلي الترجمة الكردية عليه."
+   "at": "2026-10-12T19:35:08Z",
+   "note_ar": "شغلة قصيرة وأوضح من بناء تطبيق من الصفر: تنصيب وتعريب ونشر. الأغلب الزبون من كردستان، فالقرب منه ميزة. قبل العرض: سؤاله عن نسخة السكربت (StackFood؟) ومنو يدفع رسوم حساب Google Play، والترجمة الكردية تكون عليه."
   },
-  "shown_at": "2026-10-12T19:30:45Z",
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "shown_at": "2026-10-12T19:35:08Z",
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "94516b10164d",
@@ -281,7 +281,7 @@
     }
    ],
    "fit": 68,
-   "fit_reason_ar": "دخل شهري ثابت ومن البيت، وخبرتك بجانغو من 2019 تغطي الشرط الأساسي. الناقص: AWS/GCP وKubernetes ما عندك عليهم مشروع منشور.",
+   "fit_reason_ar": "شغل كامل عن بعد براتب شهري، وخبرتك بجانغو من 2019 تغطي الشرط الأساسي. الناقص: ماكو مشروع منشور على AWS/GCP أو Kubernetes.",
    "ai": true
   },
   "draft": {
@@ -304,12 +304,12 @@
    "rank": 3,
    "rank_score": 97,
    "ai": true,
-   "at": "2026-10-12T19:30:45Z",
-   "note_ar": "إذا تريد دخل شهري ثابت، هاي الأقرب: شغل كامل عن بعد وتوقيت العراق ضمن المسموح (CET ±3). الإعلان ينتهي 15 أكتوبر فقدّم خلال يومين. توقّع اختبار تقني قوي، وراجع AWS وDocker قبل المقابلة."
+   "at": "2026-10-12T19:35:08Z",
+   "note_ar": "للراتب الشهري هاي الأقرب: شغل كامل عن بعد، وتوقيت العراق ضمن المسموح (CET ±3). الإعلان ينتهي 15 أكتوبر، فالتقديم لازم يكون خلال يومين. الفحص التقني عندهم قوي، ومراجعة AWS وDocker قبل المقابلة تفيد."
   },
-  "shown_at": "2026-10-12T19:30:45Z",
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "shown_at": "2026-10-12T19:35:08Z",
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "d83644a716f4",
@@ -364,8 +364,8 @@
    ],
    "ai": true
   },
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "4011ee76e769",
@@ -419,8 +419,8 @@
    ],
    "ai": true
   },
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "94c875373ce1",
@@ -469,8 +469,8 @@
    ],
    "ai": true
   },
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "a1b4e4a61e69",
@@ -498,8 +498,8 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: client wants someone local in Odisha, India",
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "164661cefbbd",
@@ -528,8 +528,8 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: 174 bids, ends in a day, anti-bot scraping",
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "469c9b228613",
@@ -557,8 +557,8 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: budget too small",
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "2148fc3515c8",
@@ -586,8 +586,8 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: asks for 6 years of e-commerce experience",
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "666b49b878b6",
@@ -613,8 +613,8 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: huge scope for a tiny budget",
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "3476c6385b02",
@@ -640,8 +640,8 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: 191 bids, ends in a day, Kafka/Go/Java stack",
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  },
  {
   "id": "f79ba9370a7e",
@@ -667,7 +667,7 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: budget too small, 129 bids",
-  "first_seen": "2026-10-12T19:30:45Z",
-  "updated": "2026-10-12T19:30:45Z"
+  "first_seen": "2026-10-12T19:35:08Z",
+  "updated": "2026-10-12T19:35:08Z"
  }
 ]
