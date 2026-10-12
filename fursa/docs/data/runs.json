@@ -1,0 +1,29 @@
+[
+ {
+  "at": "2026-10-12T19:30:45Z",
+  "mode": "ai",
+  "kept": 13,
+  "scouted_ai": 13,
+  "approved": 3,
+  "notified": 0,
+  "usd": 0,
+  "tokens": {
+   "in": 0,
+   "out": 0
+  },
+  "errors": [],
+  "note": "first run inside the Claude chat: 3 Haiku 5.5 agents + Opus 5.5 coordinator (not billed to the API key)",
+  "sources": {
+   "remotive": "ok",
+   "remoteok": "ok",
+   "himalayas": "ok",
+   "jobicy": "ok",
+   "weworkremotely": "ok",
+   "hackernews": "ok",
+   "freelancer": "ok",
+   "mostaql": "ok",
+   "khamsat": "ok",
+   "websearch": "ok (agent)"
+  }
+ }
+]

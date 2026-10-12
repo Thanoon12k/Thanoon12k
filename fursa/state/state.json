@@ -1,0 +1,14 @@
+{
+ "timers": {
+  "ideas": "2026-10-12T19:30:45Z"
+ },
+ "usage": {
+  "2026-10": {
+   "usd": 0.0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "calls": 0,
+   "searches": 0
+  }
+ }
+}

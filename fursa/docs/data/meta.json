@@ -1,0 +1,35 @@
+{
+ "updated": "2026-10-12T19:30:45Z",
+ "repo": "Thanoon12k/fursa",
+ "site_url": "https://thanoon12k.github.io/fursa/",
+ "mode": "ai",
+ "llm_note": "",
+ "models": {
+  "worker": "claude-haiku-5-5",
+  "manager": "claude-opus-5-5"
+ },
+ "usage_month": {
+  "usd": 0.0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "calls": 0,
+  "searches": 0
+ },
+ "budget_usd": 5.0,
+ "counts": {
+  "approved": 3,
+  "screened": 3,
+  "rejected": 7
+ },
+ "user_counts": {},
+ "sources": {},
+ "summary_ar": "أول تشغيل: 3 فرص معتمدة، اثنين منها مشاريع Flutter من زبائن بالعراق على مستقل.",
+ "notice": "",
+ "person": {
+  "name": "Thanoon Younis Mohammed",
+  "github": "Thanoon12k",
+  "website": "https://make1it.pythonanywhere.com",
+  "email": "engthanoon1@gmail.com",
+  "phone": "+964 770 279 0915"
+ }
+}

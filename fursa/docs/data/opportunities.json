@@ -1,0 +1,673 @@
+[
+ {
+  "id": "705bee5087f8",
+  "source": "mostaql",
+  "source_label": "مستقل Mostaql",
+  "url": "https://mostaql.com/project/1283899",
+  "title": "مبرمج Flutter لتطوير تطبيق مكافآت Android و iOS",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "$500.00 - $1000.00",
+  "lang": "ar",
+  "tags": [
+   "flutter",
+   "dashboard"
+  ],
+  "summary": "تطبيق Flutter (أندرويد وآيفون) لمنصة مكافآت: تسجيل حسابات، نظام نقاط/رصيد، إعلانات Rewarded Ads، دمج Offerwalls (Unity Ads وTapjoy)، سجل الأرباح، طلبات سحب بطرق السحب المحلية في العراق، لوحة تحكم لقبول/رفض السحب، وحماية من الغش.",
+  "status": "approved",
+  "user_status": null,
+  "extra": {
+   "checked_page": true,
+   "duration": "20 يوماً"
+  },
+  "score": 23,
+  "elig": "likely",
+  "elig_note": "Arab freelance platform; the client wants Iraqi payout methods",
+  "flags": [],
+  "scout": {
+   "keep": true,
+   "reason": "Flutter app with admin panel for a client in Iraq; budget stated",
+   "eligibility": "likely",
+   "eligibility_note": "Arab freelance platform; the client wants Iraqi payout methods",
+   "open": "yes",
+   "pay": "$500.00 - $1000.00",
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "ar",
+   "red_flags": [
+    "rewarded-ads/offerwall SDKs not in his portfolio yet",
+    "check Google Play policy for reward apps"
+   ],
+   "brief": "Flutter rewards app (Android/iOS): accounts, points balance, rewarded ads, Unity Ads/Tapjoy offerwalls, earnings history, withdrawals via Iraqi methods, admin panel, anti-fraud, Arabic UI.",
+   "skills": [
+    "flutter",
+    "admin panel",
+    "rewarded ads",
+    "offerwall",
+    "payments",
+    "anti-fraud"
+   ],
+   "ai": true
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "moalidaty-front-end",
+     "url": "https://github.com/Thanoon12k/moalidaty-front-end",
+     "why": "تطبيق Flutter لإدارة اشتراكات ومدفوعات ووصولات وإحصائيات، قريب جداً من نظام الرصيد وطلبات السحب."
+    },
+    {
+     "name": "moalidaty",
+     "url": "https://github.com/Thanoon12k/moalidaty",
+     "why": "باك إند Django REST مع JWT وصلاحيات مخصصة: نفس فكرة لوحة التحكم اللي تقبل وترفض الطلبات."
+    },
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "تطبيق Flutter على Supabase بثلاث لوحات (مدير وطبيب ومريض): يثبت إنك تبني لوحات أدوار متكاملة."
+    }
+   ],
+   "fit": 82,
+   "fit_reason_ar": "صاحب المشروع عراقي ويريد سحب محلي، وإنت سويت نظام مدفوعات ووصولات كامل (مولداتي) بفلاتر وجانغو. الناقص: دمج Unity Ads وTapjoy.",
+   "ai": true
+  },
+  "draft": {
+   "cv_bullets": [
+    "طوّرتُ تطبيقات Flutter متعددة المنصات وخلفيات Django وFlask منذ 2019، ونفّذتُ دورة المشروع كاملة.",
+    "بنيتُ واجهة REST بـ Django وDRF مع مصادقة JWT وصلاحيات مخصصة وعزل بيانات لكل مولّد (moalidaty).",
+    "نفّذتُ تسجيل دخول بـ JWT مع تخزين آمن، ومدفوعات ووصولات بمسح QR، ولوحة إحصائيات (moalidaty-front-end).",
+    "طوّرتُ لوحات تحكم للمشرف والطبيب والمريض تشمل المواعيد والرسوم البيانية والرسائل (Pediatric-Clinic-manager).",
+    "عملتُ على تطبيقات Flutter مع Firebase والإشعارات وقواعد البيانات الفورية (2022-2023)."
+   ],
+   "subject": null,
+   "message": "السلام عليكم،\n\nفهمتُ أنك تحتاج إلى تطبيق Flutter لأندرويد وآيفون يتضمن تسجيل المستخدمين والنقاط والرصيد، وإعلانات المكافأة وجدران العروض (Unity Ads وTapjoy)، وطلبات السحب بطرق الدفع المحلية في العراق، ولوحة إدارة لاعتماد الطلبات ومنع التكرار والاحتيال.\n\nخطة التنفيذ:\n1. المرحلة الأولى: تسجيل الدخول بـ JWT مع تخزين آمن، والنقاط والرصيد وسجل الأرباح، بواجهة عربية كاملة (RTL).\n2. المرحلة الثانية: ربط إعلانات المكافأة وجدران العروض مع تحقق من الخادم يمنع تكرار المكافآت والاحتيال. ربط Unity Ads وTapjoy جديد في أعمالي المنشورة، لذلك أبدأ بنموذج ربط تجريبي قصير قبل اعتماد السعر النهائي.\n3. المرحلة الثالثة: طلبات السحب عبر طرق الدفع المحلية التي تحددها، ولوحة الإدارة (موافقة، رفض، إدارة المستخدمين والأرصدة)، ثم الاختبار والنشر على المتجرين.\n\nأعمال ذات صلة:\nhttps://github.com/Thanoon12k/moalidaty-front-end\nhttps://github.com/Thanoon12k/moalidaty\nhttps://github.com/Thanoon12k/Pediatric-Clinic-manager\n\nالتكلفة: [السعر المقترح]، والمدة: [عدد الأيام المقترح] يوماً.\n\nهل لديك حسابات جاهزة على Unity Ads وTapjoy؟",
+   "ai": true,
+   "lang": "ar",
+   "channel": "platform",
+   "contact": null,
+   "edited_by_manager": true
+  },
+  "manager": {
+   "rank": 1,
+   "rank_score": 99,
+   "ai": true,
+   "at": "2026-10-12T19:30:45Z",
+   "note_ar": "أقوى وحدة إلك: الزبون من العراق ويريد طرق سحب محلية، والميزانية 500–1000$ خلال 20 يوم. اعرض مولداتي أول شي لأنها نفس فكرة الرصيد والوصولات. انتبه: لازم تتأكد من سياسات Google Play لتطبيقات المكافآت، واسأله عن عدد المستخدمين المتوقع قبل ما تحدد السعر."
+  },
+  "shown_at": "2026-10-12T19:30:45Z",
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "0f7f1722c3cb",
+  "source": "mostaql",
+  "source_label": "مستقل Mostaql",
+  "url": "https://mostaql.com/project/1284779",
+  "title": "تنصيب وتعديل سكربت طلبات وتوصيل جاهز (Flutter) باللغات الثلاث (عربي، كردي، إنجليزي)",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "$250.00 - $500.00",
+  "lang": "ar",
+  "tags": [
+   "flutter"
+  ],
+  "summary": "تنصيب سكربت توصيل جاهز (مثل StackFood) ولوحة التحكم على VPS، تعديل الهوية، تفعيل العربية والكردية السورانية والإنجليزية، إعداد Google Play Console ورفع 3 تطبيقات، تتبع GPS، اختبار كامل، تسليم الحسابات والكود، وفيديو تدريب قصير.",
+  "status": "approved",
+  "user_status": null,
+  "extra": {
+   "checked_page": true,
+   "duration": "7 أيام"
+  },
+  "score": 21,
+  "elig": "likely",
+  "elig_note": "Arab freelance platform; Arabic/Kurdish/English app suggests an Iraqi client",
+  "flags": [],
+  "scout": {
+   "keep": true,
+   "reason": "Short Flutter setup job, likely a client in Kurdistan/Iraq; budget stated",
+   "eligibility": "likely",
+   "eligibility_note": "Arab freelance platform; Arabic/Kurdish/English app suggests an Iraqi client",
+   "open": "yes",
+   "pay": "$250.00 - $500.00",
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "ar",
+   "red_flags": [
+    "admin panel of such scripts is usually PHP/Laravel",
+    "Kurdish translations must come from the client"
+   ],
+   "brief": "Install a ready Flutter delivery script (StackFood-like) and its admin panel on a VPS, rebrand, enable Arabic/Kurdish/English, publish 3 apps on Google Play, GPS tracking, end-to-end test, hand-over and a training video.",
+   "skills": [
+    "flutter",
+    "vps",
+    "server setup",
+    "localization",
+    "google play",
+    "gps"
+   ],
+   "ai": true
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "moalidaty-front-end",
+     "url": "https://github.com/Thanoon12k/moalidaty-front-end",
+     "why": "تطبيق Flutter عربي كامل مبني ومجرَّب: يثبت إنك تعرف تعدّل الهوية والواجهات وتجهز نسخة النشر."
+    },
+    {
+     "name": "medicine-reminder",
+     "url": "https://github.com/Thanoon12k/medicine-reminder",
+     "why": "تطبيق Flutter للأندرويد بإشعارات مجدولة: نفس نوع الإشعارات اللي لازم تختبرها بالطلب الوهمي."
+    },
+    {
+     "name": "My-Work",
+     "url": "https://github.com/Thanoon12k/My-Work",
+     "why": "أتمتة كاملة ونشر على سيرفر (PythonAnywhere): خبرة تنصيب وتشغيل بيئات."
+    }
+   ],
+   "fit": 74,
+   "fit_reason_ar": "شغل سريع (7 أيام) يناسب خبرتك بفلاتر وإدارة السيرفرات (Ubuntu وGunicorn)، وإنت مدرّب فالفيديو التدريبي سهل عليك. الناقص: لوحة التحكم غالباً PHP/Laravel.",
+   "ai": true
+  },
+  "draft": {
+   "cv_bullets": [
+    "أدرتُ خوادم Ubuntu مع Gunicorn وRedis، مع التركيز على الأمان والمراقبة (2021-2023).",
+    "بنيتُ تطبيق Flutter عربي أولاً لتذكيرات الأدوية، بإشعارات محلية مجدولة وإنذارات بملء الشاشة، ويعمل بدون اتصال بالإنترنت (medicine-reminder).",
+    "عملتُ على إشعارات Firebase وقواعد البيانات الفورية ضمن تطبيقات الجوال (2022-2023).",
+    "طوّرتُ تطبيقات Flutter لإدارة المشتركين والمدفوعات والعمال، مع لوحة إحصائيات (moalidaty-front-end).",
+    "درّبتُ طلاب الجامعات وأرشدتُ مشاريع التخرج منذ 2021."
+   ],
+   "subject": null,
+   "message": "السلام عليكم،\n\nفهمتُ أنك تريد تثبيت سكربت توصيل جاهز (مثل StackFood) على خادم VPS وتخصيصه بهويتك، وتفعيل العربية والكردية السورانية والإنجليزية وتتبع GPS، ثم نشر ثلاثة تطبيقات على Google Play: للعميل والسائق والمتجر.\n\nخطة التنفيذ:\n1. تثبيت السكربت ولوحة الإدارة على الخادم، وتخصيص الألوان والشعار واسم التطبيق.\n2. تفعيل اللغات وتتبع GPS والإشعارات. أرجو توفير الترجمة الكردية السورانية من طرفك، ولوحة الإدارة غالباً مبنية بـ PHP/Laravel، لذا سأتولى تثبيتها وتخصيصها لا تطويرها من الصفر.\n3. إعداد Google Play Console ونشر التطبيقات الثلاثة، واختبار طلب تجريبي كامل مع الإشعارات، ثم تسليم الحسابات والكود وفيديو تدريبي قصير.\n\nخبرتي ذات الصلة: إدارة خوادم Ubuntu، وتطبيقات Flutter مع إشعارات Firebase، وتدريب طلاب الجامعات.\nhttps://github.com/Thanoon12k/moalidaty-front-end\nhttps://github.com/Thanoon12k/medicine-reminder\nhttps://github.com/Thanoon12k/My-Work\n\nالتكلفة: [السعر المقترح]، والمدة: [المدة المقترحة].\n\nهل لديك حساب Google Play Console جاهز للاستخدام؟",
+   "ai": true,
+   "lang": "ar",
+   "channel": "platform",
+   "contact": null,
+   "edited_by_manager": true
+  },
+  "manager": {
+   "rank": 2,
+   "rank_score": 98,
+   "ai": true,
+   "at": "2026-10-12T19:30:45Z",
+   "note_ar": "شغلة قصيرة ومضمونة أكثر من بناء تطبيق من الصفر: تنصيب وتعريب ونشر. الأغلب الزبون من كردستان، فقربك منه ميزة. قبل العرض اسأله عن نسخة السكربت (StackFood؟) ومنو يدفع رسوم حساب Google Play، وخلي الترجمة الكردية عليه."
+  },
+  "shown_at": "2026-10-12T19:30:45Z",
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "94516b10164d",
+  "source": "weworkremotely",
+  "source_label": "We Work Remotely",
+  "url": "https://weworkremotely.com/remote-jobs/proxify-ab-senior-backend-developer-python-10",
+  "title": "Senior Backend Developer (Python)",
+  "company": "Proxify AB",
+  "kind": "job",
+  "posted": "2026-09-15",
+  "expires": "2026-10-15",
+  "location": "Anywhere in the World; CET ±3h",
+  "remote": true,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "django",
+   "python",
+   "backend"
+  ],
+  "summary": "Senior Python Developer for a Proxify client: 5+ years building products with Python and Django, PostgreSQL, AWS or GCP, CI/CD, Docker/Kubernetes a plus, intermediate-advanced English, time zone CET +/- 3 hours. Monthly payments, full-time remote.",
+  "status": "approved",
+  "user_status": null,
+  "extra": {
+   "apply": "http://career.proxify.io"
+  },
+  "score": 23,
+  "elig": "likely",
+  "elig_note": "Open worldwide but limited to CET ±3h; Iraq fits that window",
+  "flags": [],
+  "scout": {
+   "keep": true,
+   "reason": "Remote full-time Django role; Mosul (UTC+3) is inside CET ±3h",
+   "eligibility": "likely",
+   "eligibility_note": "Open worldwide but limited to CET ±3h; Iraq fits that window",
+   "open": "yes",
+   "pay": null,
+   "work_type": "full-time",
+   "channel": "form",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [
+    "listing expires 2026-10-15",
+    "Proxify runs a strict technical vetting",
+    "no public AWS/GCP project"
+   ],
+   "brief": "Senior Python/Django backend developer for Proxify clients: PostgreSQL, AWS/GCP, CI/CD, Docker; full-time remote.",
+   "skills": [
+    "python",
+    "django",
+    "postgresql",
+    "aws",
+    "docker",
+    "ci/cd"
+   ],
+   "ai": true
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "moalidaty",
+     "url": "https://github.com/Thanoon12k/moalidaty",
+     "why": "Django REST API with JWT, custom permissions and per-tenant data scoping."
+    },
+    {
+     "name": "Chat-app-api",
+     "url": "https://github.com/Thanoon12k/Chat-app-api",
+     "why": "Django + DRF + Channels (WebSockets) with Redis: real-time backend work."
+    },
+    {
+     "name": "Ideas-Store",
+     "url": "https://github.com/Thanoon12k/Ideas-Store",
+     "why": "Django + DRF with 12 automated API tests."
+    }
+   ],
+   "fit": 68,
+   "fit_reason_ar": "دخل شهري ثابت ومن البيت، وخبرتك بجانغو من 2019 تغطي الشرط الأساسي. الناقص: AWS/GCP وKubernetes ما عندك عليهم مشروع منشور.",
+   "ai": true
+  },
+  "draft": {
+   "cv_bullets": [
+    "Built Django REST APIs with JWT authentication, custom permissions and per-generator data scoping (moalidaty).",
+    "Developed a WebSocket chat backend with Django Channels and Redis (Chat-app-api).",
+    "Wrote 12 automated API tests for a Django REST Framework app (Ideas-Store).",
+    "Administered Ubuntu servers running Gunicorn and Redis, covering security and monitoring (2021-2023).",
+    "Built a Python and Playwright pipeline that runs, screenshots and deploys a 65-project portfolio site (My-Work)."
+   ],
+   "subject": null,
+   "message": "Dear Proxify team,\n\nI am applying for the Senior Backend Developer (Python) role. I have been a backend and Flutter developer since 2019, building Django and Flask backends across the full project lifecycle. I am based in Mosul, Iraq (UTC+3), within your CET ±3 hours range, and my English is excellent.\n\nRelevant public work:\n- moalidaty: Django REST API with JWT auth, custom permissions and per-generator data scoping (https://github.com/Thanoon12k/moalidaty)\n- Chat-app-api: Django, DRF and Django Channels chat backend with Redis (https://github.com/Thanoon12k/Chat-app-api)\n- Ideas-Store: Django and DRF app with 12 automated API tests (https://github.com/Thanoon12k/Ideas-Store)\n\nMy deployment work so far has been on self-managed Ubuntu servers (Gunicorn, Redis, security and monitoring, 2021-2023). [Add any AWS or GCP experience you have.] I can start [your start date].\n\nBest regards,\nThanoon Younis Mohammed\nengthanoon1@gmail.com | +964 770 279 0915\nhttps://make1it.pythonanywhere.com | https://github.com/Thanoon12k",
+   "ai": true,
+   "lang": "en",
+   "channel": "form",
+   "contact": null,
+   "edited_by_manager": true
+  },
+  "manager": {
+   "rank": 3,
+   "rank_score": 97,
+   "ai": true,
+   "at": "2026-10-12T19:30:45Z",
+   "note_ar": "إذا تريد دخل شهري ثابت، هاي الأقرب: شغل كامل عن بعد وتوقيت العراق ضمن المسموح (CET ±3). الإعلان ينتهي 15 أكتوبر فقدّم خلال يومين. توقّع اختبار تقني قوي، وراجع AWS وDocker قبل المقابلة."
+  },
+  "shown_at": "2026-10-12T19:30:45Z",
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "d83644a716f4",
+  "source": "websearch",
+  "source_label": "careers-page.com (web search)",
+  "url": "https://careers-page.com/khana-jobs/job/L784Y3Y3",
+  "title": "Senior Mobile Developer (Flutter) - Erbil",
+  "company": "AS.solutions (Khana Jobs)",
+  "kind": "job",
+  "posted": null,
+  "expires": null,
+  "location": "Iraq - Erbil (on-site)",
+  "remote": false,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "firebase",
+   "mobile"
+  ],
+  "summary": "Full-time on-site Flutter developer in Erbil: Bloc/Provider, Firebase, networking and caching, published apps. Kurdish and English required, Arabic preferred. Salary discussed at interview.",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "verified": "page opened; no posting date shown"
+  },
+  "score": 33,
+  "elig": "yes",
+  "elig_note": "On-site in Erbil",
+  "flags": [],
+  "scout": {
+   "keep": true,
+   "reason": "Flutter job inside Iraq",
+   "eligibility": "yes",
+   "eligibility_note": "On-site in Erbil",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "full-time",
+   "channel": "form",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [
+    "no posting date or deadline",
+    "on-site: commute or move from Mosul",
+    "Kurdish required"
+   ],
+   "brief": "Senior Flutter developer, full-time on-site in Erbil; Bloc/Provider, Firebase, published apps required.",
+   "skills": [
+    "flutter",
+    "firebase",
+    "bloc"
+   ],
+   "ai": true
+  },
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "4011ee76e769",
+  "source": "websearch",
+  "source_label": "careers-page.com (web search)",
+  "url": "https://careers-page.com/khana-jobs/job/QW9YY6R6",
+  "title": "Senior Mobile Developer (Flutter) - Baghdad",
+  "company": "AS.solutions (Khana Jobs)",
+  "kind": "job",
+  "posted": null,
+  "expires": null,
+  "location": "Iraq - Baghdad (on-site)",
+  "remote": false,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "firebase",
+   "mobile"
+  ],
+  "summary": "Full-time on-site Flutter developer in Baghdad: Bloc/Provider, Firebase, networking and caching, published apps. Salary discussed at interview.",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "verified": "page opened; no posting date shown"
+  },
+  "score": 33,
+  "elig": "yes",
+  "elig_note": "On-site in Baghdad",
+  "flags": [],
+  "scout": {
+   "keep": true,
+   "reason": "Flutter job inside Iraq",
+   "eligibility": "yes",
+   "eligibility_note": "On-site in Baghdad",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "full-time",
+   "channel": "form",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [
+    "no posting date or deadline",
+    "on-site: commute or move from Mosul"
+   ],
+   "brief": "Senior Flutter developer, full-time on-site in Baghdad; Bloc/Provider, Firebase, published apps required.",
+   "skills": [
+    "flutter",
+    "firebase",
+    "bloc"
+   ],
+   "ai": true
+  },
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "94c875373ce1",
+  "source": "himalayas",
+  "source_label": "Himalayas",
+  "url": "https://himalayas.app/companies/kodland/jobs/gcc-python",
+  "title": "GCC | Python (part-time tutor)",
+  "company": "Kodland",
+  "kind": "job",
+  "posted": "2026-09-25",
+  "expires": "2026-11-24",
+  "location": "Worldwide (GCC students)",
+  "remote": true,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "python"
+  ],
+  "summary": "Part-time freelance Python teacher for children (5-17), fully remote, at least 10 hours a week, English C1, weekday 3-9 pm GMT and weekends. No fixed or guaranteed income.",
+  "status": "screened",
+  "user_status": null,
+  "extra": {},
+  "score": 9,
+  "elig": "unclear",
+  "elig_note": "No location limit listed; 'GCC' may target Gulf students",
+  "flags": [],
+  "scout": {
+   "keep": true,
+   "reason": "Teaching role that fits his trainer background",
+   "eligibility": "unclear",
+   "eligibility_note": "No location limit listed; 'GCC' may target Gulf students",
+   "open": "yes",
+   "pay": null,
+   "work_type": "part-time",
+   "channel": "form",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [
+    "no fixed income",
+    "per-lesson pay not stated"
+   ],
+   "brief": "Part-time remote Python tutor for kids, 10+ h/week, English C1, evening GMT hours.",
+   "skills": [
+    "python",
+    "teaching"
+   ],
+   "ai": true
+  },
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "a1b4e4a61e69",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/flutter/flutter-live-class-upgrade-counseling",
+  "title": "Flutter Live-Class Upgrade & Counseling",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "₹37,500-75,000",
+  "lang": "en",
+  "tags": [
+   "flutter"
+  ],
+  "summary": "Flutter Live-Class Upgrade & Counseling",
+  "status": "rejected",
+  "user_status": null,
+  "extra": {},
+  "score": 21,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "reject_reason": "manager: client wants someone local in Odisha, India",
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "164661cefbbd",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/postgresql/python-developer-needed-multi-user",
+  "title": "Python Developer: Multi-User Web Scraping & Lead Generation Platform",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "$30-250",
+  "lang": "en",
+  "tags": [
+   "python",
+   "automation"
+  ],
+  "summary": "Python Developer: Multi-User Web Scraping & Lead Generation Platform",
+  "status": "rejected",
+  "user_status": null,
+  "extra": {},
+  "score": 13,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "reject_reason": "manager: 174 bids, ends in a day, anti-bot scraping",
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "469c9b228613",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/natural-language-processing/python-developer-needed-for-data",
+  "title": "Python Developer for Data Cleaning & Processing",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "₹1,500-12,500",
+  "lang": "en",
+  "tags": [
+   "python"
+  ],
+  "summary": "Python Developer for Data Cleaning & Processing",
+  "status": "rejected",
+  "user_status": null,
+  "extra": {},
+  "score": 9,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "reject_reason": "manager: budget too small",
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "2148fc3515c8",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/ecommerce/commerce-automation-specialist-needed",
+  "title": "E-Commerce Automation Specialist Needed",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "₹250,000-500,000",
+  "lang": "en",
+  "tags": [
+   "automation"
+  ],
+  "summary": "E-Commerce Automation Specialist Needed",
+  "status": "rejected",
+  "user_status": null,
+  "extra": {},
+  "score": 5,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "reject_reason": "manager: asks for 6 years of e-commerce experience",
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "666b49b878b6",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/api-developmet/custom-marketing-crm-development",
+  "title": "Custom Marketing CRM Development",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "₹12,500-37,500",
+  "lang": "en",
+  "tags": [],
+  "summary": "Custom Marketing CRM Development",
+  "status": "rejected",
+  "user_status": null,
+  "extra": {},
+  "score": 1,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "reject_reason": "manager: huge scope for a tiny budget",
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "3476c6385b02",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/full-stack-development/senior-full-stack-developer-for-40751398",
+  "title": "Lead Developers: CEMS & IRMS",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "$5,000-10,000",
+  "lang": "en",
+  "tags": [],
+  "summary": "Lead Developers: CEMS & IRMS",
+  "status": "rejected",
+  "user_status": null,
+  "extra": {},
+  "score": 1,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "reject_reason": "manager: 191 bids, ends in a day, Kafka/Go/Java stack",
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ },
+ {
+  "id": "f79ba9370a7e",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/flutter/mobile-patient-record-management-app",
+  "title": "Mobile Patient Record Management App",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "₹1,500-12,500",
+  "lang": "en",
+  "tags": [],
+  "summary": "Mobile Patient Record Management App",
+  "status": "rejected",
+  "user_status": null,
+  "extra": {},
+  "score": 1,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "reject_reason": "manager: budget too small, 129 bids",
+  "first_seen": "2026-10-12T19:30:45Z",
+  "updated": "2026-10-12T19:30:45Z"
+ }
+]
