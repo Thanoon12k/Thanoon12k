@@ -24,7 +24,7 @@ def settings(root, monkeypatch):
     for var in ("ANTHROPIC_API_KEY", "GITHUB_TOKEN", "GH_TOKEN", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID",
                 "FURSA_NO_LLM", "FURSA_ROOT", "RELIEFWEB_APPNAME", "FURSA_FORCE_PORTFOLIO"):
         monkeypatch.delenv(var, raising=False)
-    monkeypatch.setenv("GITHUB_REPOSITORY", "Thanoon12k/fursa")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "Thanoon12k/fursa-agents")
     return config.load(root=root, now=NOW)
 
 

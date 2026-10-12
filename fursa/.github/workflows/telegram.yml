@@ -1,0 +1,29 @@
+name: Telegram setup
+
+# Run this by hand (Actions → Telegram setup → Run workflow):
+# 1st time: shows your chat id (after you send any message to the bot).
+# 2nd time, after saving TELEGRAM_CHAT_ID: sends a test message.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install requests
+
+      - name: Find chat id or send a test message
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m fursa telegram-setup

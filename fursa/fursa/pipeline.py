@@ -132,6 +132,12 @@ def run(settings, *, collect_only: bool = False, llm_client=None) -> dict:
         report["status_updates"] = status.sync_issues(settings, store)
     except Exception as exc:
         report["errors"].append(f"status: {exc}")
+    telegram_updates = []
+    try:
+        telegram_updates = notify.poll(settings, store)  # replies like «قدمت» to earlier picks
+        report["telegram_updates"] = len(telegram_updates)
+    except Exception as exc:
+        report["errors"].append(f"telegram: {exc}")
 
     refresh_days = float(settings.portfolio.get("refresh_days", 7))
     if settings.force_portfolio or not store.portfolio or store.due("portfolio", 24 * refresh_days):
@@ -172,15 +178,18 @@ def run(settings, *, collect_only: bool = False, llm_client=None) -> dict:
         unseen = [r for r in store.items("approved") if not r.get("shown_at")]
         unseen.sort(key=lambda r: (r.get("manager") or {}).get("rank", 9))
         if unseen:
-            text = notify.digest(settings, unseen[: a("max_picks", 3)], store.state.get("last_summary_ar", ""))
             try:
-                sent = notify.send(settings, text)
+                report["notified"] = notify.announce(settings, store, unseen[: a("max_picks", 3)], store.state.get("last_summary_ar", ""))
             except Exception as exc:
-                sent = False
+                report["notified"] = 0
                 report["errors"].append(f"telegram: {exc}")
-            report["notified"] = len(unseen) if sent else 0
             for rec in unseen:  # shown on the dashboard either way; never re-announced
                 rec["shown_at"] = iso_time(settings.now)
+
+    try:
+        notify.confirm(settings, telegram_updates)
+    except Exception as exc:
+        report["errors"].append(f"telegram: {exc}")
 
     report["pruned"] = store.prune()
     run_usage = store.state.pop("_run_usage", {})

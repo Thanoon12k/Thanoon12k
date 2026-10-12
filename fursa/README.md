@@ -1,6 +1,6 @@
 # فرصة · Fursa
 
-فريق صغير من الوكلاء يدوّر على شغل مدفوع (وظائف عن بعد، شغل بالعراق، مشاريع حرة ومهام مدفوعة) لمطوّر **Flutter/Dart** و**Python/Django** بالموصل. يشتغل وحده كل 6 ساعات على GitHub Actions، يحفظ ذاكرته بنفس الريبو، يعرض النتائج بموقع بسيط، ويرسل تنبيه تلگرام بس لما يلگي شي يستاهل.
+فريق صغير من الوكلاء يدوّر على شغل مدفوع (وظائف عن بعد، شغل بالعراق، مشاريع حرة ومهام مدفوعة) لمطوّر **Flutter/Dart** و**Python/Django** بالموصل. يشتغل وحده كل 6 ساعات على GitHub Actions، يحفظ ذاكرته بنفس الريبو، يعرض النتائج بموقع بسيط، ويرسل الفرص على تلگرام بس لما يلگي شي يستاهل.
 
 > A small team of agents that hunts paid work for one developer, runs on GitHub Actions every 6 hours, keeps its memory as JSON in this repo, and shows everything on a GitHub Pages dashboard.
 
@@ -8,13 +8,13 @@
 
 | الدور | منو | شنو يسوي | الموديل |
 |---|---|---|---|
-| الجامعين | كود فقط | يسحبون الإعلانات من 11 مصدر مجاني، يحذفون المكرر، ويفلترون حسب المهارة والأهلية والتاريخ والرسوم | بدون ذكاء (0 tokens) |
+| الجامعين | كود فقط | يسحبون الإعلانات من 12 مصدر مجاني، يحذفون المكرر، ويفلترون حسب المهارة والأهلية والتاريخ والرسوم | بدون ذكاء (0 tokens) |
 | ١ · الكشّاف | Scout | يفحص كل إعلان: حقيقي؟ مفتوح؟ مدفوع؟ ممكن ياخذه شخص مقيم بالعراق؟ ويكتب ملخص قصير | Claude Haiku 5.5 |
 | ٢ · المطابق | Portfolio matcher | يختار 2-3 من المستودعات العامة اللي تثبت القدرة على الشغل المطلوب | Claude Haiku 5.5 |
 | ٣ · الكاتب | Writer | نقاط CV + إيميل أو رسالة واتساب أو عرض على المنصة، عربي أو إنگليزي حسب الإعلان | Claude Haiku 5.5 |
 | المدير | Manager | مراجعة نهائية صارمة: يعتمد 3 فرص كحد أقصى، يكتب ليش تناسبك باللهجة العراقية، ويصلّح المسودة إذا بيها خلل. ومرة بالأسبوع يقترح 3 أفكار دخل | Claude Opus 5.5 |
 
-المصادر المجانية: Remotive · Remote OK · Himalayas · Jobicy · We Work Remotely · Hacker News (Who is hiring) · Freelancer.com · مستقل · خمسات · ReliefWeb (منظمات بالعراق) · GitHub bounties.
+المصادر المجانية: Remotive · Remote OK · Himalayas · Jobicy · We Work Remotely · Hacker News (Who is hiring) · Freelancer.com · مستقل · خمسات · **قنوات تلگرام العامة** (8 قنوات وظائف عراقية + 5 قنوات عمل عن بعد، القائمة بـ `profile.toml`) · ReliefWeb (منظمات بالعراق) · GitHub bounties.
 ولينكدإن وفيسبوك وX وگوگل: بحث Claude على الويب مرة باليوم (نتائج البحث العامة فقط، بدون تسجيل دخول).
 
 ## ليش يصرف tokens قليلة
@@ -38,27 +38,36 @@
 
 ## التشغيل خطوة بخطوة
 
-1. **ريبو جديد** باسم `fursa` (Public حتى يشتغل GitHub Pages مجاناً)، وبيه محتويات هالمجلد.
+1. **الريبو**: [`Thanoon12k/fursa-agents`](https://github.com/Thanoon12k/fursa-agents) (Public حتى يشتغل GitHub Pages مجاناً).
 2. **المفاتيح**: بالريبو ← Settings ← Secrets and variables ← Actions ← New repository secret:
    - `ANTHROPIC_API_KEY`: من [console.anthropic.com](https://console.anthropic.com) ← API Keys، مع رصيد بسيط (مثلاً 5$).
-   - `TELEGRAM_BOT_TOKEN` و `TELEGRAM_CHAT_ID` (اختياري، الخطوة 6).
+   - `TELEGRAM_BOT_TOKEN` و `TELEGRAM_CHAT_ID` (اختياري، قسم تلگرام تحت).
    - (اختياري) بتبويب Variables: `RELIEFWEB_APPNAME`، appname مجاني يُطلب من [ReliefWeb](https://apidoc.reliefweb.int/parameters#appname) لوظائف المنظمات بالعراق.
-3. **الموقع**: Settings ← Pages ← Source: *Deploy from a branch* ← Branch: `main` ومجلد `/docs` ← Save. الموقع يصير على `https://thanoon12k.github.io/fursa/`.
+3. **الموقع**: Settings ← Pages ← Source: *Deploy from a branch* ← Branch: `main` ومجلد `/docs` ← Save. الموقع يصير على `https://thanoon12k.github.io/fursa-agents/`.
 4. **أول تشغيل**: تبويب Actions ← *Fursa agents* ← Run workflow. بعدها يشتغل وحده كل 6 ساعات (05:23، 11:23، 17:23، 23:23 بتوقيت العراق).
 5. **الإعدادات** بملف `profile.toml`: المهارات، الكلمات وأوزانها، الميزانية، الموديلات، والمصادر.
-6. **تلگرام** (اختياري):
-   1. [@BotFather](https://t.me/BotFather) ← `/newbot` ← نسخ التوكن.
-   2. إرسال أي رسالة للبوت الجديد.
-   3. فتح `https://api.telegram.org/bot<TOKEN>/getUpdates` بالمتصفح ونسخ الرقم اللي بعد `"chat":{"id":`.
-   4. إضافة القيمتين كـ secrets (الخطوة 2).
-   الرسائل بين 12 بالليل و8 الصبح توصل بدون صوت.
+
+## تلگرام
+
+**شنو يسوي:**
+- لكل فرصة جديدة يعتمدها المدير توصل رسالة: العنوان، الأجر، ليش تناسبك، المشاريع المقترحة، و**المسودة كاملة داخل الرسالة** (تنفتح بالضغط عليها) حتى تنسخها من تلگرام مباشرة، مع زرين: «الإعلان» و«التفاصيل والمسودة».
+- **الرد على رسالة الفرصة** بكلمة «قدمت» أو «مقابلة» أو «ما تهمني» (أو «انرفضت»، «عرض شغل»، «بعدين») يحفظ الحالة بالذاكرة، والبوت يأكد بالتشغيل الجاي.
+- ماكو رسائل فارغة، والرسائل بين 12 بالليل و8 الصبح توصل بدون صوت.
+- البوت يقبل الردود بس من محادثتك (`TELEGRAM_CHAT_ID`).
+
+**الربط (5 دقائق):**
+1. بتلگرام: [@BotFather](https://t.me/BotFather) ← `/newbot` ← اسم للبوت ← نسخ التوكن.
+2. بالريبو: Settings ← Secrets ← Actions ← `TELEGRAM_BOT_TOKEN` = التوكن.
+3. إرسال أي رسالة للبوت الجديد بتلگرام.
+4. Actions ← **Telegram setup** ← Run workflow ← بسجل التشغيل يطلع `Chat id ...`.
+5. حفظ الرقم كـ secret باسم `TELEGRAM_CHAT_ID`، وتشغيل **Telegram setup** مرة ثانية: توصل رسالة تجربة.
 
 ## الاستخدام اليومي
 
-1. توصلك رسالة تلگرام بيها 1–3 فرص (بس لما يكون أكو شي جديد يستاهل؛ ماكو رسائل فارغة).
-2. رابط «المسودة والتفاصيل» يفتح الموقع: ليش تناسبك، المشاريع المقترحة، والمسودة.
-3. **نسخ الرسالة** ← إكمال أي `[حقل ناقص]` مؤشَّر بالأصفر ← فتحها بجيميل أو واتساب ← مراجعتها وإرسالها **بنفسك**.
-4. أزرار **«قدّمت»** و**«عندي مقابلة»** و**«ما تهمني»** تفتح Issue جاهز بـ GitHub؛ بعد Submit تنحفظ الحالة بالذاكرة تلقائياً.
+1. توصل رسائل تلگرام بيها 1–3 فرص (بس لما يكون أكو شي جديد يستاهل).
+2. المسودة موجودة داخل الرسالة، وزر «التفاصيل والمسودة» يفتح الموقع.
+3. **نسخ الرسالة** ← إكمال أي `[حقل ناقص]` ← إرسالها **بنفسك** (المنصة، جيميل أو واتساب).
+4. الرد على رسالة الفرصة بـ «قدمت» يحفظ الحالة. وبالموقع نفس الشي من أزرار «قدّمت» و«عندي مقابلة» و«ما تهمني».
 
 ## الذاكرة المشتركة: ملفات JSON بالريبو لو Supabase؟
 
@@ -92,18 +101,19 @@ pip install -r requirements.txt
 python -m fursa run --free     # تشغيل كامل بدون ذكاء (مجاني)
 python -m fursa collect        # بس سحب وتقييم
 python -m fursa portfolio      # إعادة قراءة المستودعات
-python -m fursa telegram-test  # رسالة تجربة لتلگرام
+python -m fursa telegram-setup # chat id لتلگرام + رسالة تجربة
 pip install pytest && python -m pytest -q
 ```
 
 ```
 fursa/
-  sources/      11 مصدر مجاني + بحث Claude
+  sources/      12 مصدر مجاني (منها قنوات تلگرام) + بحث Claude
   scoring.py    التقييم والأهلية والرسوم (بدون ذكاء)
   portfolio.py  فهرسة المستودعات العامة
   scout.py      الكشّاف       matcher.py   المطابق
   writer.py     الكاتب        manager.py   المدير
   llm.py        الباب الوحيد لـ Claude API + عدّاد الكلفة والسقف
+  notify.py     تلگرام: الرسائل والردود
   pipeline.py   تشغيل واحد كامل
 docs/           الموقع (GitHub Pages) + docs/data
 state/          ذاكرة داخلية: اللي انشاف، المؤقتات، الكلفة

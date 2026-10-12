@@ -80,8 +80,10 @@ def registry() -> list:
         reliefweb,
         remoteok,
         remotive,
+        telegram,
         websearch,
         wwr,
     )
 
-    return [remotive, remoteok, himalayas, jobicy, wwr, hn, freelancer, mostaql, khamsat, reliefweb, bounties, websearch]
+    return [remotive, remoteok, himalayas, jobicy, wwr, hn, freelancer, mostaql, khamsat, telegram, reliefweb, bounties,
+            websearch]

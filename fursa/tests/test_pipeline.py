@@ -23,7 +23,7 @@ def wired(monkeypatch):
     sent = []
     monkeypatch.setattr(sources, "registry", lambda: [fake_source(JOBS)])
     monkeypatch.setattr(portfolio, "refresh", lambda settings, store, llm=None, repos=None: setattr(store, "portfolio", [dict(r) for r in PORTFOLIO]) or 0)
-    monkeypatch.setattr(notify, "send", lambda settings, text: sent.append(text) or True)
+    monkeypatch.setattr(notify, "send", lambda settings, text, buttons=None: sent.append(text) or {"message_id": len(sent)})
     return sent
 
 
@@ -63,14 +63,15 @@ def test_ai_mode_full_team(settings, wired):
         all(r["name"] != "ghost-repo" for r in first["match"]["repos"])
     assert first["draft"]["message"] == "Fixed by manager, Thanoon Younis Mohammed." and first["draft"]["edited_by_manager"]
     assert "Thanoon Younis Mohammed" in approved[1]["draft"]["message"]
-    assert len(wired) == 1 and "فرصة" in wired[0]  # one Telegram digest
+    assert len(wired) == 2 and "1/2" in wired[0] and "<blockquote expandable>" in wired[0]  # one message per pick
     assert st.ideas["ideas"] and st.usage()["usd"] > 0
 
     # second run: nothing new -> no message, nothing re-announced, no repeated AI work
     claude.calls.clear()
     pipeline.run(settings, llm_client=claude)
-    assert len(wired) == 1
+    assert len(wired) == 2
     assert not any(c["model"] == "claude-haiku-5-5" for c in claude.calls)
+    assert len(load(settings).state["telegram"]["messages"]) == 2  # message id -> posting, for replies
 
 
 def test_manager_can_reject_everything_and_no_empty_update_is_sent(settings, wired):
@@ -115,12 +116,40 @@ def test_status_titles_and_apply(settings):
     assert st.opps[rec["id"]]["user_status"] == "applied" and not status.apply(st, "000000000000", "applied")
 
 
-def test_digest_is_safe_html(settings):
+def test_pick_message_is_safe_html_with_buttons(settings):
     rec = posting(title="Flutter <script> dev & co")
-    rec.update(id="abc123abc123", elig="yes", match={"repos": [{"name": "moalidaty"}]}, manager={"note_ar": "زين"})
-    text = notify.digest(settings, [rec], "ملخص")
-    assert "&lt;script&gt;" in text and "<script>" not in text
-    assert "https://thanoon12k.github.io/fursa/#abc123abc123" in text and len(text) < 4096
+    rec.update(id="abc123abc123", elig="yes", match={"repos": [{"name": "moalidaty"}]}, manager={"note_ar": "زين"},
+               draft={"message": "Hello <b>world</b>", "subject": None})
+    text, buttons = notify.pick_message(settings, rec, 1, 2, "ملخص")
+    assert "&lt;script&gt;" in text and "<script>" not in text and "Hello &lt;b&gt;world" in text
+    assert text.startswith("🗂 ملخص") and "1/2" in text and len(text) < 4096
+    assert buttons[0][1]["url"] == "https://thanoon12k.github.io/fursa-agents/#abc123abc123"
+
+
+def test_telegram_replies_update_the_memory(settings, monkeypatch):
+    settings.telegram_token, settings.telegram_chat = "t", "42"
+    st = load(settings)
+    a, b = posting(url="https://x.example/a"), posting(url="https://x.example/b")
+    st.add(a), st.add(b)
+    st.state["telegram"] = {"offset": 10, "messages": {"500": a["id"]}}
+    calls = []
+
+    def fake_call(settings, method, payload):
+        calls.append((method, payload))
+        return [
+            {"update_id": 11, "message": {"chat": {"id": 42}, "text": "قدّمت", "reply_to_message": {"message_id": 500}}},
+            {"update_id": 12, "message": {"chat": {"id": 42}, "text": f"/interview {b['id']}"}},
+            {"update_id": 13, "message": {"chat": {"id": 99}, "text": f"/ignore {b['id']}"}},  # a stranger: ignored
+            {"update_id": 14, "message": {"chat": {"id": 42}, "text": "شكراً"}},
+        ]
+
+    monkeypatch.setattr(notify, "_call", fake_call)
+    applied = notify.poll(settings, st)
+    assert [(r["id"], s) for r, s in applied] == [(a["id"], "applied"), (b["id"], "interview")]
+    assert st.opps[b["id"]]["user_status"] == "interview" and st.state["telegram"]["offset"] == 14
+    assert calls[0][1]["offset"] == 11
+    assert notify.reply_status("ما تهمني") == "ignored" and notify.reply_status("مقابلة باچر") == "interview"
+    assert notify.reply_status("hello") is None
 
 
 def test_store_prune_and_roundtrip(settings):

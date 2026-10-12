@@ -5,8 +5,7 @@
   python -m fursa collect          only fetch and score postings
   python -m fursa portfolio        re-index your public GitHub repos now
   python -m fursa status           apply status issues opened from the dashboard
-  python -m fursa telegram-test    send a test message to your Telegram
-  python -m fursa chat-id          show the chat id(s) that messaged your bot
+  python -m fursa telegram-setup   find your Telegram chat id and send a test message
 """
 
 from __future__ import annotations
@@ -31,8 +30,7 @@ def main(argv: list[str] | None = None) -> int:
     port_p = sub.add_parser("portfolio")
     port_p.add_argument("--repos", help="comma-separated owner/name list instead of listing your account")
     sub.add_parser("status")
-    sub.add_parser("telegram-test")
-    sub.add_parser("chat-id")
+    sub.add_parser("telegram-setup")
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 
@@ -63,18 +61,23 @@ def main(argv: list[str] | None = None) -> int:
         print(f"applied {applied} status update(s)")
         return 0
 
-    if args.cmd == "telegram-test":
-        ok = notify.send(settings, "✅ <b>فرصة</b>: Telegram is connected. The agents will message you here.")
-        print("sent" if ok else "not sent: check TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID")
-        return 0 if ok else 1
-
-    if args.cmd == "chat-id":
+    if args.cmd == "telegram-setup":
         if not settings.telegram_token:
-            print("set TELEGRAM_BOT_TOKEN first")
+            print("1) Create a bot with @BotFather and save its token as the TELEGRAM_BOT_TOKEN secret.")
             return 1
-        for chat_id, name in notify.chat_ids(settings):
-            print(chat_id, name)
+        print(f"Bot: @{notify.bot_name(settings)}")
+        if not settings.telegram_chat:
+            chats = notify.chat_ids(settings)
+            if not chats:
+                print("2) Send any message to the bot in Telegram, then run this again.")
+                return 1
+            for chat_id, name in chats:
+                print(f"Chat id {chat_id} ({name}): save it as the TELEGRAM_CHAT_ID secret, then run this again.")
+            return 0
+        notify.send(settings, "✅ <b>فرصة</b>: تلگرام مربوط. الفرص الجديدة توصل هنا، والرد على أي فرصة بكلمة «قدمت» يحفظ الحالة.")
+        print("Test message sent. Telegram is ready.")
         return 0
+
     return 1
 
 

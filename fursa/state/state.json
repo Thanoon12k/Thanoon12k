@@ -1,6 +1,6 @@
 {
  "timers": {
-  "ideas": "2026-10-12T19:35:08Z"
+  "ideas": "2026-10-12T19:58:50Z"
  },
  "usage": {
   "2026-10": {
@@ -9,6 +9,13 @@
    "output_tokens": 0,
    "calls": 0,
    "searches": 0
+  }
+ },
+ "telegram": {
+  "messages": {
+   "6": "705bee5087f8",
+   "7": "0f7f1722c3cb",
+   "8": "94516b10164d"
   }
  }
 }

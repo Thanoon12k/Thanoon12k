@@ -1,7 +1,7 @@
 {
- "updated": "2026-10-12T19:35:08Z",
- "repo": "Thanoon12k/fursa",
- "site_url": "https://thanoon12k.github.io/fursa/",
+ "updated": "2026-10-12T19:58:50Z",
+ "repo": "Thanoon12k/fursa-agents",
+ "site_url": "https://thanoon12k.github.io/fursa-agents/",
  "mode": "ai",
  "llm_note": "",
  "models": {
@@ -18,8 +18,8 @@
  "budget_usd": 5.0,
  "counts": {
   "approved": 3,
-  "screened": 3,
-  "rejected": 7
+  "screened": 5,
+  "rejected": 8
  },
  "user_counts": {},
  "sources": {},

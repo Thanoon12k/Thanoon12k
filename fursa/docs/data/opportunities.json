@@ -96,12 +96,12 @@
    "rank": 1,
    "rank_score": 99,
    "ai": true,
-   "at": "2026-10-12T19:35:08Z",
+   "at": "2026-10-12T19:58:50Z",
    "note_ar": "أقوى فرصة بهالدفعة: الزبون من العراق ويريد طرق سحب محلية، والميزانية 500–1000$ خلال 20 يوم. مولداتي أول مشروع يستاهل ينعرض لأنه نفس فكرة الرصيد والوصولات. قبل التسعير: التأكد من سياسات Google Play لتطبيقات المكافآت، وسؤال الزبون عن عدد المستخدمين المتوقع."
   },
-  "shown_at": "2026-10-12T19:35:08Z",
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "shown_at": "2026-10-12T19:58:50Z",
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "0f7f1722c3cb",
@@ -199,12 +199,12 @@
    "rank": 2,
    "rank_score": 98,
    "ai": true,
-   "at": "2026-10-12T19:35:08Z",
+   "at": "2026-10-12T19:58:50Z",
    "note_ar": "شغلة قصيرة وأوضح من بناء تطبيق من الصفر: تنصيب وتعريب ونشر. الأغلب الزبون من كردستان، فالقرب منه ميزة. قبل العرض: سؤاله عن نسخة السكربت (StackFood؟) ومنو يدفع رسوم حساب Google Play، والترجمة الكردية تكون عليه."
   },
-  "shown_at": "2026-10-12T19:35:08Z",
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "shown_at": "2026-10-12T19:58:50Z",
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "94516b10164d",
@@ -304,12 +304,12 @@
    "rank": 3,
    "rank_score": 97,
    "ai": true,
-   "at": "2026-10-12T19:35:08Z",
+   "at": "2026-10-12T19:58:50Z",
    "note_ar": "للراتب الشهري هاي الأقرب: شغل كامل عن بعد، وتوقيت العراق ضمن المسموح (CET ±3). الإعلان ينتهي 15 أكتوبر، فالتقديم لازم يكون خلال يومين. الفحص التقني عندهم قوي، ومراجعة AWS وDocker قبل المقابلة تفيد."
   },
-  "shown_at": "2026-10-12T19:35:08Z",
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "shown_at": "2026-10-12T19:58:50Z",
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "d83644a716f4",
@@ -364,8 +364,8 @@
    ],
    "ai": true
   },
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "4011ee76e769",
@@ -419,8 +419,123 @@
    ],
    "ai": true
   },
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
+ },
+ {
+  "id": "836b346c1ddc",
+  "source": "telegram",
+  "source_label": "Telegram @remotejobsy → Jobee",
+  "url": "https://jobee.pro/jobs/296df139-6370-4d4a-8459-24d3b6ad5500",
+  "title": "Mobile Software Engineer, Growth & Experimentation",
+  "company": "Everis",
+  "kind": "job",
+  "posted": "2026-09-15",
+  "expires": "2026-11-14",
+  "location": "Worldwide (100% remote)",
+  "remote": true,
+  "pay": "$80K–$120K/year",
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "dart"
+  ],
+  "summary": "Full-time mid-level mobile engineer, 100% remote from anywhere (also hiring in Egypt, India, Pakistan, Philippines, Türkiye, Ukraine). Flutter, Dart, TypeScript/NestJS, MongoDB; production mobile apps, App Store/Google Play subscriptions and paywalls, A/B testing and growth experimentation. USD 80,000-120,000 a year…",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "found_in": "https://t.me/remotejobsy/201"
+  },
+  "score": 17,
+  "elig": "likely",
+  "elig_note": "'Work 100% remotely from anywhere'; Iraq not named but no country limit",
+  "flags": [],
+  "scout": {
+   "keep": true,
+   "reason": "Remote Flutter role open to any country, salary stated",
+   "eligibility": "likely",
+   "eligibility_note": "'Work 100% remotely from anywhere'; Iraq not named but no country limit",
+   "open": "yes",
+   "pay": "$80K–$120K/year",
+   "work_type": "full-time",
+   "channel": "form",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [
+    "listed through an aggregator; the employer's own page was not shown",
+    "asks for paywall and growth-experiment experience"
+   ],
+   "brief": "Mid-level Flutter engineer for growth experiments: production mobile apps, subscriptions/paywalls, A/B tests; TypeScript/NestJS and MongoDB on the backend. USD 80-120K a year, remote from anywhere.",
+   "skills": [
+    "flutter",
+    "dart",
+    "typescript",
+    "nestjs",
+    "mongodb",
+    "a/b testing"
+   ],
+   "ai": true
+  },
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
+ },
+ {
+  "id": "581e88bca87e",
+  "source": "telegram",
+  "source_label": "Telegram @remote_python_jobs → Canonical",
+  "url": "https://job-boards.greenhouse.io/canonical/jobs/3658005",
+  "title": "Python Software Engineer - Ubuntu Hardware Certification Team",
+  "company": "Canonical",
+  "kind": "job",
+  "posted": "2026-09-19",
+  "expires": null,
+  "location": "Home based - EMEA",
+  "remote": true,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "python",
+   "iot",
+   "automation"
+  ],
+  "summary": "Home based - EMEA. Build and maintain Canonical's open-source Python test-automation tools that certify desktops, laptops, servers and IoT devices for Ubuntu. Needs working Python, interest in test automation, Ubuntu or Linux experience, and a globally distributed team. Company meetings 2-4 times a year with…",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "found_in": "https://t.me/remote_python_jobs/1419"
+  },
+  "score": 13,
+  "elig": "likely",
+  "elig_note": "Home based in EMEA, which includes Iraq",
+  "flags": [],
+  "scout": {
+   "keep": true,
+   "reason": "Python + Linux + hardware testing: close to the IoT and automation projects",
+   "eligibility": "likely",
+   "eligibility_note": "Home based in EMEA, which includes Iraq",
+   "open": "yes",
+   "pay": null,
+   "work_type": "full-time",
+   "channel": "form",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [
+    "2-4 company trips a year abroad",
+    "pay not stated",
+    "long multi-stage hiring process"
+   ],
+   "brief": "Python engineer building open-source test automation that certifies hardware and IoT devices for Ubuntu; Linux experience required; remote in EMEA.",
+   "skills": [
+    "python",
+    "linux",
+    "test automation",
+    "hardware",
+    "iot"
+   ],
+   "ai": true
+  },
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "94c875373ce1",
@@ -469,8 +584,8 @@
    ],
    "ai": true
   },
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "a1b4e4a61e69",
@@ -498,8 +613,8 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: client wants someone local in Odisha, India",
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "164661cefbbd",
@@ -528,8 +643,8 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: 174 bids, ends in a day, anti-bot scraping",
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "469c9b228613",
@@ -557,8 +672,37 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: budget too small",
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
+ },
+ {
+  "id": "9025ab6570b5",
+  "source": "telegram",
+  "source_label": "Telegram @remote_python_jobs",
+  "url": "https://t.me/remote_python_jobs/1427",
+  "title": "Python Developer",
+  "company": "Hivex",
+  "kind": "job",
+  "posted": "2026-10-04",
+  "expires": null,
+  "location": "Worldwide",
+  "remote": null,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "python"
+  ],
+  "summary": "Channel post said Location: Worldwide.",
+  "status": "rejected",
+  "user_status": null,
+  "extra": {},
+  "score": 8,
+  "elig": "yes",
+  "elig_note": "open location: Worldwide",
+  "flags": [],
+  "reject_reason": "manager: the original posting on Himalayas is limited to the United States; the channel said Worldwide",
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "2148fc3515c8",
@@ -586,8 +730,8 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: asks for 6 years of e-commerce experience",
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "666b49b878b6",
@@ -613,8 +757,8 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: huge scope for a tiny budget",
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "3476c6385b02",
@@ -640,8 +784,8 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: 191 bids, ends in a day, Kafka/Go/Java stack",
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  },
  {
   "id": "f79ba9370a7e",
@@ -667,7 +811,7 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "reject_reason": "manager: budget too small, 129 bids",
-  "first_seen": "2026-10-12T19:35:08Z",
-  "updated": "2026-10-12T19:35:08Z"
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-12T19:58:50Z"
  }
 ]

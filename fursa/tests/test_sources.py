@@ -3,7 +3,7 @@
 from types import SimpleNamespace
 
 from fursa import net
-from fursa.sources import freelancer, guess_lang, himalayas, hn, khamsat, mostaql, remoteok, remotive, websearch, wwr
+from fursa.sources import freelancer, guess_lang, himalayas, hn, khamsat, mostaql, remoteok, remotive, telegram, websearch, wwr
 
 WWR_RSS = """<?xml version="1.0"?><rss><channel>
 <item><title>Acme: Senior Python Developer</title><region>Anywhere in the World</region><country></country>
@@ -116,3 +116,28 @@ def test_websearch_records_keep_only_real_urls():
 def test_guess_lang():
     assert guess_lang("مطلوب مبرمج Flutter") == "ar"
     assert guess_lang("Flutter developer") == "en"
+
+
+TELEGRAM_HTML = """
+<div class="tgme_widget_message_wrap js-widget_message_wrap"><div class="tgme_widget_message" data-post="remote_python_jobs/1434">
+<div class="tgme_widget_message_text js-message_text" dir="auto">Published time : 2026-10-11<br/>Company name : Upwork client<br/>
+Title : Python Developer for Personal Project<br/>Location : Worldwide<br/>Anywhere : Yes<br/>Remote : Yes</div>
+<a class="tgme_widget_message_date" href="https://t.me/remote_python_jobs/1434"><time datetime="2026-10-12T08:00:00+00:00">08:00</time></a>
+</div></div>
+<div class="tgme_widget_message_wrap js-widget_message_wrap"><div class="tgme_widget_message" data-post="IQ_JOBS/13862">
+<div class="tgme_widget_message_text js-message_text" dir="auto">📢 مطلوب مبرمج Flutter لشركة برمجيات<br/>📍 الموقع: بغداد - الكرادة<br/>للتقديم واتساب 07700000000</div>
+<time datetime="2026-10-10T09:00:00+00:00">09:00</time></div></div>
+<div class="tgme_widget_message_wrap"><div class="tgme_widget_message" data-post="IQ_JOBS/13863"><div class="tgme_widget_message_text">short</div></div></div>
+"""
+
+
+def test_telegram_channel_preview():
+    remote = telegram.parse(TELEGRAM_HTML, "remote_python_jobs")
+    assert len(remote) == 2  # the 'short' post is skipped
+    first = remote[0]
+    assert first["url"] == "https://t.me/remote_python_jobs/1434" and first["posted"] == "2026-10-12"
+    assert first["title"] == "Python Developer for Personal Project" and first["company"] == "Upwork client"
+    assert first["location"] == "Worldwide" and first["kind"] == "job"  # "Anywhere : Yes" means worldwide
+    iraq = telegram.parse(TELEGRAM_HTML, "IQ_JOBS", in_iraq=True)[1]
+    assert iraq["title"] == "مطلوب مبرمج Flutter لشركة برمجيات" and iraq["location"] == "Iraq - بغداد - الكرادة"
+    assert iraq["lang"] == "ar" and iraq["kind"] == "job"

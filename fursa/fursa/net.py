@@ -18,7 +18,7 @@ class SourceError(RuntimeError):
 
 
 def user_agent() -> str:
-    repo = os.environ.get("GITHUB_REPOSITORY", "Thanoon12k/fursa")
+    repo = os.environ.get("GITHUB_REPOSITORY", "Thanoon12k/fursa-agents")
     return f"Mozilla/5.0 (compatible; fursa/{__version__}; +https://github.com/{repo})"
 
 

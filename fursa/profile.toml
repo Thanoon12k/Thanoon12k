@@ -87,6 +87,10 @@ salesforce = -6
 shopify = -4
 "data entry" = -6
 "virtual assistant" = -6
+casino = -10      # gambling platforms are left out by default; delete these lines to include them
+gambling = -10
+betting = -10
+sportsbook = -10
 
 [agents]
 worker_model = "claude-haiku-5-5"   # scout, matcher and writer (cheap)
@@ -119,6 +123,13 @@ khamsat = true
 github_bounties = true
 reliefweb = true    # only runs when the RELIEFWEB_APPNAME variable is set (free, approved by ReliefWeb)
 websearch = true
+telegram = true
+
+# Public Telegram channels, read through their public web preview (t.me/s/<name>).
+# Add or remove names freely; channels in iraq_channels count as "in Iraq".
+[telegram]
+iraq_channels = ["Muhannad_job", "basrajobs", "IQ_JOBS", "baghdadjobss", "VIP_jobs", "plm3132", "vbbrt", "krdjobs"]
+channels = ["remotejobss", "remotejobs", "remote_python_jobs", "devjobs", "cryptojobslist"]
 
 [portfolio]
 extra_orgs = ["MetaluxTech"]   # organisation repos are used only where you have commits
