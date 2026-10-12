@@ -10,7 +10,7 @@ from .conftest import PORTFOLIO, FakeClaude, fake_source, posting
 
 JOBS = [
     posting(url="https://jobs.example.com/1", title="Senior Flutter Developer", company="Acme",
-            text="Flutter, Dart, Firebase, REST APIs. Remote worldwide. Send CV to jobs@acme.example"),
+            text="Flutter, Dart, Firebase, REST APIs. Remote worldwide. Send CV to jobs@acme.example or WhatsApp 07700000000"),
     posting(url="https://jobs.example.com/2", title="Django Backend Developer", company="Beta",
             text="Python, Django, Django REST framework, PostgreSQL. Remote (EMEA).", location="EMEA"),
     posting(url="https://jobs.example.com/3", title="PHP Developer", company="Gamma", text="PHP, Laravel, WordPress"),
@@ -37,6 +37,7 @@ def test_free_mode_runs_without_any_ai(settings, wired):
     st = load(settings)
     by_title = {o["title"]: o for o in st.opps.values()}
     assert "PHP Developer" not in by_title and "Flutter Developer" not in by_title  # dropped for free by the rules
+    assert by_title["Senior Flutter Developer"]["contacts"] == {"whatsapp": "9647700000000", "email": "jobs@acme.example"}
     assert by_title["Senior Flutter Developer"]["status"] in ("approved", "drafted", "rejected", "matched")
     draft = by_title["Senior Flutter Developer"].get("draft") or {}
     assert "{NAME}" not in json.dumps(draft) and "Thanoon Younis Mohammed" in draft.get("message", "")
@@ -61,7 +62,8 @@ def test_ai_mode_full_team(settings, wired):
     assert first["scout"]["contact"] is None  # invented contact removed
     assert [r["name"] for r in first["match"]["repos"]] == ["Pediatric-Clinic-manager", "My-Work"] or \
         all(r["name"] != "ghost-repo" for r in first["match"]["repos"])
-    assert first["draft"]["message"] == "Fixed by manager, Thanoon Younis Mohammed." and first["draft"]["edited_by_manager"]
+    assert first["draft"]["message"].startswith("Fixed by manager, Thanoon Younis Mohammed.") and first["draft"]["edited_by_manager"]
+    assert "https://make1it.pythonanywhere.com" in first["draft"]["message"]  # the website rides in every message
     assert "Thanoon Younis Mohammed" in approved[1]["draft"]["message"]
     assert len(wired) == 2 and "1/2" in wired[0] and "<blockquote expandable>" in wired[0]  # one message per pick
     assert st.ideas["ideas"] and st.usage()["usd"] > 0
@@ -123,7 +125,7 @@ def test_pick_message_is_safe_html_with_buttons(settings):
     text, buttons = notify.pick_message(settings, rec, 1, 2, "ملخص")
     assert "&lt;script&gt;" in text and "<script>" not in text and "Hello &lt;b&gt;world" in text
     assert text.startswith("🗂 ملخص") and "1/2" in text and len(text) < 4096
-    assert buttons[0][1]["url"] == "https://thanoon12k.github.io/fursa-agents/#abc123abc123"
+    assert buttons[-1][1]["url"] == "https://thanoon12k.github.io/fursa-agents/#abc123abc123"  # links row comes last
 
 
 def test_telegram_replies_update_the_memory(settings, monkeypatch):

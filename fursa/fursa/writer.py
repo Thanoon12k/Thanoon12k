@@ -29,7 +29,8 @@ SYSTEM = (
     "English: plain and confident, no clichés). Channel rules: email = a subject line and 120-180 words; whatsapp = "
     "no subject, 50-90 friendly words; platform = a freelance proposal with no subject, 90-150 words: show you "
     "understood the task, give a 3-step plan, link the relevant repositories, end with one question; linkedin, form "
-    "or other = an 80-120 word cover note. Link 2-3 repositories naturally (full URLs). cv_bullets: 3-5 lines for "
+    "or other = an 80-120 word cover note. Link 2-3 repositories naturally (full URLs), and always include the "
+    "portfolio website {WEBSITE} once: it shows all the projects with screenshots. cv_bullets: 3-5 lines for "
     "this posting, each starting with a verb, facts only."
 )
 
@@ -69,6 +70,21 @@ def fill_tokens(text: str | None, person: dict, lang: str) -> str | None:
     return text
 
 
+def ensure_website(message: str | None, person: dict, lang: str) -> str | None:
+    """Every message carries the portfolio website: right after the repository links, else at the end."""
+    site = (person.get("website") or "").rstrip("/")
+    if not message or not site or site in message:
+        return message
+    line = (f"معرض أعمالي (كل المشاريع مع صور): {site}" if lang == "ar"
+            else f"Portfolio with screenshots of all my projects: {site}")
+    lines = message.split("\n")
+    last_repo = max((i for i, text in enumerate(lines) if "github.com/" in text), default=None)
+    if last_repo is None:
+        return message.rstrip() + "\n\n" + line
+    lines.insert(last_repo + 1, line)
+    return "\n".join(lines)
+
+
 def _template(rec: dict, repos: list[dict], lang: str) -> dict:
     subject, body = TEMPLATES["ar" if lang == "ar" else "en"]
     team = f" {rec['company']}" if rec.get("company") else ""
@@ -103,7 +119,7 @@ def run(ctx, recs: list[dict]) -> int:
         draft = dict(result, ai=True) if result else _template(rec, repos, lang)
         by_ai += 1 if result else 0
         draft["subject"] = fill_tokens(draft.get("subject"), person, lang) if channel == "email" or not result else None
-        draft["message"] = fill_tokens(draft["message"], person, lang)
+        draft["message"] = ensure_website(fill_tokens(draft["message"], person, lang), person, lang)
         draft["cv_bullets"] = [fill_tokens(b, person, lang) for b in draft.get("cv_bullets", [])][:5]
         draft.update({"lang": lang, "channel": channel, "contact": scout.get("contact")})
         ctx.store.set_status(rec, "drafted", draft=draft)

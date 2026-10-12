@@ -295,22 +295,28 @@ footer a { color: var(--muted); }
     if (!d) return "";
     const lang = d.lang === "ar" ? "ar" : "en";
     const bullets = (d.cv_bullets || []).map((b) => `<li>${highlight(b)}</li>`).join("");
+    const c = o.contacts || {};
     const contact = d.contact || "";
-    const email = /@/.test(contact) ? contact : "";
-    const phone = /^[+\d][\d\s-]{6,}$/.test(contact) ? contact.replace(/\D/g, "") : "";
+    const email = c.email || (/@/.test(contact) ? contact : "");
+    const phone = c.whatsapp || (/^[+\d][\d\s-]{6,}$/.test(contact) ? contact.replace(/\D/g, "") : "");
     const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(d.subject || o.title)}&body=${encodeURIComponent(d.message || "")}`;
     const wa = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(d.message || "")}` : "";
+    const tg = c.telegram ? `https://t.me/${encodeURIComponent(c.telegram)}` : "";
+    const apply = c.apply_url && c.apply_url !== o.url ? safeUrl(c.apply_url) : "";
+    const shown = [email, phone && "+" + phone, c.telegram && "@" + c.telegram].filter(Boolean).join(" · ");
     return `<details class="draft"${open ? " open" : ""}>
       <summary>مسودة التقديم · ${esc(CHANNEL[d.channel] || "رسالة")} · ${lang === "ar" ? "عربي" : "English"}${d.ai === false ? " · قالب بدون ذكاء" : ""}${d.edited_by_manager ? " · عدّلها المدير" : ""}</summary>
       ${d.subject ? `<div class="subject" dir="auto">${highlight(d.subject)}</div>` : ""}
       <div class="msg" dir="${lang === "ar" ? "rtl" : "ltr"}">${highlight(d.message)}</div>
       ${bullets ? `<div class="sub" style="margin-top:10px">نقاط للسيرة الذاتية:</div><ul class="bullets" dir="${lang === "ar" ? "rtl" : "ltr"}">${bullets}</ul>` : ""}
-      ${contact ? `<div class="sub" style="margin-top:8px">جهة التقديم المذكورة بالإعلان: <span class="num">${esc(contact)}</span></div>` : ""}
+      ${shown ? `<div class="sub" style="margin-top:8px">التواصل المذكور بالإعلان: <span class="num">${esc(shown)}</span></div>` : ""}
       <div class="actions" style="margin-top:10px">
         <button class="btn primary" data-copy="msg" data-id="${esc(o.id)}">نسخ الرسالة</button>
         ${bullets ? `<button class="btn" data-copy="cv" data-id="${esc(o.id)}">نسخ نقاط السيرة</button>` : ""}
-        ${d.channel === "email" || email ? `<a class="btn" target="_blank" rel="noopener" href="${esc(gmail)}">فتح بجيميل</a>` : ""}
         ${wa ? `<a class="btn" target="_blank" rel="noopener" href="${esc(wa)}">واتساب</a>` : ""}
+        ${d.channel === "email" || email ? `<a class="btn" target="_blank" rel="noopener" href="${esc(gmail)}">فتح بجيميل</a>` : ""}
+        ${tg ? `<a class="btn" target="_blank" rel="noopener" href="${esc(tg)}">تلگرام</a>` : ""}
+        ${apply ? `<a class="btn" target="_blank" rel="noopener" href="${esc(apply)}">رابط التقديم</a>` : ""}
       </div>
     </details>`;
   }

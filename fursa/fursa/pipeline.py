@@ -19,7 +19,7 @@ from collections import Counter
 from datetime import timedelta
 from types import SimpleNamespace
 
-from . import manager, matcher, notify, portfolio, scoring, scout, sources, status, writer
+from . import contacts, manager, matcher, notify, portfolio, scoring, scout, sources, status, writer
 from .llm import LLM
 from .scoring import normalize
 from .store import Store
@@ -91,6 +91,10 @@ def collect(ctx, report: dict) -> None:
                     kept.remove(rec)
                     store.mark_seen(rec["id"])
         for rec in kept:
+            extra = rec.get("extra") or {}
+            found = contacts.extract(rec.get("text"), apply_url=extra.get("apply_url"), channel=extra.get("channel"))
+            if found:
+                rec["contacts"] = found
             store.add(rec)
         info.update(state="ok", fetched=len(items), new=len(batch), kept=len(kept))
         store.state.setdefault("sources", {})[name] = {**info, "at": iso_time(settings.now)}

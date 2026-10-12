@@ -16,6 +16,7 @@ import re
 from datetime import timedelta
 
 from . import net
+from .contacts import gmail_link, telegram_share_link, whatsapp_link
 from .scoring import normalize
 from .status import apply as apply_status
 from .text import clip
@@ -96,14 +97,36 @@ def pick_message(settings, rec: dict, n: int, total: int, summary: str = "") -> 
         if draft.get("subject"):
             lines.append(f"✉️ <b>{_e(clip(draft['subject'], 150))}</b>")
         lines.append(f"<blockquote expandable>{_e(clip(draft['message'], 2300))}</blockquote>")
+    lines.append("📨 أزرار الإرسال تفتح التطبيق والمسودة جاهزة؛ الإرسال بضغطة منك.")
     lines.append("↩️ للتحديث: الرد على هالرسالة بكلمة «قدمت» أو «مقابلة» أو «ما تهمني».")
     text = "\n".join(lines)
     if len(text) > 4000:
         text = text[:3990] + "…"
-    row = [{"text": "🔗 الإعلان", "url": rec["url"]}]
+    return text, buttons(settings, rec)
+
+
+def buttons(settings, rec: dict) -> list[list[dict]]:
+    """Contact buttons first (each opens the app with the draft ready; sending stays a human tap), then links."""
+    draft, found, person = rec.get("draft") or {}, rec.get("contacts") or {}, settings.person
+    message = draft.get("message") or ""
+    send = []
+    if found.get("whatsapp"):
+        send.append({"text": "📲 واتساب", "url": whatsapp_link(found["whatsapp"], message)})
+    if found.get("email"):  # with WhatsApp too, the email button carries no body to keep the buttons light
+        body = "" if found.get("whatsapp") else message
+        send.append({"text": "✉️ إيميل", "url": gmail_link(found["email"], draft.get("subject") or rec["title"], body)})
+    if found.get("telegram"):
+        send.append({"text": "💬 تلگرام", "url": f"https://t.me/{found['telegram']}"})
+    apply_url = found.get("apply_url") or ""
+    if apply_url.startswith("http") and apply_url != rec["url"]:
+        send.append({"text": "📝 رابط التقديم", "url": apply_url})
+    if message:
+        link = f"https://github.com/{person['github']}" if person.get("github") else (person.get("website") or rec["url"])
+        send.append({"text": "📤 إرسال المسودة", "url": telegram_share_link(message, link)})
+    info = [{"text": "🔗 الإعلان", "url": rec["url"]}]
     if settings.site_url:
-        row.append({"text": "📝 التفاصيل والمسودة", "url": f"{settings.site_url}#{rec['id']}"})
-    return text, [row]
+        info.append({"text": "📄 التفاصيل", "url": f"{settings.site_url}#{rec['id']}"})
+    return [send[i : i + 3] for i in range(0, len(send), 3)] + [info]
 
 
 def announce(settings, store, picks: list[dict], summary: str = "") -> int:

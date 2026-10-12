@@ -117,10 +117,10 @@ def review(ctx, recs: list[dict]) -> list[dict]:
             rec = by_id.pop(pick["id"])
             if pick["decision"] == "approve" and len(approved) < max_picks:
                 if pick.get("fixed_message"):
-                    from .writer import fill_tokens
+                    from .writer import ensure_website, fill_tokens
 
                     lang = (rec.get("draft") or {}).get("lang", "en")
-                    rec["draft"]["message"] = fill_tokens(pick["fixed_message"], settings.person, lang)
+                    rec["draft"]["message"] = ensure_website(fill_tokens(pick["fixed_message"], settings.person, lang), settings.person, lang)
                     rec["draft"]["edited_by_manager"] = True
                 _approve(store, rec, len(approved) + 1, pick.get("note_ar", ""), True, settings.now)
                 approved.append(rec)

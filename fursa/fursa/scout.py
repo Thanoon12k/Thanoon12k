@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import re
 
+from . import contacts
 from .scoring import normalize
 from .text import clip
 
@@ -102,6 +103,9 @@ def _apply(store, rec: dict, verdict: dict) -> None:
     contact = verdict.get("contact")
     if contact and normalize(contact) not in text:
         verdict["contact"] = None  # the model may not invent contact details
+    elif contact:
+        for key, value in contacts.extract(contact).items():
+            rec.setdefault("contacts", {}).setdefault(key, value)
     if verdict.get("pay") and not rec.get("pay"):
         rec["pay"] = verdict["pay"]
     if verdict.get("eligibility") in ("yes", "likely", "unclear", "no"):
