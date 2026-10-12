@@ -1,0 +1,129 @@
+# ─────────────────────────────────────────────────────────────────────
+#  فرصة · ملف الإعدادات — هذا الملف الوحيد اللي تحتاج تعدّله
+#  Fursa settings — the only file you need to edit.
+# ─────────────────────────────────────────────────────────────────────
+
+[person]
+# Copied from your public GitHub profile README. Never write anything untrue
+# here: the writer agent may only use what this section says about you.
+name = "Thanoon Younis Mohammed"
+headline = "Flutter & Django full-stack developer"
+city = "Mosul, Iraq"
+email = "engthanoon1@gmail.com"
+phone = "+964 770 279 0915"
+website = "https://make1it.pythonanywhere.com"
+github = "Thanoon12k"
+languages = ["Arabic (native)", "English (excellent)"]
+facts = [
+  "Backend and Flutter developer since 2019: cross-platform apps, Django and Flask backends, AI integration, the full project lifecycle",
+  "Tech trainer since 2021: trains university students and guides graduation projects",
+  "Mobile developer and technical support (2022-2023): Flutter + Firebase, notifications, real-time databases",
+  "Server administrator (2021-2023): Ubuntu, Gunicorn, Redis, security and monitoring",
+  "B.Sc. in Computer Technical Engineering (Networks & Communication), Northern Technical University (2018-2022)",
+  "Published papers in international journals",
+  "Built 'showcase' (repo My-Work): clones, runs, screenshots and publishes all 65 of his projects with one command",
+  "Runs the Golden Code Facebook page fully automated: code designs the posts, an AI agent publishes through the Graph API",
+]
+
+[search]
+min_score = 8               # postings below this relevance score are dropped without AI
+max_age_days = 30           # jobs older than this are ignored
+max_age_days_freelance = 10 # freelance projects and gigs fill fast
+min_budget_usd = 50         # freelance projects with a smaller stated budget are skipped
+min_hourly_usd = 8          # hourly projects paying less than this are skipped
+max_per_source = 8          # best postings kept from one source per run
+kinds = ["job", "freelance", "gig", "bounty"]
+queries = ["flutter", "django", "python"]
+
+# Relevance weights. A hit in the title counts double.
+[search.keywords]
+flutter = 10
+dart = 6
+django = 10
+"django rest" = 4
+drf = 3
+fastapi = 4
+flask = 5
+python = 4
+firebase = 3
+supabase = 3
+bloc = 2
+"mobile app" = 3
+"mobile developer" = 4
+"cross-platform" = 3
+"rest api" = 2
+backend = 2
+opencv = 3
+arduino = 3
+iot = 2
+automation = 2
+scraping = 2
+playwright = 3
+"ai agent" = 2
+chatbot = 2
+"فلاتر" = 10
+"فلتر" = 3
+"جانغو" = 10
+"دجانغو" = 10
+"بايثون" = 5
+"تطبيق جوال" = 4
+"تطبيق موبايل" = 4
+"تطبيق اندرويد" = 3
+"لوحة تحكم" = 2
+"اتمتة" = 2
+
+# Skills that usually mean "not your stack". Negative weights.
+[search.penalties]
+php = -4
+wordpress = -6
+laravel = -4
+".net" = -5
+"c#" = -4
+java = -3
+"react native" = -2
+golang = -3
+"ruby on rails" = -4
+salesforce = -6
+shopify = -4
+"data entry" = -6
+"virtual assistant" = -6
+
+[agents]
+worker_model = "claude-haiku-5-5"   # scout, matcher and writer (cheap)
+manager_model = "claude-opus-5-5"   # final review and weekly ideas (strong)
+worker_effort = "low"
+manager_effort = "low"            # "medium" reviews more deeply and costs about twice as much
+manager_every_hours = 12            # the manager reviews the drafts twice a day
+monthly_budget_usd = 5.0            # hard stop: after this the agents keep running without AI until next month
+max_scout = 12                      # postings the AI scout screens per run
+max_match = 6                       # postings matched to your repos per run
+max_drafts = 4                      # application drafts written per run
+max_picks = 3                       # new picks the manager may approve per run
+min_fit = 55                        # match score (0-100) needed before a draft is written
+web_search = true                   # Claude web search for LinkedIn, X, Facebook and Google
+web_search_every_hours = 24
+web_search_max_uses = 4
+web_search_tool = "web_search_20250305"
+
+[sources]
+# Set any source to false to switch it off.
+remotive = true
+remoteok = true
+himalayas = true
+jobicy = true
+weworkremotely = true
+hackernews = true
+freelancer = true
+mostaql = true
+khamsat = true
+github_bounties = true
+reliefweb = true    # only runs when the RELIEFWEB_APPNAME variable is set (free, approved by ReliefWeb)
+websearch = true
+
+[portfolio]
+extra_orgs = ["MetaluxTech"]   # organisation repos are used only where you have commits
+exclude = ["Thanoon12k"]       # repos to leave out (your profile README)
+refresh_days = 7
+
+[site]
+url = ""   # leave empty to use https://<owner>.github.io/<repo>/

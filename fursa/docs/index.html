@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>رادار فرصة</title>
+<meta name="description" content="فرص الشغل اللي لگاها الوكلاء، مع المشاريع المناسبة ومسودات التقديم.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316130d'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23ffc93c' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23ff6b47'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Readex+Pro:wght@300;400;500;600&family=Reem+Kufi:wght@600;700&display=swap">
+<style>
+/* Layout: a single reading column; a status strip, then the agents' assembly line, then tabbed boards. */
+:root {
+  --bg: #fbfaf7; --surface: #ffffff; --sunk: #f3f0e9; --ink: #16130d; --muted: #6b6357; --line: #e6e0d4;
+  --accent: #d9431f; --accent-ink: #ffffff; --gold: #ffc93c; --gold-ink: #3d2e00;
+  --ok: #0f7f62; --ok-bg: #e3f4ee; --warn: #9a6200; --warn-bg: #fdf1d8; --bad: #b42318; --bad-bg: #fde7e4; --info: #3651d4; --info-bg: #e8ecff;
+  --display: "Reem Kufi", "Readex Pro", "Segoe UI", Tahoma, sans-serif;
+  --body: "Readex Pro", "Segoe UI", Tahoma, "Noto Sans Arabic", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #16130d; --surface: #201b13; --sunk: #2a2419; --ink: #f2ece1; --muted: #a59b8c; --line: #3a3226;
+    --accent: #ff6b47; --accent-ink: #1a0f08; --gold: #ffc93c; --gold-ink: #2a1f00;
+    --ok: #3fd0a5; --ok-bg: #12332a; --warn: #f2b44c; --warn-bg: #3a2a0c; --bad: #ff8a7a; --bad-bg: #3d1a16; --info: #8fa2ff; --info-bg: #1d2448;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #16130d; --surface: #201b13; --sunk: #2a2419; --ink: #f2ece1; --muted: #a59b8c; --line: #3a3226;
+  --accent: #ff6b47; --accent-ink: #1a0f08; --gold: #ffc93c; --gold-ink: #2a1f00;
+  --ok: #3fd0a5; --ok-bg: #12332a; --warn: #f2b44c; --warn-bg: #3a2a0c; --bad: #ff8a7a; --bad-bg: #3d1a16; --info: #8fa2ff; --info-bg: #1d2448;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 400 15px/1.7 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: var(--info); }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+[hidden] { display: none !important; }
+.app { max-width: 880px; margin: 0 auto; padding-inline: 16px; padding-block: 18px 40px; display: grid; gap: 18px; }
+
+/* header */
+.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 18px; }
+.brand { display: flex; align-items: baseline; gap: 12px; }
+.logo { font: 700 38px/1 var(--display); letter-spacing: 0; color: var(--ink); }
+.logo b { color: var(--accent); font-weight: 700; }
+.tagline { color: var(--muted); font-size: 13px; }
+.status { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12.5px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: var(--sunk); color: var(--muted); white-space: nowrap; }
+.pill.ok { background: var(--ok-bg); color: var(--ok); }
+.pill.warn { background: var(--warn-bg); color: var(--warn); }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; }
+
+.notice { margin: 0; padding: 10px 14px; border-radius: var(--r); background: var(--warn-bg); color: var(--warn); font-size: 14px; }
+
+/* the assembly line */
+.line { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); overflow: hidden; }
+.stage { padding: 10px 12px; display: grid; gap: 2px; min-width: 0; position: relative; }
+.stage + .stage { border-inline-start: 1px solid var(--line); }
+.stage .n { font: 500 24px/1.1 var(--mono); font-variant-numeric: tabular-nums; }
+.stage .who { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stage .what { font-size: 13px; font-weight: 500; }
+.stage.final { background: var(--gold); color: var(--gold-ink); }
+.stage.final .who { color: var(--gold-ink); opacity: .8; }
+@media (max-width: 560px) {
+  .line { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .stage { padding: 8px 6px; }
+  .stage .n { font-size: 19px; }
+  .stage .who { display: none; }
+  .stage .what { font-size: 11.5px; }
+}
+
+/* tabs */
+.tabs { display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid var(--line); scrollbar-width: none; }
+.tab { border: 0; background: none; padding: 9px 12px; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; font-weight: 500; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab .c { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-inline-start: 4px; }
+.panel { display: grid; gap: 14px; }
+.section-title { font: 600 15px/1.4 var(--body); color: var(--muted); margin: 6px 0 0; }
+
+/* opportunity card */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 12px; min-width: 0; scroll-margin-top: 12px; }
+.card.focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+.card h3 { margin: 0; font: 600 18px/1.45 var(--body); text-wrap: balance; overflow-wrap: anywhere; }
+.card h3 a { color: inherit; text-decoration: none; }
+.card h3 a:hover { text-decoration: underline; }
+.sub { color: var(--muted); font-size: 13.5px; overflow-wrap: anywhere; }
+.rank { font: 700 13px/1 var(--mono); color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12.5px; padding: 2px 9px; border-radius: 6px; background: var(--sunk); color: var(--ink); white-space: nowrap; }
+.chip.yes { background: var(--ok-bg); color: var(--ok); }
+.chip.likely { background: var(--info-bg); color: var(--info); }
+.chip.unclear { background: var(--warn-bg); color: var(--warn); }
+.chip.no { background: var(--bad-bg); color: var(--bad); }
+.chip.pay { background: var(--gold); color: var(--gold-ink); font-weight: 500; }
+.note { margin: 0; padding: 10px 12px; background: var(--sunk); border-radius: 8px; font-size: 14.5px; }
+.note b { font-weight: 600; }
+.repos { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.repos li { display: grid; gap: 1px; min-width: 0; }
+.repos a { font: 500 13.5px/1.5 var(--mono); overflow-wrap: anywhere; }
+.repos span { font-size: 13.5px; color: var(--muted); }
+details.draft { border-top: 1px dashed var(--line); padding-top: 10px; }
+details.draft summary { cursor: pointer; font-weight: 600; font-size: 14px; list-style: none; display: flex; align-items: center; gap: 8px; }
+details.draft summary::before { content: "＋"; color: var(--accent); }
+details.draft[open] summary::before { content: "－"; }
+.subject { font-weight: 600; margin: 10px 0 4px; overflow-wrap: anywhere; }
+.msg { white-space: pre-wrap; margin: 6px 0 0; padding: 12px; background: var(--sunk); border-radius: 8px; font-size: 14px; overflow-wrap: anywhere; max-height: 360px; overflow-y: auto; }
+.msg mark { background: var(--warn-bg); color: var(--warn); border-radius: 3px; padding: 0 2px; }
+.bullets { margin: 8px 0 0; padding-inline-start: 20px; font-size: 14px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 8px; padding: 6px 12px; font-size: 13.5px; font-weight: 500; text-decoration: none; cursor: pointer; }
+.btn:hover { border-color: var(--ink); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.small { padding: 4px 10px; font-size: 12.5px; }
+.state-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.mine { font-weight: 600; color: var(--ok); }
+
+/* lists */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters input, .filters select { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 10px; min-width: 0; }
+.filters input { flex: 1 1 180px; }
+.rows { display: grid; gap: 0; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); overflow: hidden; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 10px 14px; border-top: 1px solid var(--line); cursor: pointer; }
+.row:first-child { border-top: 0; }
+.row:hover { background: var(--sunk); }
+.row .t { font-weight: 500; overflow-wrap: anywhere; }
+.row .m { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 12.5px; color: var(--muted); }
+.row .s { font-family: var(--mono); font-size: 12.5px; color: var(--muted); align-self: start; }
+.row .why { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+.empty { padding: 28px 18px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--r); }
+.empty b { display: block; color: var(--ink); font-size: 16px; margin-bottom: 4px; }
+
+/* portfolio */
+.repo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.repo { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px; display: grid; gap: 6px; min-width: 0; align-content: start; }
+.repo a { font: 500 14px/1.4 var(--mono); overflow-wrap: anywhere; }
+.repo p { margin: 0; font-size: 13.5px; }
+.meter { height: 5px; background: var(--sunk); border-radius: 3px; overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--accent); }
+.tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tags span { font: 400 11.5px/1.6 var(--mono); padding: 0 6px; border-radius: 4px; background: var(--sunk); color: var(--muted); }
+
+/* ideas and log */
+.idea { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; display: grid; gap: 6px; }
+.idea h4 { margin: 0; font: 600 16px/1.5 var(--body); }
+.idea ol { margin: 0; padding-inline-start: 20px; font-size: 14px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { padding: 8px 10px; text-align: start; border-top: 1px solid var(--line); white-space: nowrap; }
+th { color: var(--muted); font-weight: 500; border-top: 0; }
+td.wrap { white-space: normal; min-width: 180px; overflow-wrap: anywhere; }
+.src-ok { color: var(--ok); } .src-err { color: var(--bad); } .src-skip { color: var(--muted); }
+
+footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 14px; }
+footer a { color: var(--muted); }
+.toast { position: fixed; inset-inline: 0; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); margin: auto; width: max-content; max-width: calc(100% - 32px); background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: 8px; font-size: 13.5px; }
+@media (prefers-reduced-motion: no-preference) { .card.focus { transition: box-shadow .3s; } }
+</style>
+</head>
+<body>
+<div class="app" dir="rtl">
+  <header class="top">
+    <div class="brand"><span class="logo">فر<b>صة</b></span><span class="tagline">رادار الشغل · الموصل</span></div>
+    <div class="status" id="status" aria-live="polite"><span class="pill">جاري التحميل…</span></div>
+  </header>
+
+  <p class="notice" id="notice" hidden></p>
+
+  <section class="line" id="line" aria-label="خط سير الوكلاء"></section>
+
+  <nav class="tabs" role="tablist" aria-label="الأقسام">
+    <button class="tab" role="tab" id="t-picks" data-tab="picks" aria-selected="true">الأفضل<span class="c" id="c-picks"></span></button>
+    <button class="tab" role="tab" id="t-all" data-tab="all" aria-selected="false">كل الفرص<span class="c" id="c-all"></span></button>
+    <button class="tab" role="tab" id="t-work" data-tab="work" aria-selected="false">أعمالي<span class="c" id="c-work"></span></button>
+    <button class="tab" role="tab" id="t-ideas" data-tab="ideas" aria-selected="false">أفكار دخل</button>
+    <button class="tab" role="tab" id="t-log" data-tab="log" aria-selected="false">السجل</button>
+  </nav>
+
+  <main>
+    <section class="panel" id="p-picks" role="tabpanel" aria-labelledby="t-picks"></section>
+    <section class="panel" id="p-all" role="tabpanel" aria-labelledby="t-all" hidden>
+      <div class="filters">
+        <input id="q" type="search" placeholder="ابحث بالعنوان أو الشركة أو المهارة" aria-label="بحث">
+        <select id="f-stage" aria-label="المرحلة"></select>
+        <select id="f-kind" aria-label="النوع"></select>
+        <select id="f-elig" aria-label="الأهلية"></select>
+      </div>
+      <div id="all-list"></div>
+    </section>
+    <section class="panel" id="p-work" role="tabpanel" aria-labelledby="t-work" hidden></section>
+    <section class="panel" id="p-ideas" role="tabpanel" aria-labelledby="t-ideas" hidden></section>
+    <section class="panel" id="p-log" role="tabpanel" aria-labelledby="t-log" hidden></section>
+  </main>
+
+  <footer>
+    <div>ماكو ضمان دخل: كل إعلان راجعه بنفسك قبل التقديم. الوكلاء ما يرسلون أي رسالة ولا يقدّمون بدون موافقتك، وما يطلبون منك فلوس.</div>
+    <div>المصادر: <a href="https://remotive.com" rel="noopener" target="_blank">Remotive</a> · <a href="https://remoteok.com" rel="noopener" target="_blank">Remote OK</a> · <a href="https://himalayas.app" rel="noopener" target="_blank">Himalayas</a> · <a href="https://jobicy.com" rel="noopener" target="_blank">Jobicy</a> · <a href="https://weworkremotely.com" rel="noopener" target="_blank">We Work Remotely</a> · <a href="https://news.ycombinator.com" rel="noopener" target="_blank">Hacker News</a> · <a href="https://www.freelancer.com" rel="noopener" target="_blank">Freelancer</a> · <a href="https://mostaql.com" rel="noopener" target="_blank">مستقل</a> · <a href="https://khamsat.com" rel="noopener" target="_blank">خمسات</a> · <a href="https://reliefweb.int" rel="noopener" target="_blank">ReliefWeb</a></div>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(() => {
+  const KIND = { job: "وظيفة", freelance: "مشروع حر", gig: "مهمة صغيرة", bounty: "مكافأة bounty" };
+  const ELIG = { yes: "متاح للعراق", likely: "غالباً متاح", unclear: "الأهلية غير محسومة", no: "مو متاح للعراق" };
+  const STAGE = { new: "بانتظار الكشّاف", screened: "اجتاز الفحص", matched: "تمت المطابقة", drafted: "عند المدير", approved: "معتمدة", rejected: "مرفوضة" };
+  const USER = { todo: "مؤجلة", applied: "قدّمت ✓", interview: "مقابلة", offer: "عرض شغل", rejected: "انرفضت", ignored: "تجاهلتها" };
+  const CHANNEL = { email: "إيميل", whatsapp: "واتساب", platform: "عرض على المنصة", linkedin: "لينكدإن", form: "استمارة", other: "رسالة تقديم" };
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const safeUrl = (u) => (/^https?:\/\//i.test(String(u || "")) ? String(u) : "#");
+  const fmtNum = (n, d = 2) => Number(n || 0).toLocaleString("en-US", { maximumFractionDigits: d });
+  let data = { meta: {}, opportunities: [], portfolio: [], ideas: {}, runs: [] };
+
+  function ago(iso) {
+    if (!iso) return "";
+    const d = (Date.now() - new Date(iso).getTime()) / 86400000;
+    if (isNaN(d)) return "";
+    if (d < 1 / 24) return "قبل دقائق";
+    if (d < 1) return `قبل ${Math.round(d * 24)} ساعة`;
+    if (d < 2) return "أمس";
+    return `قبل ${Math.round(d)} يوم`;
+  }
+  function toast(text) {
+    const t = $("#toast");
+    t.textContent = text; t.hidden = false;
+    clearTimeout(toast.timer); toast.timer = setTimeout(() => (t.hidden = true), 2200);
+  }
+  async function copy(text, label) {
+    try { await navigator.clipboard.writeText(text); toast(`تم نسخ ${label}`); }
+    catch { const ta = document.createElement("textarea"); ta.value = text; document.body.append(ta); ta.select(); try { document.execCommand("copy"); toast(`تم نسخ ${label}`); } catch { toast("حدد النص وانسخه يدوياً"); } ta.remove(); }
+  }
+  const highlight = (text) => esc(text).replace(/\[[^\]\n]{1,40}\]/g, (m) => `<mark>${m}</mark>`);
+
+  async function load() {
+    if (window.FURSA_DATA) return window.FURSA_DATA;
+    const names = ["meta", "opportunities", "portfolio", "ideas", "runs"];
+    const out = {};
+    await Promise.all(names.map(async (n) => {
+      try { const r = await fetch(`data/${n}.json`, { cache: "no-store" }); out[n] = r.ok ? await r.json() : null; } catch { out[n] = null; }
+    }));
+    return out;
+  }
+
+  function statusBar() {
+    const m = data.meta || {};
+    const u = m.usage_month || {};
+    const pills = [];
+    pills.push(`<span class="pill" title="${esc(m.updated)}">آخر تحديث ${esc(ago(m.updated) || "—")}</span>`);
+    pills.push(m.mode === "ai"
+      ? `<span class="pill ok"><span class="dot"></span>الوكلاء شغالين بالذكاء الاصطناعي</span>`
+      : `<span class="pill warn" title="${esc(m.llm_note)}"><span class="dot"></span>وضع مجاني بدون ذكاء${m.llm_note ? " · " + esc(m.llm_note) : ""}</span>`);
+    pills.push(`<span class="pill">كلفة هالشهر <span class="num">$${fmtNum(u.usd, 3)}</span> من <span class="num">$${fmtNum(m.budget_usd, 0)}</span></span>`);
+    $("#status").innerHTML = pills.join("");
+    if (m.notice) { $("#notice").textContent = m.notice; $("#notice").hidden = false; }
+  }
+
+  function line() {
+    const c = (data.meta && data.meta.counts) || {};
+    const opp = data.opportunities || [];
+    const count = (s) => c[s] ?? opp.filter((o) => o.status === s).length;
+    const stages = [
+      ["new", "الكشّاف", "ينتظر فحص"], ["screened", "المطابق", "اجتاز الفحص"], ["matched", "الكاتب", "مطابَق"],
+      ["drafted", "المدير", "مسودة"], ["approved", "إلك", "معتمدة"],
+    ];
+    $("#line").innerHTML = stages.map(([s, who, what], i) =>
+      `<div class="stage${i === 4 ? " final" : ""}"><span class="who">${who}</span><span class="n">${count(s)}</span><span class="what">${what}</span></div>`).join("");
+  }
+
+  function issueLink(o, status, label) {
+    const repo = data.meta && data.meta.repo;
+    if (!repo) return "";
+    const title = encodeURIComponent(`[fursa] ${o.id} ${status}`);
+    const body = encodeURIComponent(`${o.title}\n${o.url}\n\nملاحظة (اختياري):`);
+    return `<a class="btn small" target="_blank" rel="noopener" href="https://github.com/${esc(repo)}/issues/new?title=${title}&body=${body}">${label}</a>`;
+  }
+
+  function chips(o) {
+    const out = [`<span class="chip">${esc(KIND[o.kind] || o.kind)}</span>`];
+    if (o.location) out.push(`<span class="chip" dir="auto">${esc(o.location)}</span>`);
+    out.push(`<span class="chip ${esc(o.elig)}" title="${esc(o.elig_note)}">${esc(ELIG[o.elig] || o.elig)}</span>`);
+    out.push(o.pay ? `<span class="chip pay" dir="auto">${esc(o.pay)}</span>` : `<span class="chip">الأجر غير معلن</span>`);
+    if (o.posted) out.push(`<span class="chip">نُشر <span class="num">${esc(o.posted)}</span></span>`);
+    return `<div class="chips">${out.join("")}</div>`;
+  }
+
+  function draftBlock(o, open) {
+    const d = o.draft;
+    if (!d) return "";
+    const lang = d.lang === "ar" ? "ar" : "en";
+    const bullets = (d.cv_bullets || []).map((b) => `<li>${highlight(b)}</li>`).join("");
+    const contact = d.contact || "";
+    const email = /@/.test(contact) ? contact : "";
+    const phone = /^[+\d][\d\s-]{6,}$/.test(contact) ? contact.replace(/\D/g, "") : "";
+    const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(d.subject || o.title)}&body=${encodeURIComponent(d.message || "")}`;
+    const wa = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(d.message || "")}` : "";
+    return `<details class="draft"${open ? " open" : ""}>
+      <summary>مسودة التقديم · ${esc(CHANNEL[d.channel] || "رسالة")} · ${lang === "ar" ? "عربي" : "English"}${d.ai === false ? " · قالب بدون ذكاء" : ""}${d.edited_by_manager ? " · عدّلها المدير" : ""}</summary>
+      ${d.subject ? `<div class="subject" dir="auto">${highlight(d.subject)}</div>` : ""}
+      <div class="msg" dir="${lang === "ar" ? "rtl" : "ltr"}">${highlight(d.message)}</div>
+      ${bullets ? `<div class="sub" style="margin-top:10px">نقاط للسيرة الذاتية:</div><ul class="bullets" dir="${lang === "ar" ? "rtl" : "ltr"}">${bullets}</ul>` : ""}
+      ${contact ? `<div class="sub" style="margin-top:8px">جهة التقديم المذكورة بالإعلان: <span class="num">${esc(contact)}</span></div>` : ""}
+      <div class="actions" style="margin-top:10px">
+        <button class="btn primary" data-copy="msg" data-id="${esc(o.id)}">نسخ الرسالة</button>
+        ${bullets ? `<button class="btn" data-copy="cv" data-id="${esc(o.id)}">نسخ نقاط السيرة</button>` : ""}
+        ${d.channel === "email" || email ? `<a class="btn" target="_blank" rel="noopener" href="${esc(gmail)}">افتحها بجيميل</a>` : ""}
+        ${wa ? `<a class="btn" target="_blank" rel="noopener" href="${esc(wa)}">واتساب</a>` : ""}
+      </div>
+    </details>`;
+  }
+
+  function card(o, i) {
+    const man = o.manager || {};
+    const match = o.match || {};
+    const why = man.note_ar || match.fit_reason_ar || "";
+    const repos = (match.repos || []).map((r) =>
+      `<li><a href="${esc(safeUrl(r.url))}" target="_blank" rel="noopener" dir="ltr">${esc(r.name)}</a><span dir="auto">${esc(r.why)}</span></li>`).join("");
+    const mine = o.user_status ? `<span class="mine">${esc(USER[o.user_status] || o.user_status)}</span>` : "";
+    return `<article class="card" id="${esc(o.id)}">
+      <div class="state-row"><span class="rank">#${i + 1}</span><span>${esc(o.source_label)}</span>${match.fit != null ? `<span>· تطابق <span class="num">${esc(match.fit)}/100</span></span>` : ""}${man.ai === false ? "<span>· بدون مراجعة المدير</span>" : ""}${mine}</div>
+      <div><h3 dir="auto"><a href="${esc(safeUrl(o.url))}" target="_blank" rel="noopener">${esc(o.title)}</a></h3>
+      ${o.company ? `<div class="sub" dir="auto">${esc(o.company)}</div>` : ""}</div>
+      ${chips(o)}
+      ${why ? `<p class="note"><b>ليش تناسبك:</b> ${esc(why)}</p>` : ""}
+      ${repos ? `<div><div class="sub">المشاريع اللي تعرضها:</div><ul class="repos">${repos}</ul></div>` : ""}
+      ${draftBlock(o, i === 0)}
+      <div class="actions">
+        <a class="btn" href="${esc(safeUrl(o.url))}" target="_blank" rel="noopener">فتح الإعلان الأصلي</a>
+        ${issueLink(o, "applied", "قدّمت")}${issueLink(o, "interview", "عندي مقابلة")}${issueLink(o, "ignored", "تجاهلها")}
+      </div>
+    </article>`;
+  }
+
+  function picks() {
+    const all = (data.opportunities || []).filter((o) => o.status === "approved" && o.user_status !== "ignored");
+    const fresh = all.filter((o) => !o.user_status).sort((a, b) => (b.manager?.at || "").localeCompare(a.manager?.at || "") || (a.manager?.rank || 9) - (b.manager?.rank || 9));
+    const followed = all.filter((o) => o.user_status);
+    $("#c-picks").textContent = fresh.length || "";
+    const p = $("#p-picks");
+    if (!all.length) {
+      p.innerHTML = `<div class="empty"><b>ماكو فرص معتمدة بعد</b>الوكلاء يشتغلون كل 6 ساعات. أول ما المدير يعتمد فرصة مناسبة تطلع هنا وتوصلك على تلگرام.</div>`;
+      return;
+    }
+    p.innerHTML = (fresh.length ? fresh.map(card).join("") : `<div class="empty"><b>تابعت كل الفرص المعتمدة</b>الجديدة تطلع هنا أول ما يعتمدها المدير.</div>`) +
+      (followed.length ? `<h2 class="section-title">تابعتها</h2>` + followed.map(card).join("") : "");
+  }
+
+  function fillSelect(id, label, values, names) {
+    const el = $(id);
+    el.innerHTML = `<option value="">${label}</option>` + values.map((v) => `<option value="${esc(v)}">${esc(names[v] || v)}</option>`).join("");
+  }
+
+  function allList() {
+    const q = $("#q").value.trim().toLowerCase();
+    const stage = $("#f-stage").value, kind = $("#f-kind").value, elig = $("#f-elig").value;
+    const list = (data.opportunities || []).filter((o) =>
+      (!stage || o.status === stage || o.user_status === stage) && (!kind || o.kind === kind) && (!elig || o.elig === elig) &&
+      (!q || [o.title, o.company, o.source_label, (o.tags || []).join(" ")].join(" ").toLowerCase().includes(q)));
+    const box = $("#all-list");
+    if (!list.length) { box.innerHTML = `<div class="empty"><b>ماكو نتائج</b>غيّر البحث أو الفلاتر.</div>`; return; }
+    box.innerHTML = `<div class="rows">${list.map((o) => {
+      const reason = o.status === "rejected" ? (o.reject_reason || "") : (o.scout?.brief || o.summary || "");
+      return `<div class="row" data-open="${esc(o.id)}" tabindex="0">
+        <div class="t" dir="auto">${esc(o.title)}</div><div class="s">${esc(o.score ?? "")}</div>
+        <div class="m"><span>${esc(STAGE[o.status] || o.status)}</span>${o.user_status ? `<span class="mine">${esc(USER[o.user_status])}</span>` : ""}<span>${esc(KIND[o.kind] || o.kind)}</span><span>${esc(o.company || "")}</span><span>${esc(o.source_label)}</span><span class="num">${esc(o.posted || "")}</span><span>${esc(ELIG[o.elig] || "")}</span></div>
+        <div class="why" dir="auto" hidden>${esc(reason)} <a href="${esc(safeUrl(o.url))}" target="_blank" rel="noopener">الإعلان</a></div>
+      </div>`; }).join("")}</div>`;
+  }
+
+  function work() {
+    const repos = data.portfolio || [];
+    $("#c-work").textContent = repos.length || "";
+    const max = Math.max(1, ...repos.map((r) => r.quality || 0));
+    $("#p-work").innerHTML = repos.length ? `<p class="sub" style="margin:0">مستودعاتك العامة فقط، مرتّبة حسب شكد تثبت مهارتك (اختبارات، README، نشاط، مساهمتك). الخاصة ما تنقرأ.</p>
+      <div class="repo-grid">${repos.map((r) => `<div class="repo">
+        <a href="${esc(safeUrl(r.url))}" target="_blank" rel="noopener" dir="ltr">${esc(r.name)}</a>
+        <p dir="auto">${esc(r.summary_ar || r.summary_en || "")}</p>
+        <div class="meter" title="${esc(r.quality)}"><i style="width:${Math.round(100 * (r.quality || 0) / max)}%"></i></div>
+        <div class="tags">${(r.tags || []).slice(0, 8).map((t) => `<span>${esc(t)}</span>`).join("")}</div>
+        <div class="sub">${[r.maturity, r.has_tests ? "فيه اختبارات" : "", r.readme_template ? "README يحتاج تحسين" : "", r.own_share < 0.6 ? "مساهمة مشتركة" : ""].filter(Boolean).map(esc).join(" · ")}</div>
+        ${r.caveat ? `<div class="sub" dir="auto">⚠ ${esc(r.caveat)}</div>` : ""}
+      </div>`).join("")}</div>` : `<div class="empty"><b>الفهرس فارغ</b>أول تشغيل يقرأ مستودعاتك العامة من GitHub.</div>`;
+  }
+
+  function ideas() {
+    const box = $("#p-ideas");
+    const list = (data.ideas && data.ideas.ideas) || [];
+    const effort = { low: "جهد قليل", medium: "جهد متوسط", high: "جهد كبير" };
+    box.innerHTML = list.length ? `<p class="sub" style="margin:0">أفكار أسبوعية من المدير حسب مشاريعك وشنو يطلب السوق هسة · ${esc(ago(data.ideas.at))}</p>` + list.map((x) => `<div class="idea">
+      <h4>${esc(x.title_ar)}</h4><div class="sub">${esc(effort[x.effort] || "")} · ${esc(x.where)}</div><div>${esc(x.why_ar)}</div>
+      <ol>${(x.steps_ar || []).map((s) => `<li>${esc(s)}</li>`).join("")}</ol></div>`).join("")
+      : `<div class="empty"><b>الأفكار تطلع مرة بالأسبوع</b>المدير يقترح 3 طرق دخل من مشاريعك الموجودة (يحتاج مفتاح الذكاء الاصطناعي).</div>`;
+  }
+
+  function log() {
+    const runs = (data.runs || []).slice().reverse().slice(0, 20);
+    const src = (data.meta && data.meta.sources) || {};
+    const cls = (s) => (s || "").startsWith("ok") ? "src-ok" : (s || "").startsWith("error") ? "src-err" : "src-skip";
+    $("#p-log").innerHTML = `<h2 class="section-title">المصادر</h2><div class="table-wrap"><table><thead><tr><th>المصدر</th><th>الحالة</th><th>جلب</th><th>جديد</th><th>مناسب</th><th>آخر مرة</th></tr></thead><tbody>${
+      Object.entries(src).map(([k, s]) => `<tr><td>${esc(s.label || k)}</td><td class="${cls(s.state)} wrap">${esc(s.state)}</td><td class="num">${esc(s.fetched ?? "")}</td><td class="num">${esc(s.new ?? "")}</td><td class="num">${esc(s.kept ?? "")}</td><td>${esc(ago(s.at))}</td></tr>`).join("")
+    }</tbody></table></div>
+    <h2 class="section-title">آخر التشغيلات</h2><div class="table-wrap"><table><thead><tr><th>الوقت</th><th>الوضع</th><th>مناسب</th><th>فحص بالذكاء</th><th>معتمد</th><th>الكلفة</th><th>tokens</th><th>ملاحظات</th></tr></thead><tbody>${
+      runs.map((r) => `<tr><td>${esc(ago(r.at))}</td><td>${r.mode === "ai" ? "ذكاء" : "مجاني"}</td><td class="num">${esc(r.kept ?? 0)}</td><td class="num">${esc(r.scouted_ai ?? 0)}</td><td class="num">${esc(r.approved ?? 0)}</td><td class="num">$${fmtNum(r.usd, 4)}</td><td class="num">${fmtNum((r.tokens || {}).in, 0)} / ${fmtNum((r.tokens || {}).out, 0)}</td><td class="wrap">${esc((r.errors || []).join(" · "))}</td></tr>`).join("")
+    }</tbody></table></div>`;
+  }
+
+  function select(tab) {
+    document.querySelectorAll(".tab").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === tab)));
+    document.querySelectorAll(".panel").forEach((p) => (p.hidden = p.id !== `p-${tab}`));
+    try { localStorage.setItem("fursa-tab", tab); } catch {}
+  }
+
+  function focusHash() {
+    const id = location.hash.slice(1);
+    if (!/^[0-9a-f]{12}$/.test(id)) return;
+    let el = document.getElementById(id);
+    if (!el) { select("all"); allList(); const row = document.querySelector(`[data-open="${id}"]`); if (row) { row.querySelector(".why").hidden = false; row.scrollIntoView({ block: "center" }); } return; }
+    select("picks");
+    el.classList.add("focus");
+    const d = el.querySelector("details"); if (d) d.open = true;
+    el.scrollIntoView({ block: "start" });
+  }
+
+  document.addEventListener("click", (e) => {
+    const tab = e.target.closest(".tab"); if (tab) { select(tab.dataset.tab); return; }
+    const c = e.target.closest("[data-copy]");
+    if (c) {
+      const o = (data.opportunities || []).find((x) => x.id === c.dataset.id); if (!o || !o.draft) return;
+      if (c.dataset.copy === "msg") copy((o.draft.subject ? o.draft.subject + "\n\n" : "") + o.draft.message, "الرسالة");
+      else copy((o.draft.cv_bullets || []).map((b) => "• " + b).join("\n"), "نقاط السيرة");
+      return;
+    }
+    const row = e.target.closest("[data-open]");
+    if (row && !e.target.closest("a")) { const w = row.querySelector(".why"); w.hidden = !w.hidden; }
+  });
+  document.addEventListener("keydown", (e) => { const row = e.target.closest && e.target.closest("[data-open]"); if (row && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); row.click(); } });
+  ["#q", "#f-stage", "#f-kind", "#f-elig"].forEach((s) => $(s).addEventListener("input", allList));
+  window.addEventListener("hashchange", focusHash);
+
+  load().then((d) => {
+    data = { meta: d.meta || {}, opportunities: d.opportunities || [], portfolio: d.portfolio || [], ideas: d.ideas || {}, runs: d.runs || [] };
+    $("#c-all").textContent = data.opportunities.length || "";
+    fillSelect("#f-stage", "كل المراحل", ["approved", "drafted", "matched", "screened", "new", "rejected", "applied", "interview", "ignored"], { ...STAGE, ...USER });
+    fillSelect("#f-kind", "كل الأنواع", ["job", "freelance", "gig", "bounty"], KIND);
+    fillSelect("#f-elig", "كل الأهليات", ["yes", "likely", "unclear", "no"], ELIG);
+    statusBar(); line(); picks(); allList(); work(); ideas(); log();
+    let saved = "picks"; try { saved = localStorage.getItem("fursa-tab") || "picks"; } catch {}
+    select(saved);
+    focusHash();
+  });
+})();
+</script>
+</body>
+</html>

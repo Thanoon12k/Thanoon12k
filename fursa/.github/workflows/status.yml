@@ -1,0 +1,47 @@
+name: Fursa status
+
+# The dashboard's "applied / interview / ignore" buttons open an issue titled
+# "[fursa] <id> <status>". This saves it to the memory and closes the issue.
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: fursa-memory
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    if: startsWith(github.event.issue.title, '[fursa]') && github.event.issue.user.login == github.repository_owner
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install requests
+
+      - name: Apply status issues
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python -m fursa status
+
+      - name: Save the shared memory
+        run: |
+          git config user.name "fursa-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data state
+          if git diff --cached --quiet; then echo "nothing changed"; exit 0; fi
+          git commit -m "memory: status update"
+          for attempt in 1 2 3; do
+            git pull --rebase --quiet && git push && exit 0
+            sleep $((attempt * 5))
+          done
+          exit 1

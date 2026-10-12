@@ -1,0 +1,61 @@
+name: Fursa agents
+
+on:
+  schedule:
+    - cron: "23 2,8,14,20 * * *"   # every 6 hours: 05:23, 11:23, 17:23, 23:23 Iraq time
+  workflow_dispatch:
+    inputs:
+      free:
+        description: "Run without AI (zero cost)"
+        type: boolean
+        default: false
+      portfolio:
+        description: "Re-read my GitHub repos now"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write   # save the shared memory (docs/data, state)
+  issues: write     # read and close the status issues opened from the dashboard
+
+concurrency:
+  group: fursa-memory
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Run the team
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RELIEFWEB_APPNAME: ${{ vars.RELIEFWEB_APPNAME }}
+          GITHUB_TOKEN: ${{ github.token }}
+          FURSA_NO_LLM: ${{ inputs.free && '1' || '' }}
+          FURSA_FORCE_PORTFOLIO: ${{ inputs.portfolio && '1' || '' }}
+        run: python -m fursa run
+
+      - name: Save the shared memory
+        run: |
+          git config user.name "fursa-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data state
+          if git diff --cached --quiet; then echo "nothing changed"; exit 0; fi
+          git commit -m "memory: run of $(date -u +'%Y-%m-%d %H:%M') UTC"
+          for attempt in 1 2 3; do
+            git pull --rebase --quiet && git push && exit 0
+            sleep $((attempt * 5))
+          done
+          exit 1
