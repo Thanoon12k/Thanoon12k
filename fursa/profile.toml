@@ -156,4 +156,4 @@ exclude = ["Thanoon12k"]       # repos to leave out (your profile README)
 refresh_days = 7
 
 [site]
-url = ""   # leave empty to use https://<owner>.github.io/<repo>/
+url = "https://claude.ai/artifact/SVapXSt8B5HC3Ua2CMGL8M"   # the dashboard: docs/index.html + docs/data/*.json published as a claude.ai Artifact

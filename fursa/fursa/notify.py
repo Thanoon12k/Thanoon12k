@@ -172,13 +172,18 @@ def help_text(settings) -> str:
 
 
 def reply_status(text: str) -> str | None:
+    """A short reply like «قدمت» or "/applied <id>". Long texts (a shared draft, a note) never change a status."""
     words = normalize(text)
+    if len(words) > 200:
+        return None
     command = re.match(r"^/(\w+)", words)
     if command and command.group(1) in REPLY_WORDS:
         return command.group(1)
     for status, options in REPLY_WORDS.items():
-        if any(normalize(o) in words for o in options):
-            return status
+        for option in map(normalize, options):
+            # English words whole ("sent" is not "represent"); Arabic ones may carry a prefix (وقدمت)
+            if (re.search(rf"\b{re.escape(option)}\b", words) if option.isascii() else option in words):
+                return status
     return None
 
 

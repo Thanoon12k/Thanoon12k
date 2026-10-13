@@ -79,13 +79,8 @@ class Settings:
 
     @property
     def site_url(self) -> str:
-        url = self.profile.get("site", {}).get("url", "")
-        if url:
-            return url.rstrip("/") + "/"
-        if self.github_repo:
-            owner, repo = self.github_repo.split("/", 1)
-            return f"https://{owner.lower()}.github.io/{repo}/"
-        return ""
+        """The dashboard (a claude.ai Artifact); Telegram links to it, with #<id> for one posting."""
+        return self.profile.get("site", {}).get("url", "").strip()
 
     def agent_int(self, key: str, default: int) -> int:
         try:

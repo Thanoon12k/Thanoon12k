@@ -1,8 +1,8 @@
 # فرصة · Fursa
 
-فريق صغير من الوكلاء يدوّر على شغل مدفوع (وظائف عن بعد، شغل بالعراق، مشاريع حرة ومهام مدفوعة) لمطوّر **Flutter/Dart** و**Python/Django** بالموصل. يشتغل وحده كل 6 ساعات على GitHub Actions، يحفظ ذاكرته بنفس الريبو، يعرض النتائج بموقع بسيط، ويرسل الفرص على تلگرام بس لما يلگي شي يستاهل.
+فريق صغير من الوكلاء يدوّر على شغل مدفوع (وظائف عن بعد، شغل بالعراق، مشاريع حرة ومهام مدفوعة) لمطوّر **Flutter/Dart** و**Python/Django** بالموصل. يشتغل وحده كل 6 ساعات على GitHub Actions، يحفظ ذاكرته بنفس الريبو، يعرض النتائج بموقع بسيط على [claude.ai](https://claude.ai/artifact/SVapXSt8B5HC3Ua2CMGL8M)، ويرسل الفرص على تلگرام بس لما يلگي شي يستاهل.
 
-> A small team of agents that hunts paid work for one developer, runs on GitHub Actions every 6 hours, keeps its memory as JSON in this repo, and shows everything on a GitHub Pages dashboard.
+> A small team of agents that hunts paid work for one developer, runs on GitHub Actions every 6 hours, keeps its memory as JSON in this repo, and shows everything on a dashboard published as a claude.ai Artifact.
 
 ## الفريق
 
@@ -38,12 +38,12 @@
 
 ## التشغيل خطوة بخطوة
 
-1. **الريبو**: [`Thanoon12k/fursa-agents`](https://github.com/Thanoon12k/fursa-agents) (Public حتى يشتغل GitHub Pages مجاناً).
+1. **الريبو**: [`Thanoon12k/fursa-agents`](https://github.com/Thanoon12k/fursa-agents) (Public: دقائق GitHub Actions مجانية بالريبوهات العامة).
 2. **المفاتيح**: بالريبو ← Settings ← Secrets and variables ← Actions ← New repository secret:
    - `ANTHROPIC_API_KEY`: من [console.anthropic.com](https://console.anthropic.com) ← API Keys، مع رصيد بسيط (مثلاً 5$).
    - `TELEGRAM_BOT_TOKEN` و `TELEGRAM_CHAT_ID` (اختياري، قسم تلگرام تحت).
    - (اختياري) بتبويب Variables: `RELIEFWEB_APPNAME`، appname مجاني يُطلب من [ReliefWeb](https://apidoc.reliefweb.int/parameters#appname) لوظائف المنظمات بالعراق.
-3. **الموقع**: Settings ← Pages ← Source: *Deploy from a branch* ← Branch: `main` ومجلد `/docs` ← Save. الموقع يصير على `https://thanoon12k.github.io/fursa-agents/`.
+3. **الموقع**: https://claude.ai/artifact/SVapXSt8B5HC3Ua2CMGL8M (خاص، بس صاحب الحساب يفتحه). الصفحة `docs/index.html` والبيانات `docs/data/*.json` تنرفع عليه سوة، والصفحة تقرا البيانات من جنبها. Claude يحدّثه مرتين باليوم (روتين بحسابك، ~05:50 و~17:50 بتوقيت العراق، بعد تشغيل الوكلاء)، وأي وقت ثاني يكفي طلب «حدث الموقع». ماكو GitHub Pages.
 4. **أول تشغيل**: تبويب Actions ← *Fursa agents* ← Run workflow. بعدها يشتغل وحده كل 6 ساعات (05:23، 11:23، 17:23، 23:23 بتوقيت العراق).
 5. **الإعدادات** بملف `profile.toml`: المهارات، الكلمات وأوزانها، الميزانية، الموديلات، والمصادر.
 
@@ -69,7 +69,7 @@
 ## الاستخدام اليومي
 
 1. توصل رسائل تلگرام بيها 1–3 فرص (بس لما يكون أكو شي جديد يستاهل).
-2. المسودة موجودة داخل الرسالة، وزر «التفاصيل والمسودة» يفتح الموقع.
+2. المسودة موجودة داخل الرسالة، وزر «📄 التفاصيل» يفتح الفرصة نفسها بالموقع.
 3. إكمال أي `[حقل ناقص]` ← زر الإرسال المناسب (واتساب، إيميل، تلگرام، أو رابط التقديم) ← مراجعة وإرسال **بنفسك**.
 4. الرد على رسالة الفرصة بـ «قدمت» يحفظ الحالة. وبالموقع نفس الشي من أزرار «قدّمت» و«عندي مقابلة» و«ما تهمني».
 
@@ -123,7 +123,7 @@ fursa/
   notify.py     تلگرام: الرسائل والأزرار والردود
   contacts.py   أرقام/إيميلات/معرّفات التواصل المكتوبة بالإعلان
   pipeline.py   تشغيل واحد كامل
-docs/           الموقع (GitHub Pages) + docs/data
+docs/           الموقع (index.html ينرفع كـ Artifact على claude.ai) + docs/data
 state/          ذاكرة داخلية: اللي انشاف، المؤقتات، الكلفة
 profile.toml    الملف الوحيد اللي يحتاج تعديل
 ```

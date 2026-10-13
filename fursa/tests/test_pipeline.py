@@ -125,7 +125,7 @@ def test_pick_message_is_safe_html_with_buttons(settings):
     text, buttons = notify.pick_message(settings, rec, 1, 2, "ملخص")
     assert "&lt;script&gt;" in text and "<script>" not in text and "Hello &lt;b&gt;world" in text
     assert text.startswith("🗂 ملخص") and "1/2" in text and len(text) < 4096
-    assert buttons[-1][1]["url"] == "https://thanoon12k.github.io/fursa-agents/#abc123abc123"  # links row comes last
+    assert buttons[-1][1]["url"] == "https://claude.ai/artifact/SVapXSt8B5HC3Ua2CMGL8M#abc123abc123"  # links row comes last
 
 
 def test_telegram_replies_update_the_memory(settings, monkeypatch):
@@ -152,6 +152,9 @@ def test_telegram_replies_update_the_memory(settings, monkeypatch):
     assert calls[0][1]["offset"] == 11
     assert notify.reply_status("ما تهمني") == "ignored" and notify.reply_status("مقابلة باچر") == "interview"
     assert notify.reply_status("hello") is None
+    assert notify.reply_status("I can represent the team") is None  # "sent" only as a whole word
+    assert notify.reply_status("وقدمت اليوم") == "applied"
+    assert notify.reply_status("Hello team,\n" + "I applied my skills to many apps. " * 10) is None  # a shared draft
 
 
 def test_store_prune_and_roundtrip(settings):
@@ -254,7 +257,7 @@ def test_start_command_gets_one_how_to_reply(settings, monkeypatch):
 
     monkeypatch.setattr(notify, "_call", fake_call)
     assert notify.poll(settings, st) == [] and st.state["telegram"]["offset"] == 2
-    assert len(sent) == 1 and "قدمت" in sent[0] and "https://thanoon12k.github.io/fursa-agents/" in sent[0]
+    assert len(sent) == 1 and "قدمت" in sent[0] and "https://claude.ai/artifact/SVapXSt8B5HC3Ua2CMGL8M" in sent[0]
 
 
 def test_platform_proposals_carry_no_contact_details(settings):
@@ -307,3 +310,13 @@ def test_platform_picks_point_to_the_platform(settings):
     text, keyboard = notify.pick_message(settings, rec, 1, 1)
     assert "📋" in text and "📨" not in text
     assert [b["text"] for row in keyboard for b in row] == ["🔗 الإعلان", "📄 التفاصيل"]
+
+
+def test_dashboard_page_is_ready_to_publish_as_an_artifact():
+    from pathlib import Path
+
+    page = (Path(__file__).resolve().parent.parent / "docs" / "index.html").read_text(encoding="utf-8")
+    assert page.startswith("<title>") and "<title>" in page[:8192]  # the Artifact host reads the name from the top
+    for tag in ("<!doctype", "<html", "<head>", "<body", "</body>", "</html>"):
+        assert tag not in page.lower()  # the host adds the document skeleton
+    assert "fetch(`data/${n}.json`" in page  # data/*.json are published beside the page
