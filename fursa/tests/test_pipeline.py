@@ -255,3 +255,55 @@ def test_start_command_gets_one_how_to_reply(settings, monkeypatch):
     monkeypatch.setattr(notify, "_call", fake_call)
     assert notify.poll(settings, st) == [] and st.state["telegram"]["offset"] == 2
     assert len(sent) == 1 and "قدمت" in sent[0] and "https://thanoon12k.github.io/fursa-agents/" in sent[0]
+
+
+def test_platform_proposals_carry_no_contact_details(settings):
+    from fursa import writer
+
+    person = settings.person
+    template = writer.TEMPLATES["en"][1].format(title="Flutter app", team="", repos="- app: https://github.com/Thanoon12k/app")
+    message = writer.finalize(template, person, "en", platform=True)
+    assert person["email"] not in message and person["phone"] not in message
+    assert person["website"].rstrip("/") in message and message.rstrip().endswith(person["name"])
+    ai_text = "Hi!\nPlan: ...\nEmail: {EMAIL}\nWhatsApp: {PHONE}\nContact me at {EMAIL}\n{WEBSITE}\n{NAME} — {PHONE}"
+    assert writer.finalize(ai_text, person, "en", platform=True).split("\n") == ["Hi!", "Plan: ...", person["website"], person["name"]]
+    job = writer.finalize(template, person, "en", platform=False)
+    assert person["email"] in job  # a job application keeps them
+
+
+def test_platform_posts_get_no_direct_contact_buttons(settings, monkeypatch):
+    project = posting(url="https://mostaql.com/project/1300001", title="تطبيق Flutter", kind="freelance",
+                      text="مطلوب مبرمج Flutter لتطبيق متجر، تواصل واتساب 07700000000")
+    monkeypatch.setattr(sources, "registry", lambda: [fake_source([project])])
+    monkeypatch.setattr(portfolio, "refresh", lambda settings, store, llm=None, repos=None: 0)
+    pipeline.run(settings, collect_only=True)
+    assert not load(settings).opps[project["id"]].get("contacts")
+
+
+def test_free_review_waits_twelve_hours_and_drops_weak_drafts(settings, wired):
+    from datetime import timedelta
+
+    pipeline.run(settings)
+    st = load(settings)
+    first = {r["id"] for r in st.items("approved")}
+    weak = posting(url="https://jobs.example.com/weak", title="Flutter Developer", company="Weak Co", text="Flutter.")
+    weak.update(elig="unclear", score=9, match={"fit": 72, "repos": []}, draft={"message": "hi"})
+    st.add(weak)
+    st.set_status(weak, "drafted")
+    st.save()
+    settings.now += timedelta(hours=6)
+    pipeline.run(settings)  # not due yet: nothing reviewed
+    st = load(settings)
+    assert {r["id"] for r in st.items("approved")} == first and st.opps[weak["id"]]["status"] == "drafted"
+    for _ in range(2):
+        settings.now += timedelta(hours=12)
+        pipeline.run(settings)
+    assert load(settings).opps[weak["id"]]["status"] == "rejected"
+
+
+def test_platform_picks_point_to_the_platform(settings):
+    rec = posting(url="https://www.freelancer.com/projects/django/x", kind="freelance")
+    rec.update(id="abc123abc124", draft={"message": "Hello", "subject": None})
+    text, keyboard = notify.pick_message(settings, rec, 1, 1)
+    assert "📋" in text and "📨" not in text
+    assert [b["text"] for row in keyboard for b in row] == ["🔗 الإعلان", "📄 التفاصيل"]

@@ -80,3 +80,11 @@ def test_assess_drops_what_the_ai_should_never_see(settings):
 
     fair = posting(kind="freelance", location=None, pay="$250–$750 (fixed)", posted="2026-10-11")
     assert scoring.assess(fair, settings)[0] is True
+
+
+def test_sales_work_is_not_development_work(settings):
+    from fursa import scoring
+
+    sales = posting(title="Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission",
+                    text="We are looking for sales professionals to sell our Flutter social media app. Commission only.")
+    assert not scoring.assess(sales, settings)[0]

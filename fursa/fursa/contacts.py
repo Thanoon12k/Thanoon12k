@@ -2,12 +2,14 @@
 
 Only what the posting itself shows; nothing is guessed. Iraqi mobile numbers
 (07xx xxx xxxx) become international (9647xx...) so WhatsApp links open the chat.
+Projects on freelance platforms get none of this: the platforms forbid dealing
+outside them before hiring, and breaking that can cost the account.
 """
 
 from __future__ import annotations
 
 import re
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 
 _WA = re.compile(r"(?:wa\.me/|api\.whatsapp\.com/send/?\?phone=)\+?(\d{8,15})", re.I)
 _IQ_MOBILE = re.compile(r"(?<![\d+])(?:\+?964|00964|0)[\s-]?(7\d{2})[\s-]?(\d{3})[\s-]?(\d{4})(?!\d)")
@@ -18,6 +20,12 @@ WHATSAPP_WORDS = ("whatsapp", "whats app", "واتساب", "واتس", "وتسا
 CONTACT_CUES = ("تواصل", "راسل", "مراسلة", "للتقديم", "ارسال", "إرسال", "ارسل", "أرسل", "contact", "dm", "message", "apply", "send", "cv")
 SKIP_TG = {"share", "joinchat", "addstickers", "proxy", "iv"}
 SKIP_EMAIL = ("example.com", "sentry.io", "noreply", "no-reply")
+PLATFORMS = ("mostaql.com", "khamsat.com", "freelancer.com", "nafezly.com")
+
+
+def on_platform(url: str | None) -> bool:
+    host = urlparse(url or "").netloc.lower()
+    return any(host == p or host.endswith("." + p) for p in PLATFORMS)
 
 
 def extract(text: str | None, *, apply_url: str | None = None, channel: str | None = None) -> dict:

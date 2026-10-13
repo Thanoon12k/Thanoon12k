@@ -27,7 +27,8 @@
    "7": "0f7f1722c3cb",
    "8": "94516b10164d",
    "11": "2c01552af7f3",
-   "12": "d83644a716f4"
+   "12": "d83644a716f4",
+   "15": "7d78c4348b9c"
   },
   "offset": 646325519
  },
@@ -428,13 +429,13 @@
   },
   "mostaql": {
    "label": "مستقل Mostaql",
-   "state": "error: HTTP 403",
-   "at": "2026-10-13T02:06:59Z"
+   "state": "blocked: HTTP 403 (the site refuses requests from GitHub's servers)",
+   "at": "2026-10-13T04:48:52Z"
   },
   "khamsat": {
    "label": "خمسات Khamsat",
-   "state": "error: HTTP 403",
-   "at": "2026-10-13T02:06:59Z"
+   "state": "blocked: HTTP 403 (the site refuses requests from GitHub's servers)",
+   "at": "2026-10-13T04:48:52Z"
   },
   "telegram": {
    "label": "Telegram",
@@ -453,5 +454,5 @@
    "at": "2026-10-13T02:06:59Z"
   }
  },
- "last_summary_ar": "أول تشغيل تلقائي على GitHub: شغل Django عن بعد مفتوح لكل الدول، ووظيفة Flutter حضورية بأربيل."
+ "last_summary_ar": "شغلة Django صغيرة بـ Freelancer؛ ورفضت مشروع تطبيق تواصل (حجمه أكبر بهواية من ميزانيته) وإعلان مبيعات بالعمولة."
 }

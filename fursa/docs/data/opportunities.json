@@ -101,6 +101,100 @@
   "notified_at": "2026-10-13T04:46:47Z"
  },
  {
+  "id": "7d78c4348b9c",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/django/PostgreSQL-Optimization-for-Django",
+  "title": "PostgreSQL Optimization for Django Platform",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "12.5k–37.5k INR (fixed)",
+  "lang": "en",
+  "tags": [
+   "django",
+   "flask",
+   "python",
+   "api"
+  ],
+  "summary": "Online education portal on Django (plus small Flask services) with one PostgreSQL instance that is now the bottleneck. Wanted: an audit report (schema, queries, ORM usage), implemented optimizations (indexes, refactored queries, connection pooling, caching), before/after benchmarks under simulated load, and deployment notes. Acceptance: key API endpoints at least 40% faster on average, within current CPU/memory limits.",
+  "status": "approved",
+  "user_status": null,
+  "extra": {
+   "bids": 50,
+   "budget_usd_max": 392.14,
+   "verified": "Freelancer API checked 2026-10-13: active and open, 53 bids, posted 2026-10-12"
+  },
+  "score": 32,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T04:54:17Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "freelance platform; check that payouts work from Iraq",
+   "open": "unknown",
+   "pay": "12.5k–37.5k INR (fixed)",
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "Our online education portal, crescentacademyedu.com, is powered by Python—primarily Django with a couple of small Flask services—and everything funnels through a single PostgreSQL instance. Traffic and course data have grown quickly, and the database layer is now the clear bottleneck.  \n\nWhat I…",
+   "skills": [
+    "django",
+    "flask",
+    "python",
+    "api"
+   ],
+   "ai": false
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-app-api",
+     "url": "https://github.com/Thanoon12k/Chat-app-api",
+     "why": "Django REST Framework API (auth, users, rooms, notifications) plus WebSocket consumers on Django Channels."
+    },
+    {
+     "name": "moalidaty",
+     "url": "https://github.com/Thanoon12k/moalidaty",
+     "why": "Django REST API with business rules: generator-scoped endpoints, JWT with custom permissions."
+    }
+   ],
+   "fit": 72,
+   "fit_reason_ar": "المشروع Django REST مع PostgreSQL، ونفس نوع الكود موجود بـ Chat-app-api وmoalidaty؛ بس تحسين الأداء والقياس ما مبين بالمشاريع.",
+   "ai": false
+  },
+  "draft": {
+   "cv_bullets": [
+    "Built Chat-app-api: Django REST Framework API for auth, users, rooms and notifications, with WebSocket consumers on Django Channels.",
+    "Built moalidaty: Django REST API with generator-scoped endpoints and JWT auth with custom permissions."
+   ],
+   "subject": null,
+   "message": "Hello,\n\nYour brief is clear: the PostgreSQL layer behind your Django REST API is the bottleneck, and you need an audit, real fixes and before/after numbers.\n\nHow I would approach it:\n1. Measure first: enable pg_stat_statements, profile the slowest endpoints and read their EXPLAIN ANALYZE plans to find missing indexes and N+1 ORM patterns.\n2. Fix: add or revise indexes, use select_related/prefetch_related or raw SQL where it pays off, and add connection pooling (PgBouncer) and caching where they fit.\n3. Prove it: load-test the key endpoints before and after, then hand over the audit report and step-by-step deployment notes.\n\nDjango REST work of mine: https://github.com/Thanoon12k/Chat-app-api and https://github.com/Thanoon12k/moalidaty\nPortfolio with screenshots of all my projects: https://make1it.pythonanywhere.com\n\nWhich endpoints matter most to you, and could I work on a staging copy of the database?\n\nThanoon Younis Mohammed",
+   "ai": false,
+   "lang": "en",
+   "channel": "platform",
+   "contact": null,
+   "edited_by_manager": true
+  },
+  "manager": {
+   "rank": 1,
+   "rank_score": 99,
+   "ai": true,
+   "at": "2026-10-13T04:54:17Z",
+   "note_ar": "شغلة صغيرة بـ Freelancer: تحسين أداء PostgreSQL لمنصة Django مع قياس قبل وبعد (شرط القبول تسريع 40%). الميزانية تقريباً 130–390$ وبيها 53 عرض. المسودة بدون إيميل أو رقم لأن المنصة تمنعها قبل التوظيف، والأفضل التأكد من طريقة السحب بالعراق."
+  },
+  "notified_at": "2026-10-13T04:54:17Z"
+ },
+ {
   "id": "705bee5087f8",
   "source": "mostaql",
   "source_label": "مستقل Mostaql",
@@ -521,248 +615,6 @@
   "notified_at": "2026-10-12T19:58:50Z"
  },
  {
-  "id": "7d78c4348b9c",
-  "source": "freelancer",
-  "source_label": "Freelancer.com",
-  "url": "https://www.freelancer.com/projects/django/PostgreSQL-Optimization-for-Django",
-  "title": "PostgreSQL Optimization for Django Platform",
-  "company": "",
-  "kind": "freelance",
-  "posted": "2026-10-12",
-  "expires": null,
-  "location": null,
-  "remote": true,
-  "pay": "12.5k–37.5k INR (fixed)",
-  "lang": "en",
-  "tags": [
-   "django",
-   "flask",
-   "python",
-   "api"
-  ],
-  "summary": "Our online education portal, crescentacademyedu.com, is powered by Python—primarily Django with a couple of small Flask services—and everything funnels through a single PostgreSQL instance. Traffic and course data have grown quickly, and the database layer is now the clear bottleneck.  \n\nWhat I need is a specialist…",
-  "status": "drafted",
-  "user_status": null,
-  "extra": {
-   "bids": 50,
-   "budget_usd_max": 392.14
-  },
-  "score": 32,
-  "elig": "likely",
-  "elig_note": "freelance platform; check that payouts work from Iraq",
-  "flags": [],
-  "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z",
-  "scout": {
-   "keep": true,
-   "reason": "passed the free rules (no AI review)",
-   "eligibility": "likely",
-   "eligibility_note": "freelance platform; check that payouts work from Iraq",
-   "open": "unknown",
-   "pay": "12.5k–37.5k INR (fixed)",
-   "work_type": "freelance",
-   "channel": "platform",
-   "contact": null,
-   "lang": "en",
-   "red_flags": [],
-   "brief": "Our online education portal, crescentacademyedu.com, is powered by Python—primarily Django with a couple of small Flask services—and everything funnels through a single PostgreSQL instance. Traffic and course data have grown quickly, and the database layer is now the clear bottleneck.  \n\nWhat I…",
-   "skills": [
-    "django",
-    "flask",
-    "python",
-    "api"
-   ],
-   "ai": false
-  },
-  "match": {
-   "repos": [
-    {
-     "name": "Chat-app-api",
-     "url": "https://github.com/Thanoon12k/Chat-app-api",
-     "why": "Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50 commits."
-    },
-    {
-     "name": "electric",
-     "url": "https://github.com/Thanoon12k/electric",
-     "why": "built with automation, data, django, django-rest, python"
-    },
-    {
-     "name": "projects-manager",
-     "url": "https://github.com/Thanoon12k/projects-manager",
-     "why": "built with django, django-rest, python, rest-api"
-    }
-   ],
-   "fit": 85,
-   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (django، flask، python، api) بدون مراجعة ذكاء اصطناعي.",
-   "ai": false
-  },
-  "draft": {
-   "cv_bullets": [
-    "Built Chat-app-api: Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50…",
-    "Built electric: built with automation, data, django, django-rest, python",
-    "Built projects-manager: built with django, django-rest, python, rest-api"
-   ],
-   "subject": "Application: PostgreSQL Optimization for Django Platform",
-   "message": "Hello,\n\nI'm Thanoon Younis Mohammed, a Flutter and Django developer based in Mosul, Iraq. Your post for \"PostgreSQL Optimization for Django Platform\" matches work I have already built:\n- Chat-app-api: https://github.com/Thanoon12k/Chat-app-api\n- electric: https://github.com/Thanoon12k/electric\n- projects-manager: https://github.com/Thanoon12k/projects-manager\n\nI can share more details about my approach and availability. Portfolio: https://make1it.pythonanywhere.com · GitHub: https://github.com/Thanoon12k\n\nBest regards,\nThanoon Younis Mohammed\nengthanoon1@gmail.com · +964 770 279 0915",
-   "ai": false,
-   "lang": "en",
-   "channel": "platform",
-   "contact": null
-  }
- },
- {
-  "id": "b79e6faec324",
-  "source": "freelancer",
-  "source_label": "Freelancer.com",
-  "url": "https://www.freelancer.com/projects/android-app-development/Build-Cross-Platform-Social-Networking",
-  "title": "Build Cross-Platform Social Networking App",
-  "company": "",
-  "kind": "freelance",
-  "posted": "2026-10-11",
-  "expires": null,
-  "location": null,
-  "remote": true,
-  "pay": "75k–150k INR (fixed)",
-  "lang": "en",
-  "tags": [
-   "flutter",
-   "mobile",
-   "backend"
-  ],
-  "summary": "I’m ready to turn a fresh social-networking concept into fully-functional Android and iOS apps. At its core the product needs familiar community staples—rich user profiles, a real-time messaging system and a dynamic activity feed—wrapped in a modern UI that feels lightning fast.\n\nBeyond the basics, two elements are…",
-  "status": "matched",
-  "user_status": null,
-  "extra": {
-   "bids": 105,
-   "budget_usd_max": 1568.55
-  },
-  "score": 20,
-  "elig": "likely",
-  "elig_note": "freelance platform; check that payouts work from Iraq",
-  "flags": [],
-  "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z",
-  "scout": {
-   "keep": true,
-   "reason": "passed the free rules (no AI review)",
-   "eligibility": "likely",
-   "eligibility_note": "freelance platform; check that payouts work from Iraq",
-   "open": "unknown",
-   "pay": "75k–150k INR (fixed)",
-   "work_type": "freelance",
-   "channel": "platform",
-   "contact": null,
-   "lang": "en",
-   "red_flags": [],
-   "brief": "I’m ready to turn a fresh social-networking concept into fully-functional Android and iOS apps. At its core the product needs familiar community staples—rich user profiles, a real-time messaging system and a dynamic activity feed—wrapped in a modern UI that feels lightning fast.\n\nBeyond the…",
-   "skills": [
-    "flutter",
-    "mobile",
-    "backend"
-   ],
-   "ai": false
-  },
-  "match": {
-   "repos": [
-    {
-     "name": "Chat-App-Flutter",
-     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
-     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
-    },
-    {
-     "name": "Pediatric-Clinic-manager",
-     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
-     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
-    },
-    {
-     "name": "Chat-app-api",
-     "url": "https://github.com/Thanoon12k/Chat-app-api",
-     "why": "Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50 commits."
-    }
-   ],
-   "fit": 80,
-   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، mobile، backend) بدون مراجعة ذكاء اصطناعي.",
-   "ai": false
-  }
- },
- {
-  "id": "ac3d78e4b649",
-  "source": "freelancer",
-  "source_label": "Freelancer.com",
-  "url": "https://www.freelancer.com/projects/sales/Sales-Agents-Wanted-Ready-Launch",
-  "title": "Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission",
-  "company": "",
-  "kind": "freelance",
-  "posted": "2026-10-11",
-  "expires": null,
-  "location": null,
-  "remote": true,
-  "pay": "$10k–$20k (fixed)",
-  "lang": "en",
-  "tags": [
-   "flutter",
-   "firebase",
-   "mobile",
-   "backend"
-  ],
-  "summary": "# Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission\n\nWe are looking for experienced sales professionals, business brokers, and freelancers to help us sell **Arheab**, a developed social media platform with a website and mobile applications.\n\n**Asking Price: $12,000 USD…",
-  "status": "matched",
-  "user_status": null,
-  "extra": {
-   "bids": 24,
-   "budget_usd_max": 20000.0
-  },
-  "score": 19,
-  "elig": "likely",
-  "elig_note": "freelance platform; check that payouts work from Iraq",
-  "flags": [],
-  "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z",
-  "scout": {
-   "keep": true,
-   "reason": "passed the free rules (no AI review)",
-   "eligibility": "likely",
-   "eligibility_note": "freelance platform; check that payouts work from Iraq",
-   "open": "unknown",
-   "pay": "$10k–$20k (fixed)",
-   "work_type": "freelance",
-   "channel": "platform",
-   "contact": null,
-   "lang": "en",
-   "red_flags": [],
-   "brief": "# Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission\n\nWe are looking for experienced sales professionals, business brokers, and freelancers to help us sell **Arheab**, a developed social media platform with a website and mobile applications.\n\n**Asking Price: $12,000…",
-   "skills": [
-    "flutter",
-    "firebase",
-    "mobile",
-    "backend"
-   ],
-   "ai": false
-  },
-  "match": {
-   "repos": [
-    {
-     "name": "Chat-App-Flutter",
-     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
-     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
-    },
-    {
-     "name": "Pediatric-Clinic-manager",
-     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
-     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
-    },
-    {
-     "name": "Chat-app-api",
-     "url": "https://github.com/Thanoon12k/Chat-app-api",
-     "why": "Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50 commits."
-    }
-   ],
-   "fit": 79,
-   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، firebase، mobile، backend) بدون مراجعة ذكاء اصطناعي.",
-   "ai": false
-  }
- },
- {
   "id": "836b346c1ddc",
   "source": "telegram",
   "source_label": "Telegram @remotejobsy → Jobee",
@@ -781,7 +633,7 @@
    "dart"
   ],
   "summary": "Full-time mid-level mobile engineer, 100% remote from anywhere (also hiring in Egypt, India, Pakistan, Philippines, Türkiye, Ukraine). Flutter, Dart, TypeScript/NestJS, MongoDB; production mobile apps, App Store/Google Play subscriptions and paywalls, A/B testing and growth experimentation. USD 80,000-120,000 a year…",
-  "status": "screened",
+  "status": "drafted",
   "user_status": null,
   "extra": {
    "found_in": "https://t.me/remotejobsy/201"
@@ -817,7 +669,42 @@
    "ai": true
   },
   "first_seen": "2026-10-12T19:58:50Z",
-  "updated": "2026-10-12T19:58:50Z"
+  "updated": "2026-10-13T04:48:52Z",
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-App-Flutter",
+     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
+     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
+    },
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
+    },
+    {
+     "name": "flutter-arduino-based-syringe-pump",
+     "url": "https://github.com/Thanoon12k/flutter-arduino-based-syringe-pump",
+     "why": "Graduation-project Flutter app that controls an Arduino syringe pump: dose calculation with unit tests, patient records in SQLite, bilingual UI, plus the Arduino firmware."
+    }
+   ],
+   "fit": 78,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، dart) بدون مراجعة ذكاء اصطناعي.",
+   "ai": false
+  },
+  "draft": {
+   "cv_bullets": [
+    "Built Chat-App-Flutter: Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits.",
+    "Built Pediatric-Clinic-manager: Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture…",
+    "Built flutter-arduino-based-syringe-pump: Graduation-project Flutter app that controls an Arduino syringe pump: dose calculation with unit tests, patient records in SQLite…"
+   ],
+   "subject": "Application: Mobile Software Engineer, Growth & Experimentation",
+   "message": "Hello Everis,\n\nI'm Thanoon Younis Mohammed, a Flutter and Django developer based in Mosul, Iraq. Your post for \"Mobile Software Engineer, Growth & Experimentation\" matches work I have already built:\n- Chat-App-Flutter: https://github.com/Thanoon12k/Chat-App-Flutter\n- Pediatric-Clinic-manager: https://github.com/Thanoon12k/Pediatric-Clinic-manager\n- flutter-arduino-based-syringe-pump: https://github.com/Thanoon12k/flutter-arduino-based-syringe-pump\n\nI can share more details about my approach and availability. Portfolio: https://make1it.pythonanywhere.com · GitHub: https://github.com/Thanoon12k\n\nBest regards,\nThanoon Younis Mohammed\nengthanoon1@gmail.com · +964 770 279 0915",
+   "ai": false,
+   "lang": "en",
+   "channel": "form",
+   "contact": null
+  }
  },
  {
   "id": "2ca0ccd93278",
@@ -839,7 +726,7 @@
    "automation"
   ],
   "summary": "Search Atlas | Product Engineer (Product Manager role, not a Full-stack role) | REMOTE (anywhere, EST hours) | Full-time contractor | $23-$34 USD/hour | https://careers.searchatlas.com/jobs/599248-product-engineer...\nWe're ~160 people, fully remote, building an AI marketing platform. Our main product is OTTO, which…",
-  "status": "screened",
+  "status": "drafted",
   "user_status": null,
   "extra": {},
   "score": 17,
@@ -847,7 +734,7 @@
   "elig_note": "open location: REMOTE (anywhere, EST hours)",
   "flags": [],
   "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T04:48:52Z",
   "scout": {
    "keep": true,
    "reason": "passed the free rules (no AI review)",
@@ -867,6 +754,41 @@
     "automation"
    ],
    "ai": false
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-app-api",
+     "url": "https://github.com/Thanoon12k/Chat-app-api",
+     "why": "Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50 commits."
+    },
+    {
+     "name": "electric",
+     "url": "https://github.com/Thanoon12k/electric",
+     "why": "built with automation, data, django, django-rest, python"
+    },
+    {
+     "name": "Arabic-Text-To-Audio-Converter",
+     "url": "https://github.com/Thanoon12k/Arabic-Text-To-Audio-Converter",
+     "why": "built with data, flask, python"
+    }
+   ],
+   "fit": 78,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (django، python، automation) بدون مراجعة ذكاء اصطناعي.",
+   "ai": false
+  },
+  "draft": {
+   "cv_bullets": [
+    "Built Chat-app-api: Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50…",
+    "Built electric: built with automation, data, django, django-rest, python",
+    "Built Arabic-Text-To-Audio-Converter: built with data, flask, python"
+   ],
+   "subject": "Application: Search Atlas | Product Engineer (Product Manager role, not a Full-stack role) | REMOTE (anywhere, EST hours) | Full-time contractor | $23-$34 USD/hour |…",
+   "message": "Hello Search Atlas,\n\nI'm Thanoon Younis Mohammed, a Flutter and Django developer based in Mosul, Iraq. Your post for \"Search Atlas | Product Engineer (Product Manager role, not a Full-stack role) | REMOTE (anywhere, EST hours) | Full-time contractor | $23-$34 USD/hour |…\" matches work I have already built:\n- Chat-app-api: https://github.com/Thanoon12k/Chat-app-api\n- electric: https://github.com/Thanoon12k/electric\n- Arabic-Text-To-Audio-Converter: https://github.com/Thanoon12k/Arabic-Text-To-Audio-Converter\n\nI can share more details about my approach and availability. Portfolio: https://make1it.pythonanywhere.com · GitHub: https://github.com/Thanoon12k\n\nBest regards,\nThanoon Younis Mohammed\nengthanoon1@gmail.com · +964 770 279 0915",
+   "ai": false,
+   "lang": "en",
+   "channel": "other",
+   "contact": null
   }
  },
  {
@@ -890,7 +812,7 @@
    "ai"
   ],
   "summary": "Hi,\n\nCan you develop the complete platform from scratch including Figma UI, frontend, backend, database, admin panel, and all required APIs?\n\nTech stack: Flutter (Android and iOS), Backend.\n\nThe platform will have two main roles: Owners can register and list their services or items, while Users can discover nearby…",
-  "status": "screened",
+  "status": "matched",
   "user_status": null,
   "extra": {
    "bids": 79,
@@ -901,7 +823,7 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T04:48:52Z",
   "scout": {
    "keep": true,
    "reason": "passed the free rules (no AI review)",
@@ -921,6 +843,28 @@
     "backend",
     "ai"
    ],
+   "ai": false
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-App-Flutter",
+     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
+     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
+    },
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
+    },
+    {
+     "name": "Chat-app-api",
+     "url": "https://github.com/Thanoon12k/Chat-app-api",
+     "why": "Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50 commits."
+    }
+   ],
+   "fit": 69,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، mobile، backend، ai) بدون مراجعة ذكاء اصطناعي.",
    "ai": false
   }
  },
@@ -944,7 +888,7 @@
    "api"
   ],
   "summary": "I need a full-scale rebuild of the “amigrapes” mobile experience for both Android and iOS. The goal is to replicate the core flow and overall look-and-feel of the reference app while adding the flexibility to grow new features later.\n\nScope of work  \n• Design and code the complete front-end for Android (Kotlin or…",
-  "status": "screened",
+  "status": "matched",
   "user_status": null,
   "extra": {
    "bids": 101,
@@ -955,7 +899,7 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T04:48:52Z",
   "scout": {
    "keep": true,
    "reason": "passed the free rules (no AI review)",
@@ -974,6 +918,28 @@
     "mobile",
     "api"
    ],
+   "ai": false
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-App-Flutter",
+     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
+     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
+    },
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
+    },
+    {
+     "name": "moalidaty-front-end",
+     "url": "https://github.com/Thanoon12k/moalidaty-front-end",
+     "why": "Flutter (GetX) client for generator-subscription management: subscribers, budgets, workers, receipts with QR scanning and a stats dashboard; JWT auth with secure storage."
+    }
+   ],
+   "fit": 78,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، mobile، api) بدون مراجعة ذكاء اصطناعي.",
    "ai": false
   }
  },
@@ -996,7 +962,7 @@
    "mobile"
   ],
   "summary": "I have a nearly-finished mobile app for both iOS and Android, but several tasks are still blocking release. The codebase is stable overall; I simply need an experienced developer who can jump in right away and tackle three areas: squashing the last few bugs, adding a couple of small features, and tightening…",
-  "status": "screened",
+  "status": "matched",
   "user_status": null,
   "extra": {
    "bids": 74,
@@ -1007,7 +973,7 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T04:48:52Z",
   "scout": {
    "keep": true,
    "reason": "passed the free rules (no AI review)",
@@ -1025,6 +991,28 @@
     "flutter",
     "mobile"
    ],
+   "ai": false
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-App-Flutter",
+     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
+     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
+    },
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
+    },
+    {
+     "name": "flutter-arduino-based-syringe-pump",
+     "url": "https://github.com/Thanoon12k/flutter-arduino-based-syringe-pump",
+     "why": "Graduation-project Flutter app that controls an Arduino syringe pump: dose calculation with unit tests, patient records in SQLite, bilingual UI, plus the Arduino firmware."
+    }
+   ],
+   "fit": 77,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، mobile) بدون مراجعة ذكاء اصطناعي.",
    "ai": false
   }
  },
@@ -1047,7 +1035,7 @@
    "mobile"
   ],
   "summary": "I am building a mobile-only platform where users can hire a “rental boyfriend” for three clear purposes: companionship at events, emotional support through in-app chat, and personalised city tours. The entire experience must live inside a polished iOS and Android application.\n\nCore flow  \n• New users come in through…",
-  "status": "screened",
+  "status": "matched",
   "user_status": null,
   "extra": {
    "bids": 39,
@@ -1058,7 +1046,7 @@
   "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
   "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T04:48:52Z",
   "scout": {
    "keep": true,
    "reason": "passed the free rules (no AI review)",
@@ -1076,6 +1064,28 @@
     "flutter",
     "mobile"
    ],
+   "ai": false
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-App-Flutter",
+     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
+     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
+    },
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
+    },
+    {
+     "name": "flutter-arduino-based-syringe-pump",
+     "url": "https://github.com/Thanoon12k/flutter-arduino-based-syringe-pump",
+     "why": "Graduation-project Flutter app that controls an Arduino syringe pump: dose calculation with unit tests, patient records in SQLite, bilingual UI, plus the Arduino firmware."
+    }
+   ],
+   "fit": 77,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، mobile) بدون مراجعة ذكاء اصطناعي.",
    "ai": false
   }
  },
@@ -1298,6 +1308,60 @@
   }
  },
  {
+  "id": "98c4cf67f611",
+  "source": "telegram",
+  "source_label": "Telegram @remote_python_jobs",
+  "url": "https://t.me/remote_python_jobs/1431",
+  "title": "Senior Python Engineer (Sunday-Thursday working week)",
+  "company": "ZentixSoft",
+  "kind": "job",
+  "posted": "2026-10-09",
+  "expires": null,
+  "location": "Worldwide",
+  "remote": null,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "python",
+   "backend"
+  ],
+  "summary": "Published time : 2026-10-08\nCompany name : ZentixSoft\nTitle : Senior Python Engineer (Sunday-Thursday working week)\nGrades : senior\nJob description : Design and build Python and/or Node.js backend services with asynchronous, event-driven processing, own API contracts, and deploy containerised services on Azure with…",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "channel": "remote_python_jobs",
+   "apply_url": "https://djinni.co/jobs/852295-senior-python-engineer-sunday-thursday-workin/"
+  },
+  "score": 10,
+  "elig": "yes",
+  "elig_note": "open location: Worldwide",
+  "flags": [],
+  "contacts": {
+   "apply_url": "https://djinni.co/jobs/852295-senior-python-engineer-sunday-thursday-workin/"
+  },
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T04:48:52Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "yes",
+   "eligibility_note": "open location: Worldwide",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "unknown",
+   "channel": "other",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "Published time : 2026-10-08\nCompany name : ZentixSoft\nTitle : Senior Python Engineer (Sunday-Thursday working week)\nGrades : senior\nJob description : Design and build Python and/or Node.js backend services with asynchronous, event-driven processing, own API contracts, and deploy containerised…",
+   "skills": [
+    "python",
+    "backend"
+   ],
+   "ai": false
+  }
+ },
+ {
   "id": "94c875373ce1",
   "source": "himalayas",
   "source_label": "Himalayas",
@@ -1348,42 +1412,6 @@
   "updated": "2026-10-12T19:58:50Z"
  },
  {
-  "id": "98c4cf67f611",
-  "source": "telegram",
-  "source_label": "Telegram @remote_python_jobs",
-  "url": "https://t.me/remote_python_jobs/1431",
-  "title": "Senior Python Engineer (Sunday-Thursday working week)",
-  "company": "ZentixSoft",
-  "kind": "job",
-  "posted": "2026-10-09",
-  "expires": null,
-  "location": "Worldwide",
-  "remote": null,
-  "pay": null,
-  "lang": "en",
-  "tags": [
-   "python",
-   "backend"
-  ],
-  "text": "Published time : 2026-10-08\nCompany name : ZentixSoft\nTitle : Senior Python Engineer (Sunday-Thursday working week)\nGrades : senior\nJob description : Design and build Python and/or Node.js backend services with asynchronous, event-driven processing, own API contracts, and deploy containerised services on Azure with CI/CD for a long-term data-heavy enterprise project.\nLocation : Worldwide\nAnywhere : Yes\nRemote : Yes\n👉 👉 ( Job Description & Apply ) 👈️ 👈️\nTags :\n#python #nodejs #azure #docker #event_driven #api_design #remote #worldwide #senior #full_time\nApply: https://djinni.co/jobs/852295-senior-python-engineer-sunday-thursday-workin/",
-  "summary": "Published time : 2026-10-08\nCompany name : ZentixSoft\nTitle : Senior Python Engineer (Sunday-Thursday working week)\nGrades : senior\nJob description : Design and build Python and/or Node.js backend services with asynchronous, event-driven processing, own API contracts, and deploy containerised services on Azure with…",
-  "status": "new",
-  "user_status": null,
-  "extra": {
-   "channel": "remote_python_jobs",
-   "apply_url": "https://djinni.co/jobs/852295-senior-python-engineer-sunday-thursday-workin/"
-  },
-  "score": 10,
-  "elig": "yes",
-  "elig_note": "open location: Worldwide",
-  "flags": [],
-  "contacts": {
-   "apply_url": "https://djinni.co/jobs/852295-senior-python-engineer-sunday-thursday-workin/"
-  },
-  "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z"
- },
- {
   "id": "6be440e94cb3",
   "source": "telegram",
   "source_label": "Telegram @remote_python_jobs",
@@ -1400,9 +1428,8 @@
   "tags": [
    "python"
   ],
-  "text": "Published time : 2026-10-04\nCompany name : Canonical\nTitle : Senior Software Engineer - Python/MongoDB\nGrades : senior\nJob description : Build the world's best open-source analog to MongoDB Atlas / Amazon DocumentDB: high-performing, rock-solid MongoDB deployments that customers own and operate on any cloud, multi-cloud, or on-premise environment.\nLocation : Worldwide\nAnywhere : Yes\nRemote : Yes\n👉 👉 ( Job Description & Apply ) 👈️ 👈️\nTags :\n#python #mongodb #remote #senior #full_time #open_source #devops #worldwide\nApply: https://www.workingnomads.com/jobs/senior-software-engineer-pythonmongodb-canonical-1913711",
   "summary": "Published time : 2026-10-04\nCompany name : Canonical\nTitle : Senior Software Engineer - Python/MongoDB\nGrades : senior\nJob description : Build the world's best open-source analog to MongoDB Atlas / Amazon DocumentDB: high-performing, rock-solid MongoDB deployments that customers own and operate on any cloud…",
-  "status": "new",
+  "status": "screened",
   "user_status": null,
   "extra": {
    "channel": "remote_python_jobs",
@@ -1416,7 +1443,25 @@
    "apply_url": "https://www.workingnomads.com/jobs/senior-software-engineer-pythonmongodb-canonical-1913711"
   },
   "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z"
+  "updated": "2026-10-13T04:48:52Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "yes",
+   "eligibility_note": "open location: Worldwide",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "unknown",
+   "channel": "other",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "Published time : 2026-10-04\nCompany name : Canonical\nTitle : Senior Software Engineer - Python/MongoDB\nGrades : senior\nJob description : Build the world's best open-source analog to MongoDB Atlas / Amazon DocumentDB: high-performing, rock-solid MongoDB deployments that customers own and operate on…",
+   "skills": [
+    "python"
+   ],
+   "ai": false
+  }
  },
  {
   "id": "16559633742b",
@@ -1435,9 +1480,8 @@
   "tags": [
    "mobile"
   ],
-  "text": "💼 Senior Mobile Developer (iOS + Android)\n🏛️ at HyroTrader\n🌍 Remote\n💰 $6k-11k/month\n💥 New! Posted one minute ago\n✅ Apply → https://cjl.ist/qh3siyw6x\nOr forward to a friend!\nApply: https://cjl.ist/qh3siyw6x",
   "summary": "💼 Senior Mobile Developer (iOS + Android)\n🏛️ at HyroTrader\n🌍 Remote\n💰 $6k-11k/month\n💥 New! Posted one minute ago\n✅ Apply → https://cjl.ist/qh3siyw6x\nOr forward to a friend!\nApply: https://cjl.ist/qh3siyw6x",
-  "status": "new",
+  "status": "screened",
   "user_status": null,
   "extra": {
    "channel": "cryptojobslist",
@@ -1451,7 +1495,25 @@
    "apply_url": "https://cjl.ist/qh3siyw6x"
   },
   "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z"
+  "updated": "2026-10-13T04:48:52Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "unclear",
+   "eligibility_note": "location not stated",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "unknown",
+   "channel": "other",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "💼 Senior Mobile Developer (iOS + Android)\n🏛️ at HyroTrader\n🌍 Remote\n💰 $6k-11k/month\n💥 New! Posted one minute ago\n✅ Apply → https://cjl.ist/qh3siyw6x\nOr forward to a friend!\nApply: https://cjl.ist/qh3siyw6x",
+   "skills": [
+    "mobile"
+   ],
+   "ai": false
+  }
  },
  {
   "id": "ea94cdf58f21",
@@ -1470,9 +1532,8 @@
   "tags": [
    "python"
   ],
-  "text": "Published time : 2026-10-11\nCompany name : Upwork client\nTitle : Python Developer for Personal Project\nGrades : junior, middle\nJob description : Help build a personal-development web project focused on self-growth and motivation: coding, debugging, and integrating the Python app with other tools in close collaboration with the client.\nLocation : Worldwide\nAnywhere : Yes\nRemote : Yes\n👉 👉 ( Job Description & Apply ) 👈️ 👈️\nTags :\n#python #remote #worldwide #freelance #web_development\nApply: https://www.upwork.com/freelance-jobs/apply/Python-Developer-for-Personal-Project_~022109274857646373974/",
   "summary": "Published time : 2026-10-11\nCompany name : Upwork client\nTitle : Python Developer for Personal Project\nGrades : junior, middle\nJob description : Help build a personal-development web project focused on self-growth and motivation: coding, debugging, and integrating the Python app with other tools in close…",
-  "status": "new",
+  "status": "screened",
   "user_status": null,
   "extra": {
    "channel": "remote_python_jobs",
@@ -1486,7 +1547,25 @@
    "apply_url": "https://www.upwork.com/freelance-jobs/apply/Python-Developer-for-Personal-Project_~022109274857646373974/"
   },
   "first_seen": "2026-10-13T02:06:59Z",
-  "updated": "2026-10-13T02:06:59Z"
+  "updated": "2026-10-13T04:48:52Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "yes",
+   "eligibility_note": "open location: Worldwide",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "Published time : 2026-10-11\nCompany name : Upwork client\nTitle : Python Developer for Personal Project\nGrades : junior, middle\nJob description : Help build a personal-development web project focused on self-growth and motivation: coding, debugging, and integrating the Python app with other tools…",
+   "skills": [
+    "python"
+   ],
+   "ai": false
+  }
  },
  {
   "id": "4011ee76e769",
@@ -1586,6 +1665,200 @@
   },
   "shown_at": "2026-10-13T02:06:59Z",
   "reject_reason": "same company as another pick: Senior Mobile Developer (Flutter) - Erbil (Erbil is closer to Mosul)"
+ },
+ {
+  "id": "b79e6faec324",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/android-app-development/Build-Cross-Platform-Social-Networking",
+  "title": "Build Cross-Platform Social Networking App",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-11",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "75k–150k INR (fixed)",
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "mobile",
+   "backend"
+  ],
+  "summary": "I’m ready to turn a fresh social-networking concept into fully-functional Android and iOS apps. At its core the product needs familiar community staples—rich user profiles, a real-time messaging system and a dynamic activity feed—wrapped in a modern UI that feels lightning fast.\n\nBeyond the basics, two elements are…",
+  "status": "rejected",
+  "user_status": null,
+  "extra": {
+   "bids": 105,
+   "budget_usd_max": 1568.55
+  },
+  "score": 20,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T04:54:17Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "freelance platform; check that payouts work from Iraq",
+   "open": "unknown",
+   "pay": "75k–150k INR (fixed)",
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "I’m ready to turn a fresh social-networking concept into fully-functional Android and iOS apps. At its core the product needs familiar community staples—rich user profiles, a real-time messaging system and a dynamic activity feed—wrapped in a modern UI that feels lightning fast.\n\nBeyond the…",
+   "skills": [
+    "flutter",
+    "mobile",
+    "backend"
+   ],
+   "ai": false
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-App-Flutter",
+     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
+     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
+    },
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
+    },
+    {
+     "name": "Chat-app-api",
+     "url": "https://github.com/Thanoon12k/Chat-app-api",
+     "why": "Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50 commits."
+    }
+   ],
+   "fit": 80,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، mobile، backend) بدون مراجعة ذكاء اصطناعي.",
+   "ai": false
+  },
+  "draft": {
+   "cv_bullets": [
+    "Built Chat-App-Flutter: Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits.",
+    "Built Pediatric-Clinic-manager: Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture…",
+    "Built Chat-app-api: Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50…"
+   ],
+   "subject": "Application: Build Cross-Platform Social Networking App",
+   "message": "Hello,\n\nI'm Thanoon Younis Mohammed, a Flutter and Django developer based in Mosul, Iraq. Your post for \"Build Cross-Platform Social Networking App\" matches work I have already built:\n- Chat-App-Flutter: https://github.com/Thanoon12k/Chat-App-Flutter\n- Pediatric-Clinic-manager: https://github.com/Thanoon12k/Pediatric-Clinic-manager\n- Chat-app-api: https://github.com/Thanoon12k/Chat-app-api\n\nI can share more details about my approach and availability. Portfolio: https://make1it.pythonanywhere.com · GitHub: https://github.com/Thanoon12k\n\nBest regards,\nThanoon Younis Mohammed\nengthanoon1@gmail.com · +964 770 279 0915",
+   "ai": false,
+   "lang": "en",
+   "channel": "platform",
+   "contact": null
+  },
+  "manager": {
+   "rank": 2,
+   "rank_score": 98,
+   "note_ar": "اختيار تلقائي بدون مراجعة المدير (ماكو مفتاح API أو انتهت الميزانية)، ويحتاج مراجعة الإعلان والمسودة قبل الإرسال.",
+   "ai": false,
+   "at": "2026-10-13T04:48:52Z"
+  },
+  "reject_reason": "manager: the scope (short videos, monetization, events, admin panel, store launch) is far bigger than ~$900-1,800 fixed, and 106 bids are already in"
+ },
+ {
+  "id": "ac3d78e4b649",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/sales/Sales-Agents-Wanted-Ready-Launch",
+  "title": "Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-11",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "$10k–$20k (fixed)",
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "firebase",
+   "mobile",
+   "backend"
+  ],
+  "summary": "# Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission\n\nWe are looking for experienced sales professionals, business brokers, and freelancers to help us sell **Arheab**, a developed social media platform with a website and mobile applications.\n\n**Asking Price: $12,000 USD…",
+  "status": "rejected",
+  "user_status": null,
+  "extra": {
+   "bids": 24,
+   "budget_usd_max": 20000.0
+  },
+  "score": 19,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T04:54:17Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "freelance platform; check that payouts work from Iraq",
+   "open": "unknown",
+   "pay": "$10k–$20k (fixed)",
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "# Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission\n\nWe are looking for experienced sales professionals, business brokers, and freelancers to help us sell **Arheab**, a developed social media platform with a website and mobile applications.\n\n**Asking Price: $12,000…",
+   "skills": [
+    "flutter",
+    "firebase",
+    "mobile",
+    "backend"
+   ],
+   "ai": false
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-App-Flutter",
+     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
+     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
+    },
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
+    },
+    {
+     "name": "Chat-app-api",
+     "url": "https://github.com/Thanoon12k/Chat-app-api",
+     "why": "Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50 commits."
+    }
+   ],
+   "fit": 79,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، firebase، mobile، backend) بدون مراجعة ذكاء اصطناعي.",
+   "ai": false
+  },
+  "draft": {
+   "cv_bullets": [
+    "Built Chat-App-Flutter: Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits.",
+    "Built Pediatric-Clinic-manager: Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture…",
+    "Built Chat-app-api: Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50…"
+   ],
+   "subject": "Application: Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission",
+   "message": "Hello,\n\nI'm Thanoon Younis Mohammed, a Flutter and Django developer based in Mosul, Iraq. Your post for \"Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission\" matches work I have already built:\n- Chat-App-Flutter: https://github.com/Thanoon12k/Chat-App-Flutter\n- Pediatric-Clinic-manager: https://github.com/Thanoon12k/Pediatric-Clinic-manager\n- Chat-app-api: https://github.com/Thanoon12k/Chat-app-api\n\nI can share more details about my approach and availability. Portfolio: https://make1it.pythonanywhere.com · GitHub: https://github.com/Thanoon12k\n\nBest regards,\nThanoon Younis Mohammed\nengthanoon1@gmail.com · +964 770 279 0915",
+   "ai": false,
+   "lang": "en",
+   "channel": "platform",
+   "contact": null
+  },
+  "manager": {
+   "rank": 3,
+   "rank_score": 97,
+   "note_ar": "اختيار تلقائي بدون مراجعة المدير (ماكو مفتاح API أو انتهت الميزانية)، ويحتاج مراجعة الإعلان والمسودة قبل الإرسال.",
+   "ai": false,
+   "at": "2026-10-13T04:48:52Z"
+  },
+  "reject_reason": "manager: not development work (commission sales of an existing app)"
  },
  {
   "id": "a1b4e4a61e69",

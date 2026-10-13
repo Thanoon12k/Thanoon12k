@@ -95,7 +95,8 @@ def collect(ctx, report: dict) -> None:
                     store.mark_seen(rec["id"])
         for rec in kept:
             extra = rec.get("extra") or {}
-            found = contacts.extract(rec.get("text"), apply_url=extra.get("apply_url"), channel=extra.get("channel"))
+            found = {} if contacts.on_platform(rec["url"]) else contacts.extract(
+                rec.get("text"), apply_url=extra.get("apply_url"), channel=extra.get("channel"))
             if found:
                 rec["contacts"] = found
             store.add(rec)
@@ -189,10 +190,10 @@ def run(settings, *, collect_only: bool = False, llm_client=None) -> dict:
 
         drafted = sorted(store.items("drafted"), key=lambda r: -(r.get("match") or {}).get("fit", 0))
         manager_due = store.due("manager", float(settings.agents.get("manager_every_hours", 12)))
-        if drafted and (ctx.llm is None or manager_due or len(drafted) >= 2 * a("max_picks", 3)):
+        backlog = ctx.llm is not None and len(drafted) >= 2 * a("max_picks", 3)  # a full AI batch is worth a review now
+        if drafted and (manager_due or backlog):  # free rules too: at most max_picks per review, a review every 12 hours
             approved = manager.review(ctx, drafted[:8])
-            if ctx.llm is not None:
-                store.touch("manager")
+            store.touch("manager")
             report["approved"] = len(approved)
 
         if ctx.llm is not None and store.due("ideas", 24 * 7):

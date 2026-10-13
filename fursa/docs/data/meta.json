@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-13T02:06:59Z",
+ "updated": "2026-10-13T04:48:52Z",
  "repo": "Thanoon12k/fursa-agents",
  "site_url": "https://thanoon12k.github.io/fursa-agents/",
  "mode": "free",
@@ -17,12 +17,11 @@
  },
  "budget_usd": 5.0,
  "counts": {
-  "approved": 5,
-  "rejected": 9,
-  "drafted": 1,
-  "matched": 2,
-  "screened": 11,
-  "new": 4
+  "approved": 6,
+  "rejected": 11,
+  "drafted": 2,
+  "matched": 4,
+  "screened": 9
  },
  "user_counts": {},
  "sources": {
@@ -84,13 +83,13 @@
   },
   "mostaql": {
    "label": "مستقل Mostaql",
-   "state": "error: HTTP 403",
-   "at": "2026-10-13T02:06:59Z"
+   "state": "blocked: HTTP 403 (the site refuses requests from GitHub's servers)",
+   "at": "2026-10-13T04:48:52Z"
   },
   "khamsat": {
    "label": "خمسات Khamsat",
-   "state": "error: HTTP 403",
-   "at": "2026-10-13T02:06:59Z"
+   "state": "blocked: HTTP 403 (the site refuses requests from GitHub's servers)",
+   "at": "2026-10-13T04:48:52Z"
   },
   "telegram": {
    "label": "Telegram",
@@ -109,7 +108,7 @@
    "at": "2026-10-13T02:06:59Z"
   }
  },
- "summary_ar": "أول تشغيل تلقائي على GitHub: شغل Django عن بعد مفتوح لكل الدول، ووظيفة Flutter حضورية بأربيل.",
+ "summary_ar": "شغلة Django صغيرة بـ Freelancer؛ ورفضت مشروع تطبيق تواصل (حجمه أكبر بهواية من ميزانيته) وإعلان مبيعات بالعمولة.",
  "notice": "",
  "person": {
   "name": "Thanoon Younis Mohammed",

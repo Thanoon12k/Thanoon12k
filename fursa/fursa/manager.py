@@ -120,10 +120,12 @@ def review(ctx, recs: list[dict]) -> list[dict]:
             rec = by_id.pop(pick["id"])
             if pick["decision"] == "approve" and len(approved) < max_picks:
                 if pick.get("fixed_message"):
-                    from .writer import ensure_website, fill_tokens
+                    from .contacts import on_platform
+                    from .writer import finalize
 
-                    lang = (rec.get("draft") or {}).get("lang", "en")
-                    rec["draft"]["message"] = ensure_website(fill_tokens(pick["fixed_message"], settings.person, lang), settings.person, lang)
+                    draft = rec.get("draft") or {}
+                    platform = draft.get("channel") == "platform" or on_platform(rec["url"])
+                    rec["draft"]["message"] = finalize(pick["fixed_message"], settings.person, draft.get("lang", "en"), platform)
                     rec["draft"]["edited_by_manager"] = True
                 _approve(store, rec, len(approved) + 1, pick.get("note_ar", ""), True, settings.now)
                 approved.append(rec)
@@ -142,6 +144,12 @@ def review(ctx, recs: list[dict]) -> list[dict]:
     strong = [r for r in recs if r.get("elig") in ("yes", "likely") and (r.get("score") or 0) >= min_score
               and (r.get("match") or {}).get("fit", 0) >= 70]
     ranked = sorted(strong, key=lambda r: (-(r.get("match") or {}).get("fit", 0), -(r.get("score") or 0)))
+    strong_ids = {r["id"] for r in strong}
+    for rec in recs:  # below the bar in two reviews: out of the queue
+        if rec["id"] not in strong_ids:
+            rec["manager_skips"] = rec.get("manager_skips", 0) + 1
+            if rec["manager_skips"] >= 2:
+                store.set_status(rec, "rejected", reject_reason="below the free rules' bar in two reviews (no AI review)")
     week_ago = iso_time(settings.now - timedelta(days=7))
     taken = {_company(r): r["title"] for r in store.items("approved") if (r.get("manager") or {}).get("at", "") >= week_ago}
     for rec in ranked:

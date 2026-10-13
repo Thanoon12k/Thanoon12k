@@ -16,7 +16,7 @@ import re
 from datetime import timedelta
 
 from . import net
-from .contacts import gmail_link, telegram_share_link, whatsapp_link
+from .contacts import gmail_link, on_platform, telegram_share_link, whatsapp_link
 from .scoring import normalize
 from .status import apply as apply_status
 from .text import clip, iso_time
@@ -97,7 +97,10 @@ def pick_message(settings, rec: dict, n: int, total: int, summary: str = "") -> 
         if draft.get("subject"):
             lines.append(f"✉️ <b>{_e(clip(draft['subject'], 150))}</b>")
         lines.append(f"<blockquote expandable>{_e(clip(draft['message'], 2300))}</blockquote>")
-    lines.append("📨 أزرار الإرسال تفتح التطبيق والمسودة جاهزة؛ الإرسال بضغطة منك.")
+    if on_platform(rec["url"]):
+        lines.append("📋 التقديم من صفحة المشروع بالمنصة: نسخ المسودة ولصقها بخانة العرض (بدون أي وسيلة تواصل).")
+    else:
+        lines.append("📨 أزرار الإرسال تفتح التطبيق والمسودة جاهزة؛ الإرسال بضغطة منك.")
     lines.append("↩️ للتحديث: الرد على هالرسالة بكلمة «قدمت» أو «مقابلة» أو «ما تهمني».")
     text = "\n".join(lines)
     if len(text) > 4000:
@@ -120,7 +123,7 @@ def buttons(settings, rec: dict) -> list[list[dict]]:
     apply_url = found.get("apply_url") or ""
     if apply_url.startswith("http") and apply_url != rec["url"]:
         send.append({"text": "📝 رابط التقديم", "url": apply_url})
-    if message:
+    if message and not on_platform(rec["url"]):  # platform proposals are pasted on the platform itself
         link = f"https://github.com/{person['github']}" if person.get("github") else (person.get("website") or rec["url"])
         send.append({"text": "📤 إرسال المسودة", "url": telegram_share_link(message, link)})
     info = [{"text": "🔗 الإعلان", "url": rec["url"]}]

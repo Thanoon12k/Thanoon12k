@@ -7,6 +7,9 @@ as visible [placeholders] for the user to fill.
 
 from __future__ import annotations
 
+import re
+
+from . import contacts
 from .text import clip
 
 NULLABLE = {"anyOf": [{"type": "string"}, {"type": "null"}]}
@@ -28,7 +31,8 @@ SYSTEM = (
     "{PHONE}, {WEBSITE}, {GITHUB}. Write in the requested language (Arabic: clear, polite Modern Standard Arabic; "
     "English: plain and confident, no clichés). Channel rules: email = a subject line and 120-180 words; whatsapp = "
     "no subject, 50-90 friendly words; platform = a freelance proposal with no subject, 90-150 words: show you "
-    "understood the task, give a 3-step plan, link the relevant repositories, end with one question; linkedin, form "
+    "understood the task, give a 3-step plan, link the relevant repositories, end with one question, and never put "
+    "{EMAIL}, {PHONE} or any other contact detail in it (platforms forbid contact details before hiring); linkedin, form "
     "or other = an 80-120 word cover note. Link 2-3 repositories naturally (full URLs), and always include the "
     "portfolio website {WEBSITE} once: it shows all the projects with screenshots. cv_bullets: 3-5 lines for "
     "this posting, each starting with a verb, facts only."
@@ -68,6 +72,34 @@ def fill_tokens(text: str | None, person: dict, lang: str) -> str | None:
     for key, placeholder in missing.items():
         text = text.replace("{" + key + "}", values.get(key) or placeholder)
     return text
+
+
+_LABEL_ONLY = re.compile(r"(?i)(contact( me)?( at| on)?|e-?mail|phone|mobile|tel|whatsapp|للتواصل|البريد( الإلكتروني)?|الهاتف|رقم الهاتف|واتساب)")
+
+
+def without_contacts(message: str | None, person: dict) -> str | None:
+    """Freelance platforms forbid contact details before hiring: drop email and phone, keep links to the work."""
+    if not message:
+        return message
+    values = [v for v in ("{EMAIL}", "{PHONE}", person.get("email"), person.get("phone")) if v]
+    lines = []
+    for line in message.split("\n"):
+        if not any(v in line for v in values):
+            lines.append(line)
+            continue
+        for value in values:
+            line = line.replace(value, "")
+        line = line.strip(" ·|,،-–—:")
+        if line and not _LABEL_ONLY.fullmatch(line):
+            lines.append(line)
+    return "\n".join(lines).rstrip()
+
+
+def finalize(message: str | None, person: dict, lang: str, platform: bool) -> str | None:
+    """Tokens filled, no contact details on platforms, and the website always present."""
+    if platform:
+        message = without_contacts(message, person)
+    return ensure_website(fill_tokens(message, person, lang), person, lang)
 
 
 def ensure_website(message: str | None, person: dict, lang: str) -> str | None:
@@ -119,7 +151,7 @@ def run(ctx, recs: list[dict]) -> int:
         draft = dict(result, ai=True) if result else _template(rec, repos, lang)
         by_ai += 1 if result else 0
         draft["subject"] = fill_tokens(draft.get("subject"), person, lang) if channel == "email" or not result else None
-        draft["message"] = ensure_website(fill_tokens(draft["message"], person, lang), person, lang)
+        draft["message"] = finalize(draft["message"], person, lang, channel == "platform" or contacts.on_platform(rec["url"]))
         draft["cv_bullets"] = [fill_tokens(b, person, lang) for b in draft.get("cv_bullets", [])][:5]
         draft.update({"lang": lang, "channel": channel, "contact": scout.get("contact")})
         ctx.store.set_status(rec, "drafted", draft=draft)

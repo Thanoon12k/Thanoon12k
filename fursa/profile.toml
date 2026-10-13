@@ -99,6 +99,15 @@ sportsbook = -10
 "توثيق حساب" = -8
 "زيادة متابعين" = -8
 "fake reviews" = -10
+"sales agent" = -10    # selling or commission work is not development work
+"sales agents" = -10
+"sales representative" = -10
+"commission only" = -10
+"cold calling" = -10
+"telemarketing" = -10
+"business broker" = -10
+"مندوب مبيعات" = -10
+"مسوق بالعمولة" = -10
 
 [agents]
 worker_model = "claude-haiku-5-5"   # scout, matcher and writer (cheap)
