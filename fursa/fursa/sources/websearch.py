@@ -27,6 +27,9 @@ ANGLES = (
     'NGO Iraq vacancy "IT officer" OR developer OR "database officer" Ninewa OR Mosul',
     '"Django" contract remote worldwide hiring',
     'Flutter freelance project "remote" "Middle East" OR Arabic',
+    "site:mostaql.com/project Flutter OR فلاتر OR Dart",  # Mostaql and Khamsat refuse GitHub's servers;
+    "site:mostaql.com/project Django OR Python OR بايثون",  # search engines still see their open projects
+    "site:khamsat.com/community/requests تطبيق OR برمجة OR بايثون",
 )
 
 SYSTEM = (

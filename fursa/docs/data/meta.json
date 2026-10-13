@@ -1,8 +1,8 @@
 {
- "updated": "2026-10-12T19:58:50Z",
+ "updated": "2026-10-13T02:06:59Z",
  "repo": "Thanoon12k/fursa-agents",
  "site_url": "https://thanoon12k.github.io/fursa-agents/",
- "mode": "ai",
+ "mode": "free",
  "llm_note": "",
  "models": {
   "worker": "claude-haiku-5-5",
@@ -17,13 +17,99 @@
  },
  "budget_usd": 5.0,
  "counts": {
-  "approved": 3,
-  "screened": 5,
-  "rejected": 8
+  "approved": 5,
+  "rejected": 9,
+  "drafted": 1,
+  "matched": 2,
+  "screened": 11,
+  "new": 4
  },
  "user_counts": {},
- "sources": {},
- "summary_ar": "أول تشغيل: 3 فرص معتمدة، اثنين منها مشاريع Flutter من زبائن بالعراق على مستقل.",
+ "sources": {
+  "remotive": {
+   "label": "Remotive",
+   "state": "ok",
+   "fetched": 15,
+   "new": 15,
+   "kept": 0,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "remoteok": {
+   "label": "Remote OK",
+   "state": "ok",
+   "fetched": 99,
+   "new": 99,
+   "kept": 0,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "himalayas": {
+   "label": "Himalayas",
+   "state": "ok",
+   "fetched": 59,
+   "new": 55,
+   "kept": 1,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "jobicy": {
+   "label": "Jobicy",
+   "state": "ok",
+   "fetched": 50,
+   "new": 50,
+   "kept": 1,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "weworkremotely": {
+   "label": "We Work Remotely",
+   "state": "ok",
+   "fetched": 60,
+   "new": 52,
+   "kept": 0,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "hackernews": {
+   "label": "Hacker News: Who is hiring",
+   "state": "ok",
+   "fetched": 5,
+   "new": 5,
+   "kept": 1,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "freelancer": {
+   "label": "Freelancer.com",
+   "state": "ok",
+   "fetched": 58,
+   "new": 53,
+   "kept": 8,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "mostaql": {
+   "label": "مستقل Mostaql",
+   "state": "error: HTTP 403",
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "khamsat": {
+   "label": "خمسات Khamsat",
+   "state": "error: HTTP 403",
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "telegram": {
+   "label": "Telegram",
+   "state": "ok",
+   "fetched": 251,
+   "new": 247,
+   "kept": 5,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "github_bounties": {
+   "label": "GitHub bounties",
+   "state": "ok",
+   "fetched": 30,
+   "new": 23,
+   "kept": 0,
+   "at": "2026-10-13T02:06:59Z"
+  }
+ },
+ "summary_ar": "أول تشغيل تلقائي على GitHub: شغل Django عن بعد مفتوح لكل الدول، ووظيفة Flutter حضورية بأربيل.",
  "notice": "",
  "person": {
   "name": "Thanoon Younis Mohammed",

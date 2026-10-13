@@ -4,8 +4,8 @@ Out: one message per new approved pick (title, pay, why it fits, the draft insid
      an expandable quote, buttons to the posting and the dashboard). Nothing is
      sent when nothing new was approved.
 In:  each run reads the bot's new messages. Replying to a pick with «قدمت»,
-     «مقابلة», «ما تهمني»... (or sending "/applied <id>") saves that status.
-     Only messages from TELEGRAM_CHAT_ID are accepted.
+     «مقابلة», «ما تهمني»... (or sending "/applied <id>") saves that status;
+     /start or /help gets a short how-to. Only messages from TELEGRAM_CHAT_ID are accepted.
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ from . import net
 from .contacts import gmail_link, telegram_share_link, whatsapp_link
 from .scoring import normalize
 from .status import apply as apply_status
-from .text import clip
+from .text import clip, iso_time
 
 log = logging.getLogger("fursa.notify")
 API = "https://api.telegram.org/bot{token}/{method}"
@@ -129,19 +129,43 @@ def buttons(settings, rec: dict) -> list[list[dict]]:
     return [send[i : i + 3] for i in range(0, len(send), 3)] + [info]
 
 
-def announce(settings, store, picks: list[dict], summary: str = "") -> int:
-    """One message per pick. Remembers message ids so replies can update the status."""
-    sent = 0
+def announce(settings, store, picks: list[dict], summary: str = "") -> tuple[int, list[str]]:
+    """One message per pick; returns (sent, errors).
+
+    A delivered pick gets `notified_at` and its message id is remembered so replies can update its status.
+    Without the bot secrets nothing is marked, so the picks go out once the bot is set up. A pick whose
+    message fails does not block the others and is retried on the next runs (three tries).
+    """
+    sent, errors = 0, []
     memory = store.state.setdefault("telegram", {}).setdefault("messages", {})
     for n, rec in enumerate(picks, 1):
-        text, buttons = pick_message(settings, rec, n, len(picks), summary)
-        message = send(settings, text, buttons)
+        text, keyboard = pick_message(settings, rec, n, len(picks), summary)
+        try:
+            message = send(settings, text, keyboard)
+        except Exception as exc:
+            rec["notify_tries"] = rec.get("notify_tries", 0) + 1
+            errors.append(f"{rec['id']}: {exc}")
+            continue
         if message:
             memory[str(message.get("message_id"))] = rec["id"]
+            rec["notified_at"] = iso_time(settings.now)
+            rec.pop("notify_tries", None)
             sent += 1
     for key in sorted(memory, key=int)[:-300]:  # keep the map small
         del memory[key]
-    return sent
+    return sent, errors
+
+
+def help_text(settings) -> str:
+    lines = [
+        "👋 هذا بوت «فرصة»: كل 6 ساعات يدوّر فرص شغل ويرسل أفضلها هنا، وإذا ماكو شي جديد موثوق ما يرسل.",
+        "• كل فرصة برسالة وحدها: ليش تناسبك، أي مشروع ينعرض، المسودة، وأزرار الإرسال.",
+        "• للتحديث: الرد على رسالة الفرصة بكلمة «قدمت» أو «مقابلة» أو «ما تهمني».",
+        "• البوت يقرا الرسائل مع كل تشغيل، فالجواب يوصل خلال ساعات مو فوراً.",
+    ]
+    if settings.site_url:
+        lines.append(f"• كل الفرص والمشاريع: {settings.site_url}")
+    return "\n".join(lines)
 
 
 def reply_status(text: str) -> str | None:
@@ -162,13 +186,16 @@ def poll(settings, store) -> list[tuple[dict, str]]:
     tg = store.state.setdefault("telegram", {})
     memory = tg.setdefault("messages", {})
     updates = _call(settings, "getUpdates", {"offset": tg.get("offset", 0) + 1, "timeout": 0, "allowed_updates": ["message"]})
-    applied = []
+    applied, wants_help = [], False
     for update in updates or []:
         tg["offset"] = max(tg.get("offset", 0), update.get("update_id", 0))
         message = update.get("message") or {}
         if str((message.get("chat") or {}).get("id")) != str(settings.telegram_chat):
             continue  # only the owner's chat may change the memory
         text = message.get("text") or ""
+        if re.match(r"^/(start|help)\b", text.strip()):
+            wants_help = True
+            continue
         replied = str((message.get("reply_to_message") or {}).get("message_id", ""))
         opp_id = memory.get(replied)
         explicit = re.search(r"\b([0-9a-f]{12})\b", text)
@@ -177,6 +204,8 @@ def poll(settings, store) -> list[tuple[dict, str]]:
         status = reply_status(text)
         if opp_id and status and apply_status(store, opp_id, status, text):
             applied.append((store.opps[opp_id], status))
+    if wants_help:  # one answer, however many times /start was pressed
+        send(settings, help_text(settings))
     return applied
 
 

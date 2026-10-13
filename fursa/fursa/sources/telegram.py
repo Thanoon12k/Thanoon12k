@@ -3,6 +3,8 @@
 No account, no bot and no API key: only public channels with the preview turned
 on. One request per channel per run, with a pause between channels. Channels are
 listed in profile.toml [telegram]; Iraqi ones get "Iraq" as their location.
+Official channels of freelance platforms (e.g. @nafezly) post each new project with
+its link; that project page then counts as the original posting.
 """
 
 import logging
@@ -23,15 +25,18 @@ _TIME = re.compile(r'<time datetime="([^"]+)"')
 _HREF = re.compile(r'href="(https?://[^"]+)"')
 _FREELANCE = re.compile(r"(freelanc|مشروع|مستقل|عمل حر|بالقطعة)", re.I)
 _FIELD = re.compile(
-    r"^\W*(title|job title|position|company name|company|location|anywhere|المسمى الوظيفي|العنوان الوظيفي|الوظيفة|الشركة|الموقع|المكان)"
+    r"^\W*(title|job title|position|company name|company|location|anywhere|budget|المسمى الوظيفي|العنوان الوظيفي|عنوان المشروع"
+    r"|الوظيفة|الشركة|الموقع|المكان|الميزانية)"
     r"\s*[:：]\s*(.+?)\s*$",
     re.I | re.M,
 )
-_NOISE = re.compile(r"^\W*(published time|posted|date|job opportunity|tags|ready to apply|apply)\b", re.I)
+_NOISE = re.compile(r"^\W*(published time|posted|date|job opportunity|tags|ready to apply|apply|تم إضافة مشروع جديد)\b", re.I)
+_PLATFORM = re.compile(r"https://(?:www\.)?(?:nafezly\.com/project|mostaql\.com/project|khamsat\.com/community/requests)/\d+", re.I)
 FIELD_KEYS = {
     "title": "title", "job title": "title", "position": "title", "المسمى الوظيفي": "title", "العنوان الوظيفي": "title",
-    "الوظيفة": "title", "company name": "company", "company": "company", "الشركة": "company",
+    "الوظيفة": "title", "عنوان المشروع": "title", "company name": "company", "company": "company", "الشركة": "company",
     "location": "location", "الموقع": "location", "المكان": "location", "anywhere": "anywhere",
+    "budget": "pay", "الميزانية": "pay",
 }
 
 
@@ -68,7 +73,7 @@ def parse(page: str, channel: str, in_iraq: bool = False) -> list[dict]:
         if len(body) < 30:  # stickers, photos without a caption, one-word posts
             continue
         links = [u for u in _HREF.findall(text.group(1)) if "t.me/" not in u and "telegram.org" not in u]
-        if links:  # the "apply" link is usually hidden behind link text; keep it visible
+        if links and links[0] not in body:  # the "apply" link is usually hidden behind link text; keep it visible
             body += f"\nApply: {links[0]}"
         info = fields(body)
         location = info.get("location")
@@ -76,14 +81,21 @@ def parse(page: str, channel: str, in_iraq: bool = False) -> list[dict]:
             location = "Worldwide"
         if in_iraq:
             location = f"Iraq - {location}" if location else "Iraq"
+        post_url = f"https://t.me/{post.group(1)}/{post.group(2)}"
+        platform = next((u for u in links if _PLATFORM.match(u)), None)
+        extra = {"channel": post.group(1), **({"apply_url": links[0]} if links else {})}
+        if platform:
+            extra["telegram_post"] = post_url
         out.append(
             opportunity(
-                NAME, f"Telegram @{post.group(1)}", f"https://t.me/{post.group(1)}/{post.group(2)}",
+                NAME, f"Telegram @{post.group(1)}", platform or post_url,
                 clip(info.get("title") or headline(body), 120), clip(info.get("company") or "", 80), body,
                 posted=when.group(1) if when else None,
                 location=location,
+                remote=True if platform else None,
                 kind="freelance" if _FREELANCE.search(body) else "job",
-                extra={"channel": post.group(1), **({"apply_url": links[0]} if links else {})},
+                pay=clip(info.get("pay"), 80) or None,
+                extra=extra,
             )
         )
     return out

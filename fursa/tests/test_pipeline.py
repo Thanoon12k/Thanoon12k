@@ -165,3 +165,93 @@ def test_store_prune_and_roundtrip(settings):
     st.save(meta={"ok": True})
     again = load(settings)
     assert keep["id"] in again.opps and gone["id"] in again.seen
+
+
+def test_picks_found_before_telegram_was_set_up_go_out_once_it_is(settings, wired, monkeypatch):
+    settings.anthropic_key = "test-key"
+    claude = FakeClaude()
+    monkeypatch.setattr(notify, "send", lambda settings, text, buttons=None: None)  # no bot secrets yet
+    pipeline.run(settings, llm_client=claude)
+    approved = load(settings).items("approved")
+    assert len(approved) == 2 and not any(r.get("notified_at") for r in approved)
+
+    sent = []
+    monkeypatch.setattr(notify, "send", lambda settings, text, buttons=None: sent.append(text) or {"message_id": 100 + len(sent)})
+    pipeline.run(settings, llm_client=claude)  # the secrets were added
+    st = load(settings)
+    assert len(sent) == 2 and all(r.get("notified_at") for r in st.items("approved"))
+    pipeline.run(settings, llm_client=claude)
+    assert len(sent) == 2  # never twice
+
+
+def test_one_failed_telegram_message_does_not_block_the_rest(settings, monkeypatch):
+    from fursa import net
+
+    st = load(settings)
+    first, second = posting(url="https://x.example/a"), posting(url="https://x.example/b")
+    calls = []
+
+    def flaky(settings, text, buttons=None):
+        calls.append(text)
+        if len(calls) == 1:
+            raise net.SourceError("Telegram sendMessage failed: Bad Request")
+        return {"message_id": 7}
+
+    monkeypatch.setattr(notify, "send", flaky)
+    sent, errors = notify.announce(settings, st, [first, second])
+    assert sent == 1 and len(errors) == 1 and first["id"] in errors[0]
+    assert first["notify_tries"] == 1 and not first.get("notified_at") and second["notified_at"]
+    assert st.state["telegram"]["messages"] == {"7": second["id"]}
+
+
+def test_rules_review_keeps_one_pick_per_company(settings):
+    from types import SimpleNamespace
+
+    from fursa import manager
+
+    st = load(settings)
+    recs = []
+    for city, fit in (("Erbil", 90), ("Baghdad", 88), ("Remote", 80)):
+        rec = posting(url=f"https://x.example/{city}", title=f"Senior Flutter Developer - {city}",
+                      company="Khana Jobs" if city != "Remote" else "Other Co")
+        rec.update(elig="yes", score=40, match={"fit": fit, "repos": []}, draft={"message": "hi"})
+        st.add(rec)
+        st.set_status(rec, "drafted")
+        recs.append(rec)
+    approved = manager.review(SimpleNamespace(settings=settings, store=st, llm=None), recs)
+    assert [r["title"] for r in approved] == ["Senior Flutter Developer - Erbil", "Senior Flutter Developer - Remote"]
+    assert st.opps[recs[1]["id"]]["status"] == "rejected" and "same company" in st.opps[recs[1]["id"]]["reject_reason"]
+
+
+def test_a_site_that_refuses_github_servers_is_marked_blocked(settings, monkeypatch):
+    import requests
+
+    def refused(ctx):
+        response = requests.Response()
+        response.status_code = 403
+        raise requests.HTTPError("403 Forbidden", response=response)
+
+    from types import SimpleNamespace
+
+    blocked = SimpleNamespace(NAME="blocked_site", LABEL="Blocked board", EVERY_HOURS=1, fetch=refused)
+    monkeypatch.setattr(sources, "registry", lambda: [blocked])
+    monkeypatch.setattr(portfolio, "refresh", lambda settings, store, llm=None, repos=None: 0)
+    report = pipeline.run(settings, collect_only=True)
+    assert report["sources"]["blocked_site"]["state"].startswith("blocked: HTTP 403")
+
+
+def test_start_command_gets_one_how_to_reply(settings, monkeypatch):
+    settings.telegram_token, settings.telegram_chat = "t", "42"
+    st = load(settings)
+    sent = []
+
+    def fake_call(settings, method, payload):
+        if method == "sendMessage":
+            sent.append(payload["text"])
+            return {"message_id": 1}
+        return [{"update_id": 1, "message": {"chat": {"id": 42}, "text": "/start"}},
+                {"update_id": 2, "message": {"chat": {"id": 42}, "text": "/start"}}]
+
+    monkeypatch.setattr(notify, "_call", fake_call)
+    assert notify.poll(settings, st) == [] and st.state["telegram"]["offset"] == 2
+    assert len(sent) == 1 and "قدمت" in sent[0] and "https://thanoon12k.github.io/fursa-agents/" in sent[0]

@@ -8,6 +8,8 @@ import html
 import re
 import xml.etree.ElementTree as ET
 
+import requests
+
 from .. import net
 from ..text import html_to_text
 from . import opportunity
@@ -69,9 +71,12 @@ def parse_rss(xml_text: str) -> list[dict]:
 
 def fetch(ctx) -> list[dict]:
     out = []
-    for page in PAGES:
-        out.extend(parse_listing(net.get_text(page)))
-    if not out:  # the page layout changed: fall back to the open-projects RSS
+    try:
+        for page in PAGES:
+            out.extend(parse_listing(net.get_text(page)))
+    except requests.HTTPError:  # pages refused (GitHub's servers often get 403): the official RSS may still answer
+        out = []
+    if not out:  # refused, or the page layout changed: fall back to the open-projects RSS
         out = parse_rss(net.get_text(RSS))
     return out
 

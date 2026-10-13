@@ -58,7 +58,10 @@ def collect(ctx, report: dict) -> None:
             items = mod.fetch(ctx)
         except Exception as exc:
             code = getattr(getattr(exc, "response", None), "status_code", None)
-            info["state"] = f"error: HTTP {code}" if code else f"error: {type(exc).__name__}: {str(exc)[:140]}"
+            if code == 403:  # the site refuses GitHub's servers; nothing to fix on our side, the web search covers it
+                info["state"] = "blocked: HTTP 403 (the site refuses requests from GitHub's servers)"
+            else:
+                info["state"] = f"error: HTTP {code}" if code else f"error: {type(exc).__name__}: {str(exc)[:140]}"
             store.state.setdefault("sources", {})[name] = {**info, "at": iso_time(settings.now)}
             log.warning("%s failed: %s", name, exc)
             continue
@@ -125,6 +128,22 @@ def _meta(settings, store, llm, report) -> dict:
     }
 
 
+def deliver(settings, store, report: dict, max_picks: int) -> int:
+    """Send approved picks that never reached Telegram: new ones, and ones approved before the bot was set up.
+
+    A pick goes out once. Picks older than a week, or already marked by the user, are not sent.
+    """
+    now, week_ago = iso_time(settings.now), iso_time(settings.now - timedelta(days=7))
+    pending = [r for r in store.items("approved") if not r.get("notified_at") and not r.get("user_status")
+               and (r.get("manager") or {}).get("at", "") >= week_ago and r.get("notify_tries", 0) < 3]
+    pending.sort(key=lambda r: (not (r.get("manager") or {}).get("ai"), (r.get("manager") or {}).get("rank", 9)))
+    batch = pending[:max_picks]
+    reviewed_now = any((r.get("manager") or {}).get("at") == now and (r.get("manager") or {}).get("ai") for r in batch)
+    sent, failed = notify.announce(settings, store, batch, store.state.get("last_summary_ar", "") if reviewed_now else "")
+    report["errors"] += [f"telegram: {e}" for e in failed]
+    return sent
+
+
 def run(settings, *, collect_only: bool = False, llm_client=None) -> dict:
     store = Store(settings).load()
     store.state.pop("_run_usage", None)
@@ -179,16 +198,7 @@ def run(settings, *, collect_only: bool = False, llm_client=None) -> dict:
         if ctx.llm is not None and store.due("ideas", 24 * 7):
             report["ideas"] = manager.ideas(ctx)
 
-        unseen = [r for r in store.items("approved") if not r.get("shown_at")]
-        unseen.sort(key=lambda r: (r.get("manager") or {}).get("rank", 9))
-        if unseen:
-            try:
-                report["notified"] = notify.announce(settings, store, unseen[: a("max_picks", 3)], store.state.get("last_summary_ar", ""))
-            except Exception as exc:
-                report["notified"] = 0
-                report["errors"].append(f"telegram: {exc}")
-            for rec in unseen:  # shown on the dashboard either way; never re-announced
-                rec["shown_at"] = iso_time(settings.now)
+        report["notified"] = deliver(settings, store, report, a("max_picks", 3))
 
     try:
         notify.confirm(settings, telegram_updates)

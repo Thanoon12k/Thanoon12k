@@ -91,6 +91,14 @@ casino = -10      # gambling platforms are left out by default; delete these lin
 gambling = -10
 betting = -10
 sportsbook = -10
+"5 نجوم" = -10       # fake reviews, made-up accounts and account trading break the platforms' rules
+"حسابات جيميل" = -10
+"حساب جيميل" = -10
+"شراء حساب" = -10
+"بيع حساب" = -10
+"توثيق حساب" = -8
+"زيادة متابعين" = -8
+"fake reviews" = -10
 
 [agents]
 worker_model = "claude-haiku-5-5"   # scout, matcher and writer (cheap)
@@ -129,7 +137,9 @@ telegram = true
 # Add or remove names freely; channels in iraq_channels count as "in Iraq".
 [telegram]
 iraq_channels = ["Muhannad_job", "basrajobs", "IQ_JOBS", "baghdadjobss", "VIP_jobs", "plm3132", "vbbrt", "krdjobs"]
-channels = ["remotejobss", "remotejobs", "remote_python_jobs", "devjobs", "cryptojobslist"]
+# nafezly: the official channel of Nafezly (نفذلي), it posts every new freelance project with its link.
+# Mostaql and Khamsat have no live public channel; they are covered by their own pages, RSS and the web search.
+channels = ["nafezly", "remotejobss", "remotejobs", "remote_python_jobs", "devjobs", "cryptojobslist"]
 
 [portfolio]
 extra_orgs = ["MetaluxTech"]   # organisation repos are used only where you have commits

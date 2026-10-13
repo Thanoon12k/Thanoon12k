@@ -7,7 +7,9 @@ One call per run reviews every fresh draft together and approves at most
 from __future__ import annotations
 
 from collections import Counter
+from datetime import timedelta
 
+from .scoring import normalize
 from .text import age_days, clip, iso_time
 
 NULLABLE = {"anyOf": [{"type": "string"}, {"type": "null"}]}
@@ -71,7 +73,8 @@ def review_system(settings, max_picks: int) -> str:
         f"{p.get('headline', 'a Flutter and Django developer')} in {p.get('city', 'Mosul, Iraq')}. Review their work like a "
         f"strict editor. Approve at most {max_picks} postings, and only when: the posting looks real and current, the developer can "
         "take it from Iraq (or the doubt is clearly stated), the pay or value is worth the developer's time, and the draft is truthful, "
-        "specific and ready to send. Reject the rest. note_ar: max 60 words in Iraqi Arabic dialect, addressed to the developer: why it fits, "
+        "specific and ready to send. Approve at most one posting per company (the same job in two cities counts once; "
+        "keep the one easier to reach from Mosul). Reject the rest. note_ar: max 60 words in Iraqi Arabic dialect, addressed to the developer: why it fits, "
         "what to check before applying, which project to show first. If an approved draft has a factual problem or a weak "
         "opening, return the corrected full message in fixed_message (same language, same channel, keep any [placeholders] "
         "and {NAME}-style tokens), otherwise null. rank 1 is best. Never promise income. summary_ar: one line in Iraqi "
@@ -139,11 +142,24 @@ def review(ctx, recs: list[dict]) -> list[dict]:
     strong = [r for r in recs if r.get("elig") in ("yes", "likely") and (r.get("score") or 0) >= min_score
               and (r.get("match") or {}).get("fit", 0) >= 70]
     ranked = sorted(strong, key=lambda r: (-(r.get("match") or {}).get("fit", 0), -(r.get("score") or 0)))
-    for rec in ranked[:max_picks]:
+    week_ago = iso_time(settings.now - timedelta(days=7))
+    taken = {_company(r): r["title"] for r in store.items("approved") if (r.get("manager") or {}).get("at", "") >= week_ago}
+    for rec in ranked:
+        if len(approved) >= max_picks:
+            break
+        company = _company(rec)
+        if company and company in taken:  # the same job in another city, or a second post by the same company
+            store.set_status(rec, "rejected", reject_reason=f"same company as another pick: {clip(taken[company], 80)}")
+            continue
+        taken[company] = rec["title"]
         note = "اختيار تلقائي بدون مراجعة المدير (ماكو مفتاح API أو انتهت الميزانية)، ويحتاج مراجعة الإعلان والمسودة قبل الإرسال."
         _approve(store, rec, len(approved) + 1, note, False, settings.now)
         approved.append(rec)
     return approved
+
+
+def _company(rec: dict) -> str:
+    return normalize(rec.get("company") or "").strip()
 
 
 IDEAS_SYSTEM = (

@@ -141,3 +141,43 @@ def test_telegram_channel_preview():
     iraq = telegram.parse(TELEGRAM_HTML, "IQ_JOBS", in_iraq=True)[1]
     assert iraq["title"] == "مطلوب مبرمج Flutter لشركة برمجيات" and iraq["location"] == "Iraq - بغداد - الكرادة"
     assert iraq["lang"] == "ar" and iraq["kind"] == "job"
+
+
+NAFEZLY_HTML = """
+<div class="tgme_widget_message_wrap js-widget_message_wrap"><div class="tgme_widget_message" data-post="nafezly/36760">
+<div class="tgme_widget_message_text js-message_text" dir="auto">تم إضافة مشروع جديد على منصة نفذلي<br/>عنوان المشروع : تطوير تطبيق Flutter لمتجر إلكتروني<br/>
+تفاصيل المشروع : مطلوب مبرمج فلاتر لربط التطبيق مع REST API وFirebase.<br/>الميزانية : 250 - 500 دولار<br/>
+رابط المشروع : <a href="https://nafezly.com/project/56270" target="_blank">https://nafezly.com/project/56270</a></div>
+<time datetime="2026-10-12T09:00:00+00:00">09:00</time></div></div>
+<div class="tgme_widget_message_wrap js-widget_message_wrap"><div class="tgme_widget_message" data-post="nafezly/36761">
+<div class="tgme_widget_message_text js-message_text" dir="auto">تم إضافة مشروع جديد على منصة نفذلي<br/>عنوان المشروع : تطوير تطبيق Flutter لمتجر إلكتروني<br/>
+تفاصيل المشروع : مطلوب مبرمج فلاتر لربط التطبيق مع REST API وFirebase.<br/>الميزانية : 250 - 500 دولار<br/>
+رابط المشروع : <a href="https://nafezly.com/project/56270" target="_blank">https://nafezly.com/project/56270</a></div>
+<time datetime="2026-10-12T09:03:00+00:00">09:03</time></div></div>
+"""
+
+
+def test_telegram_platform_channel_points_to_the_project_page():
+    rows = telegram.parse(NAFEZLY_HTML, "nafezly")
+    first = rows[0]
+    assert first["url"] == "https://nafezly.com/project/56270" and rows[1]["id"] == first["id"]  # a re-post is the same project
+    assert first["title"] == "تطوير تطبيق Flutter لمتجر إلكتروني" and first["pay"] == "250 - 500 دولار"
+    assert first["kind"] == "freelance" and first["remote"] is True
+    assert first["extra"]["telegram_post"] == "https://t.me/nafezly/36760"
+    assert first["text"].count("https://nafezly.com/project/56270") == 1  # the link is not appended twice
+
+
+def test_mostaql_falls_back_to_rss_when_pages_are_refused(monkeypatch):
+    import requests
+
+    def fake_get_text(url, **kwargs):
+        if url == mostaql.RSS:
+            return ('<rss><channel><item><title>تطبيق Flutter</title><link>https://mostaql.com/project/1300000-x</link>'
+                    '<description>تطبيق فلاتر</description><pubDate>Mon, 12 Oct 2026 08:00:00 GMT</pubDate></item></channel></rss>')
+        response = requests.Response()
+        response.status_code = 403
+        raise requests.HTTPError("403 Forbidden", response=response)
+
+    monkeypatch.setattr(net, "get_text", fake_get_text)
+    rows = mostaql.fetch(None)
+    assert [r["url"] for r in rows] == ["https://mostaql.com/project/1300000"]

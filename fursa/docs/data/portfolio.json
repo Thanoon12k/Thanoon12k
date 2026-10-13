@@ -49,6 +49,27 @@
   "quality": 7.0
  },
  {
+  "name": "Arabic-Text-To-Audio-Converter",
+  "url": "https://github.com/Thanoon12k/Arabic-Text-To-Audio-Converter",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "data",
+   "flask",
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "https://arabic-text-to-audio-converter.vercel.app",
+  "pushed": "2025-08-20",
+  "quality": 6.6
+ },
+ {
   "name": "flutter-arduino-based-syringe-pump",
   "url": "https://github.com/Thanoon12k/flutter-arduino-based-syringe-pump",
   "summary_en": "Graduation-project Flutter app that controls an Arduino syringe pump: dose calculation with unit tests, patient records in SQLite, bilingual UI, plus the Arduino firmware.",
@@ -72,6 +93,50 @@
   "quality": 6.55
  },
  {
+  "name": "projects-manager",
+  "url": "https://github.com/Thanoon12k/projects-manager",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "django",
+   "django-rest",
+   "python",
+   "rest-api"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": true,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-01-30",
+  "quality": 6.35
+ },
+ {
+  "name": "background_remover",
+  "url": "https://github.com/Thanoon12k/background_remover",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "data",
+   "django",
+   "python",
+   "rest-api"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-09-25",
+  "quality": 5.8
+ },
+ {
   "name": "Ideas-Store",
   "url": "https://github.com/Thanoon12k/Ideas-Store",
   "summary_en": "Django + DRF ideas app with image upload, per-user isolation, Arabic/English RTL and 12 API tests.",
@@ -93,6 +158,29 @@
   "quality": 5.7
  },
  {
+  "name": "text2mp3_converter",
+  "url": "https://github.com/Thanoon12k/text2mp3_converter",
+  "summary_en": "convert any text with length to downloadable mp3 file",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "django",
+   "django-rest",
+   "javascript",
+   "python",
+   "rest-api"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-09-26",
+  "quality": 5.6
+ },
+ {
   "name": "medicine-reminder",
   "url": "https://github.com/Thanoon12k/medicine-reminder",
   "summary_en": "Offline, Arabic-first Flutter medication reminder with full-screen alarms, multi-patient support, SQLite storage and text-to-speech.",
@@ -112,6 +200,70 @@
   "homepage": "",
   "pushed": "2026-08-20",
   "quality": 5.4
+ },
+ {
+  "name": "Tik-Tok-Pass-captcha",
+  "url": "https://github.com/Thanoon12k/Tik-Tok-Pass-captcha",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "automation",
+   "python",
+   "rest-api"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 1,
+  "homepage": "",
+  "pushed": "2023-09-30",
+  "quality": 5.35
+ },
+ {
+  "name": "Video-Audio-Studio",
+  "url": "https://github.com/Thanoon12k/Video-Audio-Studio",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "data",
+   "python",
+   "rest-api"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2024-05-05",
+  "quality": 5.1
+ },
+ {
+  "name": "Youtube-Translator",
+  "url": "https://github.com/Thanoon12k/Youtube-Translator",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "data",
+   "django",
+   "python",
+   "rest-api"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-09-10",
+  "quality": 5.1
  },
  {
   "name": "Chat-App-Flutter",
@@ -182,6 +334,25 @@
   "quality": 4.75
  },
  {
+  "name": "thesis-sources-notes",
+  "url": "https://github.com/Thanoon12k/thesis-sources-notes",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-02-24",
+  "quality": 4.35
+ },
+ {
   "name": "moalidaty",
   "url": "https://github.com/Thanoon12k/moalidaty",
   "summary_en": "Django REST API for the generator-subscription system: generator-scoped endpoints, JWT with custom permissions, and Pillow receipt images with Arabic text.",
@@ -203,9 +374,146 @@
   "quality": 4.2
  },
  {
+  "name": "ZKTeco-ZKFinger-PRINTS-SCANNER",
+  "url": "https://github.com/Thanoon12k/ZKTeco-ZKFinger-PRINTS-SCANNER",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 1,
+  "homepage": "",
+  "pushed": "2026-08-21",
+  "quality": 4.15
+ },
+ {
+  "name": "customers-manager",
+  "url": "https://github.com/Thanoon12k/customers-manager",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "django",
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-01-01",
+  "quality": 4.15
+ },
+ {
+  "name": "Cloud-Simulation-AI",
+  "url": "https://github.com/MetaluxTech/Cloud-Simulation-AI",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "java"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2024-09-12",
+  "quality": 4.0
+ },
+ {
+  "name": "Injaz",
+  "url": "https://github.com/Thanoon12k/Injaz",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-06-02",
+  "quality": 3.95
+ },
+ {
+  "name": "real-snakes-catcher",
+  "url": "https://github.com/Thanoon12k/real-snakes-catcher",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "dart",
+   "flutter",
+   "rest-api"
+  ],
+  "own_share": 0.33,
+  "readme_template": false,
+  "has_tests": true,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-10-06",
+  "quality": 3.87
+ },
+ {
+  "name": "shajjar",
+  "url": "https://github.com/Thanoon12k/shajjar",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "python"
+  ],
+  "own_share": 0.6,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-09-28",
+  "quality": 3.75
+ },
+ {
+  "name": "mosul1tourism",
+  "url": "https://github.com/Thanoon12k/mosul1tourism",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "flask",
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-09-27",
+  "quality": 3.75
+ },
+ {
   "name": "My-Work",
   "url": "https://github.com/Thanoon12k/My-Work",
-  "summary_en": "Python + Playwright pipeline that clones, runs and screenshots his projects across Django, Flask, FastAPI and Streamlit, then builds and deploys his portfolio site.",
+  "summary_en": "Python + Playwright pipeline that clones, runs and screenshots the projects across Django, Flask, FastAPI and Streamlit, then builds and deploys the portfolio site.",
   "summary_ar": "أداة Python مع Playwright تنسخ مشاريعه وتشغّلها وتصوّرها (Django وFlask وFastAPI وStreamlit) ثم تبني موقع أعماله وتنشره.",
   "kind": "tool",
   "maturity": "feature-rich",
@@ -222,6 +530,306 @@
   "quality": 3.7
  },
  {
+  "name": "green-chrome-notes",
+  "url": "https://github.com/Thanoon12k/green-chrome-notes",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "javascript"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-07-23",
+  "quality": 3.7
+ },
+ {
+  "name": "jupyter-lstm-ga",
+  "url": "https://github.com/Thanoon12k/jupyter-lstm-ga",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "ai",
+   "data",
+   "flask",
+   "python",
+   "rest-api"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-12-18",
+  "quality": 3.4
+ },
+ {
+  "name": "hand-moving-sensor",
+  "url": "https://github.com/Thanoon12k/hand-moving-sensor",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "dart",
+   "flutter",
+   "getx",
+   "iot",
+   "rest-api"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-05-07",
+  "quality": 3.2
+ },
+ {
+  "name": "electric",
+  "url": "https://github.com/Thanoon12k/electric",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "automation",
+   "data",
+   "django",
+   "django-rest",
+   "python",
+   "redis",
+   "rest-api",
+   "websockets"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-01-24",
+  "quality": 3.15
+ },
+ {
+  "name": "ROUTER-AQM-FIFO-CODEL-PIE-comparison",
+  "url": "https://github.com/Thanoon12k/ROUTER-AQM-FIFO-CODEL-PIE-comparison",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2025-05-14",
+  "quality": 2.7
+ },
+ {
+  "name": "background_reomver_vercel",
+  "url": "https://github.com/Thanoon12k/background_reomver_vercel",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "django",
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "https://background-reomver.vercel.app",
+  "pushed": "2024-01-05",
+  "quality": 2.45
+ },
+ {
+  "name": "FogSimulation",
+  "url": "https://github.com/MetaluxTech/FogSimulation",
+  "summary_en": "simulate fog computing network",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "c++"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-08-28",
+  "quality": 2.4
+ },
+ {
+  "name": "excel_dynamic_date",
+  "url": "https://github.com/Thanoon12k/excel_dynamic_date",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2025-03-26",
+  "quality": 2.25
+ },
+ {
+  "name": "React-Blog",
+  "url": "https://github.com/Thanoon12k/React-Blog",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "javascript"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-11-11",
+  "quality": 2.2
+ },
+ {
+  "name": "ESP_TEMP_SENSOR",
+  "url": "https://github.com/Thanoon12k/ESP_TEMP_SENSOR",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2025-03-24",
+  "quality": 2.15
+ },
+ {
+  "name": "chatgpt-to-word-extension",
+  "url": "https://github.com/Thanoon12k/chatgpt-to-word-extension",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "javascript"
+  ],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2025-04-04",
+  "quality": 2.1
+ },
+ {
+  "name": "AI-Arabic-handwriting-OCR",
+  "url": "https://github.com/Thanoon12k/AI-Arabic-handwriting-OCR",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2025-05-26",
+  "quality": 2.05
+ },
+ {
+  "name": "NextJs-Share-Prompts",
+  "url": "https://github.com/Thanoon12k/NextJs-Share-Prompts",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [],
+  "own_share": 1.0,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2024-08-11",
+  "quality": 2.05
+ },
+ {
+  "name": "AI-cloud-network-manager",
+  "url": "https://github.com/Thanoon12k/AI-cloud-network-manager",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "java"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2025-12-18",
+  "quality": 1.95
+ },
+ {
+  "name": "dev-monitor",
+  "url": "https://github.com/Thanoon12k/dev-monitor",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "ci",
+   "flask",
+   "python",
+   "rest-api"
+  ],
+  "own_share": 0.05,
+  "readme_template": false,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-10-11",
+  "quality": 1.73
+ },
+ {
   "name": "joosa-app",
   "url": "https://github.com/Thanoon12k/joosa-app",
   "summary_en": "Product plan (Pre-MVP) for an Arabic-first generator subscription and payments platform.",
@@ -236,6 +844,27 @@
   "stars": 0,
   "homepage": "",
   "pushed": "2026-10-07",
+  "quality": 1.65
+ },
+ {
+  "name": "EmployeeManager_Flutter",
+  "url": "https://github.com/Thanoon12k/EmployeeManager_Flutter",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "dart",
+   "flutter",
+   "rest-api"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2025-04-21",
   "quality": 1.65
  },
  {
@@ -258,6 +887,77 @@
   "quality": 1.6
  },
  {
+  "name": "flutter-course",
+  "url": "https://github.com/Thanoon12k/flutter-course",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-10-06",
+  "quality": 1.6
+ },
+ {
+  "name": "AI-agents-basics",
+  "url": "https://github.com/Thanoon12k/AI-agents-basics",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-03-13",
+  "quality": 1.55
+ },
+ {
+  "name": "Thanoon12k.github.io",
+  "url": "https://github.com/Thanoon12k/Thanoon12k.github.io",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2025-11-18",
+  "quality": 1.55
+ },
+ {
+  "name": "qaser-techani",
+  "url": "https://github.com/Thanoon12k/qaser-techani",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "javascript",
+   "typescript"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2026-09-04",
+  "quality": 1.5
+ },
+ {
   "name": "BubbleSheetScanner",
   "url": "https://github.com/Thanoon12k/BubbleSheetScanner",
   "summary_en": "Python desktop tool (Tkinter + OpenCV) that reads bubble answer sheets, including PDF pages.",
@@ -275,5 +975,271 @@
   "homepage": "",
   "pushed": "2025-02-06",
   "quality": 1.25
+ },
+ {
+  "name": "Speak-Loud",
+  "url": "https://github.com/Thanoon12k/Speak-Loud",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "dart",
+   "flutter",
+   "getx"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-04-27",
+  "quality": 1.25
+ },
+ {
+  "name": "Fingerprints-Attendance-System",
+  "url": "https://github.com/Thanoon12k/Fingerprints-Attendance-System",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "javascript",
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2024-03-05",
+  "quality": 1.05
+ },
+ {
+  "name": "IOT-Temperature-Sensor",
+  "url": "https://github.com/Thanoon12k/IOT-Temperature-Sensor",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "charts",
+   "dart",
+   "flutter",
+   "rest-api"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2024-08-02",
+  "quality": 0.9
+ },
+ {
+  "name": "pdf-words-counter",
+  "url": "https://github.com/Thanoon12k/pdf-words-counter",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-12-29",
+  "quality": 0.3
+ },
+ {
+  "name": "Askme",
+  "url": "https://github.com/Thanoon12k/Askme",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-08-26",
+  "quality": 0.3
+ },
+ {
+  "name": "Arduino-As-OscilloScope",
+  "url": "https://github.com/Thanoon12k/Arduino-As-OscilloScope",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "c++",
+   "iot"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2024-05-01",
+  "quality": 0.25
+ },
+ {
+  "name": "LSTM-GA-API",
+  "url": "https://github.com/MetaluxTech/LSTM-GA-API",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "java",
+   "python"
+  ],
+  "own_share": 0.75,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-10-10",
+  "quality": 0.2
+ },
+ {
+  "name": "desktopBackgroundChange",
+  "url": "https://github.com/Thanoon12k/desktopBackgroundChange",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-09-19",
+  "quality": 0.15
+ },
+ {
+  "name": "cloud-network-simulator",
+  "url": "https://github.com/Thanoon12k/cloud-network-simulator",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "c++"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-09-08",
+  "quality": 0.1
+ },
+ {
+  "name": "EmployeesPromotionApp",
+  "url": "https://github.com/Thanoon12k/EmployeesPromotionApp",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-04-15",
+  "quality": 0.1
+ },
+ {
+  "name": "converter",
+  "url": "https://github.com/Thanoon12k/converter",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "django",
+   "javascript"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-02-23",
+  "quality": 0.1
+ },
+ {
+  "name": "chess-analyser",
+  "url": "https://github.com/Thanoon12k/chess-analyser",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2025-09-07",
+  "quality": 0.05
+ },
+ {
+  "name": "askpdf-backend",
+  "url": "https://github.com/Thanoon12k/askpdf-backend",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [
+   "django",
+   "python"
+  ],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-06-30",
+  "quality": 0.05
+ },
+ {
+  "name": "MRFO-Optimizer",
+  "url": "https://github.com/Thanoon12k/MRFO-Optimizer",
+  "summary_en": "",
+  "summary_ar": "",
+  "kind": "",
+  "maturity": "",
+  "caveat": "",
+  "tags": [],
+  "own_share": 1.0,
+  "readme_template": true,
+  "has_tests": false,
+  "stars": 0,
+  "homepage": "",
+  "pushed": "2023-05-05",
+  "quality": 0.05
  }
 ]

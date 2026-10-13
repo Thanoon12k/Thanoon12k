@@ -1,5 +1,106 @@
 [
  {
+  "id": "2c01552af7f3",
+  "source": "himalayas",
+  "source_label": "Himalayas",
+  "url": "https://himalayas.app/companies/spotter-labs/jobs/remote-backend-django-engineer-ai-algorithmic-systems-7271859842",
+  "title": "Remote Backend Django Engineer – AI & Algorithmic Systems",
+  "company": "Spotter Labs",
+  "kind": "job",
+  "posted": "2026-10-12",
+  "expires": "2026-12-08",
+  "location": "Worldwide",
+  "remote": true,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "django",
+   "python",
+   "backend"
+  ],
+  "summary": "We’re a remote, product-focused startup building AI- and algorithm-driven systems, and we’re looking for a strong Backend Django Engineer who loves clean data models, well-designed APIs, and clever algorithms.\nYou’ll own core backend features end-to-end: from modeling the data to implementing the logic and exposing…",
+  "status": "approved",
+  "user_status": null,
+  "extra": {
+   "employment": "Full Time",
+   "seniority": [
+    "Mid-level"
+   ],
+   "verified": "Himalayas API checked 2026-10-13: posted 2026-10-12, open until 2026-12-08, no location limits"
+  },
+  "score": 32,
+  "elig": "yes",
+  "elig_note": "open location: Worldwide",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T04:46:47Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "yes",
+   "eligibility_note": "open location: Worldwide",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "unknown",
+   "channel": "other",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "We’re a remote, product-focused startup building AI- and algorithm-driven systems, and we’re looking for a strong Backend Django Engineer who loves clean data models, well-designed APIs, and clever algorithms.\nYou’ll own core backend features end-to-end: from modeling the data to implementing the…",
+   "skills": [
+    "django",
+    "python",
+    "backend"
+   ],
+   "ai": false
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-app-api",
+     "url": "https://github.com/Thanoon12k/Chat-app-api",
+     "why": "Django REST Framework API (auth, users, rooms, notifications) plus WebSocket consumers on Django Channels."
+    },
+    {
+     "name": "moalidaty",
+     "url": "https://github.com/Thanoon12k/moalidaty",
+     "why": "Django REST API with real business rules: generator-scoped endpoints, JWT with custom permissions, Arabic receipt images."
+    },
+    {
+     "name": "My-Work",
+     "url": "https://github.com/Thanoon12k/My-Work",
+     "why": "Python + Playwright automation that runs and screenshots Django/Flask/FastAPI/Streamlit projects and deploys the portfolio."
+    }
+   ],
+   "fit": 86,
+   "fit_reason_ar": "الدور Django وDRF وPostgreSQL وcaching، ونفس نوع الشغل موجود بـ Chat-app-api وmoalidaty.",
+   "ai": false
+  },
+  "draft": {
+   "cv_bullets": [
+    "Built Chat-app-api: Django REST Framework API for auth, users, rooms and notifications, with real-time WebSocket consumers on Django Channels.",
+    "Built moalidaty: Django REST API for a generator-subscription business, with generator-scoped endpoints, JWT auth with custom permissions and Arabic-text receipt images (Pillow).",
+    "Built My-Work: Python + Playwright pipeline that runs and screenshots Django, Flask, FastAPI and Streamlit projects and deploys the portfolio site."
+   ],
+   "subject": "Application: Remote Backend Django Engineer – AI & Algorithmic Systems",
+   "message": "Hello Spotter Labs team,\n\nI'm Thanoon Younis Mohammed, a Python/Django developer based in Mosul, Iraq, applying for the Remote Backend Django Engineer role. Designing REST APIs in Django and DRF around real business rules is the work I do most:\n\n- Chat-app-api: Django REST Framework endpoints for auth, users, rooms and notifications, plus real-time WebSocket consumers on Django Channels. https://github.com/Thanoon12k/Chat-app-api\n- moalidaty: a Django REST API for a generator-subscription business, with generator-scoped endpoints, JWT authentication with custom permissions, and receipt images rendered with Arabic text. https://github.com/Thanoon12k/moalidaty\n\nI'm glad to take the assessment and walk you through the code.\n\nPortfolio with screenshots of all my projects: https://make1it.pythonanywhere.com\nGitHub: https://github.com/Thanoon12k\n\nBest regards,\nThanoon Younis Mohammed\nengthanoon1@gmail.com · +964 770 279 0915",
+   "ai": false,
+   "lang": "en",
+   "channel": "other",
+   "contact": null,
+   "edited_by_manager": true
+  },
+  "manager": {
+   "rank": 1,
+   "rank_score": 99,
+   "ai": true,
+   "at": "2026-10-13T04:46:47Z",
+   "note_ar": "شغل Django عن بعد ومفتوح لكل الدول، مستوى Mid-level، والمطلوب DRF وPostgreSQL وcaching، وهذا قريب من Chat-app-api وmoalidaty. التقديم من صفحة Himalayas بالسيرة الذاتية؛ إذا انقبلت السيرة يوصل اختبار، والشركة تدفع 100$ بعد إكماله (مو رسوم). آخر موعد 8 كانون الأول، والراتب غير معلن."
+  },
+  "shown_at": "2026-10-13T02:06:59Z",
+  "notified_at": "2026-10-13T04:46:47Z"
+ },
+ {
   "id": "705bee5087f8",
   "source": "mostaql",
   "source_label": "مستقل Mostaql",
@@ -101,7 +202,110 @@
   },
   "shown_at": "2026-10-12T19:58:50Z",
   "first_seen": "2026-10-12T19:58:50Z",
-  "updated": "2026-10-12T19:58:50Z"
+  "updated": "2026-10-12T19:58:50Z",
+  "notified_at": "2026-10-12T19:58:50Z"
+ },
+ {
+  "id": "d83644a716f4",
+  "source": "websearch",
+  "source_label": "careers-page.com (web search)",
+  "url": "https://careers-page.com/khana-jobs/job/L784Y3Y3",
+  "title": "Senior Mobile Developer (Flutter) - Erbil",
+  "company": "AS.solutions (Khana Jobs)",
+  "kind": "job",
+  "posted": null,
+  "expires": null,
+  "location": "Iraq - Erbil (on-site)",
+  "remote": false,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "firebase",
+   "mobile"
+  ],
+  "summary": "Full-time on-site Flutter developer in Erbil: Bloc/Provider, Firebase, networking and caching, published apps. Kurdish and English required, Arabic preferred. Salary discussed at interview.",
+  "status": "approved",
+  "user_status": null,
+  "extra": {
+   "verified": "page opened 2026-10-13: open (Apply for Position), no posting date shown"
+  },
+  "score": 33,
+  "elig": "yes",
+  "elig_note": "On-site in Erbil",
+  "flags": [],
+  "scout": {
+   "keep": true,
+   "reason": "Flutter job inside Iraq",
+   "eligibility": "yes",
+   "eligibility_note": "On-site in Erbil",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "full-time",
+   "channel": "form",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [
+    "no posting date or deadline",
+    "on-site: commute or move from Mosul",
+    "Kurdish required"
+   ],
+   "brief": "Senior Flutter developer, full-time on-site in Erbil; Bloc/Provider, Firebase, published apps required.",
+   "skills": [
+    "flutter",
+    "firebase",
+    "bloc"
+   ],
+   "ai": true
+  },
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-13T04:46:47Z",
+  "match": {
+   "repos": [
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "Flutter clinic app on Supabase: admin, doctor and patient dashboards, appointments, growth charts, messaging; Riverpod and go_router."
+    },
+    {
+     "name": "Chat-App-Flutter",
+     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
+     "why": "Flutter chat client: rooms, private chat, friend requests and push notifications with GetX and Firebase Cloud Messaging."
+    },
+    {
+     "name": "flutter-arduino-based-syringe-pump",
+     "url": "https://github.com/Thanoon12k/flutter-arduino-based-syringe-pump",
+     "why": "Team graduation project: Flutter (Provider) app driving an Arduino pump, unit-tested dose maths, SQLite records."
+    }
+   ],
+   "fit": 78,
+   "fit_reason_ar": "Flutter مع Firebase وProvider وتطبيقات متعددة الأدوار، بس الإعلان يطلب كردي وإنكليزي ودوام حضوري بأربيل.",
+   "ai": false
+  },
+  "draft": {
+   "cv_bullets": [
+    "Built Pediatric-Clinic-manager: Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router.",
+    "Built Chat-App-Flutter: Flutter chat client with rooms, private chat, friend requests and push notifications using GetX and Firebase Cloud Messaging.",
+    "Team graduation project (flutter-arduino-based-syringe-pump): Flutter app controlling an Arduino syringe pump, with unit-tested dose calculation, SQLite patient records and a bilingual UI."
+   ],
+   "subject": "Application: Senior Mobile Developer (Flutter) - Erbil",
+   "message": "Hello Khana Jobs team,\n\nI'm Thanoon Younis Mohammed, a Flutter developer from Mosul, Iraq, applying for the Senior Mobile (Flutter) Developer role in Erbil. Three apps that show how I work:\n\n- Pediatric-Clinic-manager: a Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging, built with clean architecture, Riverpod and go_router. https://github.com/Thanoon12k/Pediatric-Clinic-manager\n- Chat-App-Flutter: a chat client with rooms, private chat, friend requests and push notifications (GetX, Firebase Cloud Messaging). https://github.com/Thanoon12k/Chat-App-Flutter\n- flutter-arduino-based-syringe-pump: a team graduation project, a Flutter (Provider) app that controls an Arduino syringe pump, with unit-tested dose calculation, patient records in SQLite and a bilingual UI. https://github.com/Thanoon12k/flutter-arduino-based-syringe-pump\n\nI'd be glad to walk you through any of them.\n\nPortfolio with screenshots of all my projects: https://make1it.pythonanywhere.com\nGitHub: https://github.com/Thanoon12k\n\nBest regards,\nThanoon Younis Mohammed\nengthanoon1@gmail.com · +964 770 279 0915",
+   "ai": false,
+   "lang": "en",
+   "channel": "form",
+   "contact": null,
+   "edited_by_manager": true
+  },
+  "manager": {
+   "rank": 2,
+   "rank_score": 98,
+   "ai": true,
+   "at": "2026-10-13T04:46:47Z",
+   "note_ar": "وظيفة Flutter دوام كامل حضوري بأربيل (نفس الوظيفة منشورة لبغداد، وأربيل أقرب للموصل). الإعلان بعده مفتوح بس بدون تاريخ نشر، ويطلب كردي وإنكليزي (العربي ميزة إضافية) وتطبيقات منشورة بالمتجر. الراتب يتحدد بالمقابلة. أول مشروع للعرض: Pediatric-Clinic-manager. التقديم من زر «Apply for Position» بالصفحة."
+  },
+  "shown_at": "2026-10-13T02:06:59Z",
+  "text": "Job vacancy senior mobile (Flutter) developer at AS.solutions company for IT solutions. Full time job on office. Location: Iraq-Erbil. Requirements: Flutter state management (Bloc, Provider, setState); integrating third-party libraries and services; networking, local data caching and multitasking; hands-on with Firebase services; Material Design; can design Flutter apps from scratch; track record of published Flutter apps; strong written and verbal communication. Salary will be discussed during the interview. Can speak Kurdish and English (priority for speaking Arabic also with the English and Kurdish).",
+  "notified_at": "2026-10-13T04:46:47Z"
  },
  {
   "id": "0f7f1722c3cb",
@@ -204,7 +408,8 @@
   },
   "shown_at": "2026-10-12T19:58:50Z",
   "first_seen": "2026-10-12T19:58:50Z",
-  "updated": "2026-10-12T19:58:50Z"
+  "updated": "2026-10-12T19:58:50Z",
+  "notified_at": "2026-10-12T19:58:50Z"
  },
  {
   "id": "94516b10164d",
@@ -312,118 +517,250 @@
   "updated": "2026-10-12T19:58:50Z",
   "contacts": {
    "apply_url": "https://career.proxify.io"
+  },
+  "notified_at": "2026-10-12T19:58:50Z"
+ },
+ {
+  "id": "7d78c4348b9c",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/django/PostgreSQL-Optimization-for-Django",
+  "title": "PostgreSQL Optimization for Django Platform",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "12.5k–37.5k INR (fixed)",
+  "lang": "en",
+  "tags": [
+   "django",
+   "flask",
+   "python",
+   "api"
+  ],
+  "summary": "Our online education portal, crescentacademyedu.com, is powered by Python—primarily Django with a couple of small Flask services—and everything funnels through a single PostgreSQL instance. Traffic and course data have grown quickly, and the database layer is now the clear bottleneck.  \n\nWhat I need is a specialist…",
+  "status": "drafted",
+  "user_status": null,
+  "extra": {
+   "bids": 50,
+   "budget_usd_max": 392.14
+  },
+  "score": 32,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "freelance platform; check that payouts work from Iraq",
+   "open": "unknown",
+   "pay": "12.5k–37.5k INR (fixed)",
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "Our online education portal, crescentacademyedu.com, is powered by Python—primarily Django with a couple of small Flask services—and everything funnels through a single PostgreSQL instance. Traffic and course data have grown quickly, and the database layer is now the clear bottleneck.  \n\nWhat I…",
+   "skills": [
+    "django",
+    "flask",
+    "python",
+    "api"
+   ],
+   "ai": false
+  },
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-app-api",
+     "url": "https://github.com/Thanoon12k/Chat-app-api",
+     "why": "Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50 commits."
+    },
+    {
+     "name": "electric",
+     "url": "https://github.com/Thanoon12k/electric",
+     "why": "built with automation, data, django, django-rest, python"
+    },
+    {
+     "name": "projects-manager",
+     "url": "https://github.com/Thanoon12k/projects-manager",
+     "why": "built with django, django-rest, python, rest-api"
+    }
+   ],
+   "fit": 85,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (django، flask، python، api) بدون مراجعة ذكاء اصطناعي.",
+   "ai": false
+  },
+  "draft": {
+   "cv_bullets": [
+    "Built Chat-app-api: Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50…",
+    "Built electric: built with automation, data, django, django-rest, python",
+    "Built projects-manager: built with django, django-rest, python, rest-api"
+   ],
+   "subject": "Application: PostgreSQL Optimization for Django Platform",
+   "message": "Hello,\n\nI'm Thanoon Younis Mohammed, a Flutter and Django developer based in Mosul, Iraq. Your post for \"PostgreSQL Optimization for Django Platform\" matches work I have already built:\n- Chat-app-api: https://github.com/Thanoon12k/Chat-app-api\n- electric: https://github.com/Thanoon12k/electric\n- projects-manager: https://github.com/Thanoon12k/projects-manager\n\nI can share more details about my approach and availability. Portfolio: https://make1it.pythonanywhere.com · GitHub: https://github.com/Thanoon12k\n\nBest regards,\nThanoon Younis Mohammed\nengthanoon1@gmail.com · +964 770 279 0915",
+   "ai": false,
+   "lang": "en",
+   "channel": "platform",
+   "contact": null
   }
  },
  {
-  "id": "d83644a716f4",
-  "source": "websearch",
-  "source_label": "careers-page.com (web search)",
-  "url": "https://careers-page.com/khana-jobs/job/L784Y3Y3",
-  "title": "Senior Mobile Developer (Flutter) - Erbil",
-  "company": "AS.solutions (Khana Jobs)",
-  "kind": "job",
-  "posted": null,
+  "id": "b79e6faec324",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/android-app-development/Build-Cross-Platform-Social-Networking",
+  "title": "Build Cross-Platform Social Networking App",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-11",
   "expires": null,
-  "location": "Iraq - Erbil (on-site)",
-  "remote": false,
-  "pay": null,
+  "location": null,
+  "remote": true,
+  "pay": "75k–150k INR (fixed)",
   "lang": "en",
   "tags": [
    "flutter",
-   "firebase",
-   "mobile"
+   "mobile",
+   "backend"
   ],
-  "summary": "Full-time on-site Flutter developer in Erbil: Bloc/Provider, Firebase, networking and caching, published apps. Kurdish and English required, Arabic preferred. Salary discussed at interview.",
-  "status": "screened",
+  "summary": "I’m ready to turn a fresh social-networking concept into fully-functional Android and iOS apps. At its core the product needs familiar community staples—rich user profiles, a real-time messaging system and a dynamic activity feed—wrapped in a modern UI that feels lightning fast.\n\nBeyond the basics, two elements are…",
+  "status": "matched",
   "user_status": null,
   "extra": {
-   "verified": "page opened; no posting date shown"
+   "bids": 105,
+   "budget_usd_max": 1568.55
   },
-  "score": 33,
-  "elig": "yes",
-  "elig_note": "On-site in Erbil",
+  "score": 20,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z",
   "scout": {
    "keep": true,
-   "reason": "Flutter job inside Iraq",
-   "eligibility": "yes",
-   "eligibility_note": "On-site in Erbil",
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "freelance platform; check that payouts work from Iraq",
    "open": "unknown",
-   "pay": null,
-   "work_type": "full-time",
-   "channel": "form",
+   "pay": "75k–150k INR (fixed)",
+   "work_type": "freelance",
+   "channel": "platform",
    "contact": null,
    "lang": "en",
-   "red_flags": [
-    "no posting date or deadline",
-    "on-site: commute or move from Mosul",
-    "Kurdish required"
-   ],
-   "brief": "Senior Flutter developer, full-time on-site in Erbil; Bloc/Provider, Firebase, published apps required.",
+   "red_flags": [],
+   "brief": "I’m ready to turn a fresh social-networking concept into fully-functional Android and iOS apps. At its core the product needs familiar community staples—rich user profiles, a real-time messaging system and a dynamic activity feed—wrapped in a modern UI that feels lightning fast.\n\nBeyond the…",
    "skills": [
     "flutter",
-    "firebase",
-    "bloc"
+    "mobile",
+    "backend"
    ],
-   "ai": true
+   "ai": false
   },
-  "first_seen": "2026-10-12T19:58:50Z",
-  "updated": "2026-10-12T19:58:50Z"
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-App-Flutter",
+     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
+     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
+    },
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
+    },
+    {
+     "name": "Chat-app-api",
+     "url": "https://github.com/Thanoon12k/Chat-app-api",
+     "why": "Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50 commits."
+    }
+   ],
+   "fit": 80,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، mobile، backend) بدون مراجعة ذكاء اصطناعي.",
+   "ai": false
+  }
  },
  {
-  "id": "4011ee76e769",
-  "source": "websearch",
-  "source_label": "careers-page.com (web search)",
-  "url": "https://careers-page.com/khana-jobs/job/QW9YY6R6",
-  "title": "Senior Mobile Developer (Flutter) - Baghdad",
-  "company": "AS.solutions (Khana Jobs)",
-  "kind": "job",
-  "posted": null,
+  "id": "ac3d78e4b649",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/sales/Sales-Agents-Wanted-Ready-Launch",
+  "title": "Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-11",
   "expires": null,
-  "location": "Iraq - Baghdad (on-site)",
-  "remote": false,
-  "pay": null,
+  "location": null,
+  "remote": true,
+  "pay": "$10k–$20k (fixed)",
   "lang": "en",
   "tags": [
    "flutter",
    "firebase",
-   "mobile"
+   "mobile",
+   "backend"
   ],
-  "summary": "Full-time on-site Flutter developer in Baghdad: Bloc/Provider, Firebase, networking and caching, published apps. Salary discussed at interview.",
-  "status": "screened",
+  "summary": "# Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission\n\nWe are looking for experienced sales professionals, business brokers, and freelancers to help us sell **Arheab**, a developed social media platform with a website and mobile applications.\n\n**Asking Price: $12,000 USD…",
+  "status": "matched",
   "user_status": null,
   "extra": {
-   "verified": "page opened; no posting date shown"
+   "bids": 24,
+   "budget_usd_max": 20000.0
   },
-  "score": 33,
-  "elig": "yes",
-  "elig_note": "On-site in Baghdad",
+  "score": 19,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
   "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z",
   "scout": {
    "keep": true,
-   "reason": "Flutter job inside Iraq",
-   "eligibility": "yes",
-   "eligibility_note": "On-site in Baghdad",
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "freelance platform; check that payouts work from Iraq",
    "open": "unknown",
-   "pay": null,
-   "work_type": "full-time",
-   "channel": "form",
+   "pay": "$10k–$20k (fixed)",
+   "work_type": "freelance",
+   "channel": "platform",
    "contact": null,
    "lang": "en",
-   "red_flags": [
-    "no posting date or deadline",
-    "on-site: commute or move from Mosul"
-   ],
-   "brief": "Senior Flutter developer, full-time on-site in Baghdad; Bloc/Provider, Firebase, published apps required.",
+   "red_flags": [],
+   "brief": "# Sales Agents Wanted – Ready-to-Launch Social Media App & Website | 10% Commission\n\nWe are looking for experienced sales professionals, business brokers, and freelancers to help us sell **Arheab**, a developed social media platform with a website and mobile applications.\n\n**Asking Price: $12,000…",
    "skills": [
     "flutter",
     "firebase",
-    "bloc"
+    "mobile",
+    "backend"
    ],
-   "ai": true
+   "ai": false
   },
-  "first_seen": "2026-10-12T19:58:50Z",
-  "updated": "2026-10-12T19:58:50Z"
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-App-Flutter",
+     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
+     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
+    },
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
+    },
+    {
+     "name": "Chat-app-api",
+     "url": "https://github.com/Thanoon12k/Chat-app-api",
+     "why": "Django backend for a chat app: DRF endpoints for auth, users, rooms and notifications plus WebSocket consumers on Django Channels; 50 commits."
+    }
+   ],
+   "fit": 79,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، firebase، mobile، backend) بدون مراجعة ذكاء اصطناعي.",
+   "ai": false
+  }
  },
  {
   "id": "836b346c1ddc",
@@ -481,6 +818,317 @@
   },
   "first_seen": "2026-10-12T19:58:50Z",
   "updated": "2026-10-12T19:58:50Z"
+ },
+ {
+  "id": "2ca0ccd93278",
+  "source": "hackernews",
+  "source_label": "Hacker News: Who is hiring",
+  "url": "https://news.ycombinator.com/item?id=49931746",
+  "title": "Search Atlas | Product Engineer (Product Manager role, not a Full-stack role) | REMOTE (anywhere, EST hours) | Full-time contractor | $23-$34 USD/hour |…",
+  "company": "Search Atlas",
+  "kind": "job",
+  "posted": "2026-10-02",
+  "expires": null,
+  "location": "REMOTE (anywhere, EST hours)",
+  "remote": true,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "django",
+   "python",
+   "automation"
+  ],
+  "summary": "Search Atlas | Product Engineer (Product Manager role, not a Full-stack role) | REMOTE (anywhere, EST hours) | Full-time contractor | $23-$34 USD/hour | https://careers.searchatlas.com/jobs/599248-product-engineer...\nWe're ~160 people, fully remote, building an AI marketing platform. Our main product is OTTO, which…",
+  "status": "screened",
+  "user_status": null,
+  "extra": {},
+  "score": 17,
+  "elig": "yes",
+  "elig_note": "open location: REMOTE (anywhere, EST hours)",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "yes",
+   "eligibility_note": "open location: REMOTE (anywhere, EST hours)",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "unknown",
+   "channel": "other",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "Search Atlas | Product Engineer (Product Manager role, not a Full-stack role) | REMOTE (anywhere, EST hours) | Full-time contractor | $23-$34 USD/hour | https://careers.searchatlas.com/jobs/599248-product-engineer...\nWe're ~160 people, fully remote, building an AI marketing platform. Our main…",
+   "skills": [
+    "django",
+    "python",
+    "automation"
+   ],
+   "ai": false
+  }
+ },
+ {
+  "id": "f13c9a32be50",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/kotlin/Kotlin-Native-Features-Integration",
+  "title": "Kotlin Native Features Integration and backend developer",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "1.5k–12.5k INR (fixed)",
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "mobile",
+   "backend",
+   "ai"
+  ],
+  "summary": "Hi,\n\nCan you develop the complete platform from scratch including Figma UI, frontend, backend, database, admin panel, and all required APIs?\n\nTech stack: Flutter (Android and iOS), Backend.\n\nThe platform will have two main roles: Owners can register and list their services or items, while Users can discover nearby…",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "bids": 79,
+   "budget_usd_max": 130.71
+  },
+  "score": 17,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "freelance platform; check that payouts work from Iraq",
+   "open": "unknown",
+   "pay": "1.5k–12.5k INR (fixed)",
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "Hi,\n\nCan you develop the complete platform from scratch including Figma UI, frontend, backend, database, admin panel, and all required APIs?\n\nTech stack: Flutter (Android and iOS), Backend.\n\nThe platform will have two main roles: Owners can register and list their services or items, while Users…",
+   "skills": [
+    "flutter",
+    "mobile",
+    "backend",
+    "ai"
+   ],
+   "ai": false
+  }
+ },
+ {
+  "id": "c917bf2df96b",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/react-native/Cross-Platform-Amigrapes-Style-App",
+  "title": "Cross-Platform Amigrapes-Style App Development",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "1.5k–12.5k INR (fixed)",
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "mobile",
+   "api"
+  ],
+  "summary": "I need a full-scale rebuild of the “amigrapes” mobile experience for both Android and iOS. The goal is to replicate the core flow and overall look-and-feel of the reference app while adding the flexibility to grow new features later.\n\nScope of work  \n• Design and code the complete front-end for Android (Kotlin or…",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "bids": 101,
+   "budget_usd_max": 130.71
+  },
+  "score": 16,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "freelance platform; check that payouts work from Iraq",
+   "open": "unknown",
+   "pay": "1.5k–12.5k INR (fixed)",
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "I need a full-scale rebuild of the “amigrapes” mobile experience for both Android and iOS. The goal is to replicate the core flow and overall look-and-feel of the reference app while adding the flexibility to grow new features later.\n\nScope of work  \n• Design and code the complete front-end for…",
+   "skills": [
+    "flutter",
+    "mobile",
+    "api"
+   ],
+   "ai": false
+  }
+ },
+ {
+  "id": "6f549eac7b8f",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/ios/Mobile-App-Bug-Feature-Help",
+  "title": "Mobile App Bug & Feature Help",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-11",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "1.5k–12.5k INR (fixed)",
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "mobile"
+  ],
+  "summary": "I have a nearly-finished mobile app for both iOS and Android, but several tasks are still blocking release. The codebase is stable overall; I simply need an experienced developer who can jump in right away and tackle three areas: squashing the last few bugs, adding a couple of small features, and tightening…",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "bids": 74,
+   "budget_usd_max": 130.71
+  },
+  "score": 15,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "freelance platform; check that payouts work from Iraq",
+   "open": "unknown",
+   "pay": "1.5k–12.5k INR (fixed)",
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "I have a nearly-finished mobile app for both iOS and Android, but several tasks are still blocking release. The codebase is stable overall; I simply need an experienced developer who can jump in right away and tackle three areas: squashing the last few bugs, adding a couple of small features, and…",
+   "skills": [
+    "flutter",
+    "mobile"
+   ],
+   "ai": false
+  }
+ },
+ {
+  "id": "594d3b35a8b4",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/flutter/Rental-Boyfriend-App-Development",
+  "title": "Rental Boyfriend App Development",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-11",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "750–1.25k INR/hour",
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "mobile"
+  ],
+  "summary": "I am building a mobile-only platform where users can hire a “rental boyfriend” for three clear purposes: companionship at events, emotional support through in-app chat, and personalised city tours. The entire experience must live inside a polished iOS and Android application.\n\nCore flow  \n• New users come in through…",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "bids": 39,
+   "budget_usd_max": 13.07
+  },
+  "score": 15,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "freelance platform; check that payouts work from Iraq",
+   "open": "unknown",
+   "pay": "750–1.25k INR/hour",
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "I am building a mobile-only platform where users can hire a “rental boyfriend” for three clear purposes: companionship at events, emotional support through in-app chat, and personalised city tours. The entire experience must live inside a polished iOS and Android application.\n\nCore flow  \n• New…",
+   "skills": [
+    "flutter",
+    "mobile"
+   ],
+   "ai": false
+  }
+ },
+ {
+  "id": "3f7892457fd7",
+  "source": "freelancer",
+  "source_label": "Freelancer.com",
+  "url": "https://www.freelancer.com/projects/ios/Social-Media-App-Developers-Needed",
+  "title": "Social Media App Developers Needed",
+  "company": "",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": null,
+  "remote": true,
+  "pay": "12.5k–37.5k INR (fixed)",
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "mobile"
+  ],
+  "summary": "I’m ready to kick-off the first of several next-gen apps I have planned, and I want an experienced Indian team that can handle both Android and iOS builds from the ground up. The inaugural project is a social media platform focused on user profiles and content sharing with smooth photo- and video-upload capabilities…",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "bids": 66,
+   "budget_usd_max": 392.14
+  },
+  "score": 15,
+  "elig": "likely",
+  "elig_note": "freelance platform; check that payouts work from Iraq",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "freelance platform; check that payouts work from Iraq",
+   "open": "unknown",
+   "pay": "12.5k–37.5k INR (fixed)",
+   "work_type": "freelance",
+   "channel": "platform",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "I’m ready to kick-off the first of several next-gen apps I have planned, and I want an experienced Indian team that can handle both Android and iOS builds from the ground up. The inaugural project is a social media platform focused on user profiles and content sharing with smooth photo- and…",
+   "skills": [
+    "flutter",
+    "mobile"
+   ],
+   "ai": false
+  }
  },
  {
   "id": "581e88bca87e",
@@ -541,6 +1189,115 @@
   "updated": "2026-10-12T19:58:50Z"
  },
  {
+  "id": "7276d9d52759",
+  "source": "jobicy",
+  "source_label": "Jobicy",
+  "url": "https://jobicy.com/jobs/150364-software-engineer-python-container-images",
+  "title": "Software Engineer - Python - Container Images",
+  "company": "Canonical",
+  "kind": "job",
+  "posted": "2026-10-11",
+  "expires": null,
+  "location": "APAC,  EMEA,  LATAM,  Canada,  USA",
+  "remote": true,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "python",
+   "iot",
+   "automation"
+  ],
+  "summary": "Canonical is a leading provider of open source software and operating systems to the global enterprise and technology markets. Our platform, Ubuntu, is very widely used in breakthrough enterprise initiatives such as public cloud, data science, AI, engineering innovation, and IoT. Our customers include the world's…",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "type": [
+    "Full-Time"
+   ],
+   "level": "Any"
+  },
+  "score": 13,
+  "elig": "likely",
+  "elig_note": "region includes Iraq: APAC,  EMEA,  LATAM,  Canada,  USA",
+  "flags": [],
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "likely",
+   "eligibility_note": "region includes Iraq: APAC,  EMEA,  LATAM,  Canada,  USA",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "unknown",
+   "channel": "other",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "Canonical is a leading provider of open source software and operating systems to the global enterprise and technology markets. Our platform, Ubuntu, is very widely used in breakthrough enterprise initiatives such as public cloud, data science, AI, engineering innovation, and IoT. Our customers…",
+   "skills": [
+    "python",
+    "iot",
+    "automation"
+   ],
+   "ai": false
+  }
+ },
+ {
+  "id": "50d6d185607d",
+  "source": "telegram",
+  "source_label": "Telegram @remote_python_jobs",
+  "url": "https://t.me/remote_python_jobs/1426",
+  "title": "AWS Lambda Python Developer",
+  "company": "BairesDev",
+  "kind": "job",
+  "posted": "2026-10-03",
+  "expires": null,
+  "location": "Worldwide",
+  "remote": null,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "python",
+   "backend"
+  ],
+  "summary": "Published time : 2026-10-02\nCompany name : BairesDev\nTitle : AWS Lambda Python Developer\nGrades : senior\nJob description : Design and build scalable serverless backend systems on AWS Lambda: event-driven application logic, optimized cloud functions, and integrations with backend systems and secure API…",
+  "status": "screened",
+  "user_status": null,
+  "extra": {
+   "channel": "remote_python_jobs",
+   "apply_url": "https://remotar.com.br/job/165099/bairesdev/work-from-home-aws-lambda-python-developer-ref.-0190e"
+  },
+  "score": 10,
+  "elig": "yes",
+  "elig_note": "open location: Worldwide",
+  "flags": [],
+  "contacts": {
+   "apply_url": "https://remotar.com.br/job/165099/bairesdev/work-from-home-aws-lambda-python-developer-ref.-0190e"
+  },
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z",
+  "scout": {
+   "keep": true,
+   "reason": "passed the free rules (no AI review)",
+   "eligibility": "yes",
+   "eligibility_note": "open location: Worldwide",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "unknown",
+   "channel": "other",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [],
+   "brief": "Published time : 2026-10-02\nCompany name : BairesDev\nTitle : AWS Lambda Python Developer\nGrades : senior\nJob description : Design and build scalable serverless backend systems on AWS Lambda: event-driven application logic, optimized cloud functions, and integrations with backend systems and secure…",
+   "skills": [
+    "python",
+    "backend"
+   ],
+   "ai": false
+  }
+ },
+ {
   "id": "94c875373ce1",
   "source": "himalayas",
   "source_label": "Himalayas",
@@ -589,6 +1346,246 @@
   },
   "first_seen": "2026-10-12T19:58:50Z",
   "updated": "2026-10-12T19:58:50Z"
+ },
+ {
+  "id": "98c4cf67f611",
+  "source": "telegram",
+  "source_label": "Telegram @remote_python_jobs",
+  "url": "https://t.me/remote_python_jobs/1431",
+  "title": "Senior Python Engineer (Sunday-Thursday working week)",
+  "company": "ZentixSoft",
+  "kind": "job",
+  "posted": "2026-10-09",
+  "expires": null,
+  "location": "Worldwide",
+  "remote": null,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "python",
+   "backend"
+  ],
+  "text": "Published time : 2026-10-08\nCompany name : ZentixSoft\nTitle : Senior Python Engineer (Sunday-Thursday working week)\nGrades : senior\nJob description : Design and build Python and/or Node.js backend services with asynchronous, event-driven processing, own API contracts, and deploy containerised services on Azure with CI/CD for a long-term data-heavy enterprise project.\nLocation : Worldwide\nAnywhere : Yes\nRemote : Yes\n👉 👉 ( Job Description & Apply ) 👈️ 👈️\nTags :\n#python #nodejs #azure #docker #event_driven #api_design #remote #worldwide #senior #full_time\nApply: https://djinni.co/jobs/852295-senior-python-engineer-sunday-thursday-workin/",
+  "summary": "Published time : 2026-10-08\nCompany name : ZentixSoft\nTitle : Senior Python Engineer (Sunday-Thursday working week)\nGrades : senior\nJob description : Design and build Python and/or Node.js backend services with asynchronous, event-driven processing, own API contracts, and deploy containerised services on Azure with…",
+  "status": "new",
+  "user_status": null,
+  "extra": {
+   "channel": "remote_python_jobs",
+   "apply_url": "https://djinni.co/jobs/852295-senior-python-engineer-sunday-thursday-workin/"
+  },
+  "score": 10,
+  "elig": "yes",
+  "elig_note": "open location: Worldwide",
+  "flags": [],
+  "contacts": {
+   "apply_url": "https://djinni.co/jobs/852295-senior-python-engineer-sunday-thursday-workin/"
+  },
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z"
+ },
+ {
+  "id": "6be440e94cb3",
+  "source": "telegram",
+  "source_label": "Telegram @remote_python_jobs",
+  "url": "https://t.me/remote_python_jobs/1428",
+  "title": "Senior Software Engineer - Python/MongoDB",
+  "company": "Canonical",
+  "kind": "job",
+  "posted": "2026-10-05",
+  "expires": null,
+  "location": "Worldwide",
+  "remote": null,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "python"
+  ],
+  "text": "Published time : 2026-10-04\nCompany name : Canonical\nTitle : Senior Software Engineer - Python/MongoDB\nGrades : senior\nJob description : Build the world's best open-source analog to MongoDB Atlas / Amazon DocumentDB: high-performing, rock-solid MongoDB deployments that customers own and operate on any cloud, multi-cloud, or on-premise environment.\nLocation : Worldwide\nAnywhere : Yes\nRemote : Yes\n👉 👉 ( Job Description & Apply ) 👈️ 👈️\nTags :\n#python #mongodb #remote #senior #full_time #open_source #devops #worldwide\nApply: https://www.workingnomads.com/jobs/senior-software-engineer-pythonmongodb-canonical-1913711",
+  "summary": "Published time : 2026-10-04\nCompany name : Canonical\nTitle : Senior Software Engineer - Python/MongoDB\nGrades : senior\nJob description : Build the world's best open-source analog to MongoDB Atlas / Amazon DocumentDB: high-performing, rock-solid MongoDB deployments that customers own and operate on any cloud…",
+  "status": "new",
+  "user_status": null,
+  "extra": {
+   "channel": "remote_python_jobs",
+   "apply_url": "https://www.workingnomads.com/jobs/senior-software-engineer-pythonmongodb-canonical-1913711"
+  },
+  "score": 8,
+  "elig": "yes",
+  "elig_note": "open location: Worldwide",
+  "flags": [],
+  "contacts": {
+   "apply_url": "https://www.workingnomads.com/jobs/senior-software-engineer-pythonmongodb-canonical-1913711"
+  },
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z"
+ },
+ {
+  "id": "16559633742b",
+  "source": "telegram",
+  "source_label": "Telegram @cryptojobslist",
+  "url": "https://t.me/cryptojobslist/11572",
+  "title": "Senior Mobile Developer (iOS + Android)",
+  "company": "",
+  "kind": "job",
+  "posted": "2026-10-07",
+  "expires": null,
+  "location": null,
+  "remote": null,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "mobile"
+  ],
+  "text": "💼 Senior Mobile Developer (iOS + Android)\n🏛️ at HyroTrader\n🌍 Remote\n💰 $6k-11k/month\n💥 New! Posted one minute ago\n✅ Apply → https://cjl.ist/qh3siyw6x\nOr forward to a friend!\nApply: https://cjl.ist/qh3siyw6x",
+  "summary": "💼 Senior Mobile Developer (iOS + Android)\n🏛️ at HyroTrader\n🌍 Remote\n💰 $6k-11k/month\n💥 New! Posted one minute ago\n✅ Apply → https://cjl.ist/qh3siyw6x\nOr forward to a friend!\nApply: https://cjl.ist/qh3siyw6x",
+  "status": "new",
+  "user_status": null,
+  "extra": {
+   "channel": "cryptojobslist",
+   "apply_url": "https://cjl.ist/qh3siyw6x"
+  },
+  "score": 8,
+  "elig": "unclear",
+  "elig_note": "location not stated",
+  "flags": [],
+  "contacts": {
+   "apply_url": "https://cjl.ist/qh3siyw6x"
+  },
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z"
+ },
+ {
+  "id": "ea94cdf58f21",
+  "source": "telegram",
+  "source_label": "Telegram @remote_python_jobs",
+  "url": "https://t.me/remote_python_jobs/1434",
+  "title": "Python Developer for Personal Project",
+  "company": "Upwork client",
+  "kind": "freelance",
+  "posted": "2026-10-12",
+  "expires": null,
+  "location": "Worldwide",
+  "remote": null,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "python"
+  ],
+  "text": "Published time : 2026-10-11\nCompany name : Upwork client\nTitle : Python Developer for Personal Project\nGrades : junior, middle\nJob description : Help build a personal-development web project focused on self-growth and motivation: coding, debugging, and integrating the Python app with other tools in close collaboration with the client.\nLocation : Worldwide\nAnywhere : Yes\nRemote : Yes\n👉 👉 ( Job Description & Apply ) 👈️ 👈️\nTags :\n#python #remote #worldwide #freelance #web_development\nApply: https://www.upwork.com/freelance-jobs/apply/Python-Developer-for-Personal-Project_~022109274857646373974/",
+  "summary": "Published time : 2026-10-11\nCompany name : Upwork client\nTitle : Python Developer for Personal Project\nGrades : junior, middle\nJob description : Help build a personal-development web project focused on self-growth and motivation: coding, debugging, and integrating the Python app with other tools in close…",
+  "status": "new",
+  "user_status": null,
+  "extra": {
+   "channel": "remote_python_jobs",
+   "apply_url": "https://www.upwork.com/freelance-jobs/apply/Python-Developer-for-Personal-Project_~022109274857646373974/"
+  },
+  "score": 8,
+  "elig": "yes",
+  "elig_note": "open location: Worldwide",
+  "flags": [],
+  "contacts": {
+   "apply_url": "https://www.upwork.com/freelance-jobs/apply/Python-Developer-for-Personal-Project_~022109274857646373974/"
+  },
+  "first_seen": "2026-10-13T02:06:59Z",
+  "updated": "2026-10-13T02:06:59Z"
+ },
+ {
+  "id": "4011ee76e769",
+  "source": "websearch",
+  "source_label": "careers-page.com (web search)",
+  "url": "https://careers-page.com/khana-jobs/job/QW9YY6R6",
+  "title": "Senior Mobile Developer (Flutter) - Baghdad",
+  "company": "AS.solutions (Khana Jobs)",
+  "kind": "job",
+  "posted": null,
+  "expires": null,
+  "location": "Iraq - Baghdad (on-site)",
+  "remote": false,
+  "pay": null,
+  "lang": "en",
+  "tags": [
+   "flutter",
+   "firebase",
+   "mobile"
+  ],
+  "summary": "Full-time on-site Flutter developer in Baghdad: Bloc/Provider, Firebase, networking and caching, published apps. Salary discussed at interview.",
+  "status": "rejected",
+  "user_status": null,
+  "extra": {
+   "verified": "page opened; no posting date shown"
+  },
+  "score": 33,
+  "elig": "yes",
+  "elig_note": "On-site in Baghdad",
+  "flags": [],
+  "scout": {
+   "keep": true,
+   "reason": "Flutter job inside Iraq",
+   "eligibility": "yes",
+   "eligibility_note": "On-site in Baghdad",
+   "open": "unknown",
+   "pay": null,
+   "work_type": "full-time",
+   "channel": "form",
+   "contact": null,
+   "lang": "en",
+   "red_flags": [
+    "no posting date or deadline",
+    "on-site: commute or move from Mosul"
+   ],
+   "brief": "Senior Flutter developer, full-time on-site in Baghdad; Bloc/Provider, Firebase, published apps required.",
+   "skills": [
+    "flutter",
+    "firebase",
+    "bloc"
+   ],
+   "ai": true
+  },
+  "first_seen": "2026-10-12T19:58:50Z",
+  "updated": "2026-10-13T04:46:47Z",
+  "match": {
+   "repos": [
+    {
+     "name": "Chat-App-Flutter",
+     "url": "https://github.com/Thanoon12k/Chat-App-Flutter",
+     "why": "Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits."
+    },
+    {
+     "name": "Pediatric-Clinic-manager",
+     "url": "https://github.com/Thanoon12k/Pediatric-Clinic-manager",
+     "why": "Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture with Riverpod and go_router."
+    },
+    {
+     "name": "flutter-arduino-based-syringe-pump",
+     "url": "https://github.com/Thanoon12k/flutter-arduino-based-syringe-pump",
+     "why": "Graduation-project Flutter app that controls an Arduino syringe pump: dose calculation with unit tests, patient records in SQLite, bilingual UI, plus the Arduino firmware."
+    }
+   ],
+   "fit": 85,
+   "fit_reason_ar": "مطابقة تلقائية حسب المهارات (flutter، firebase، mobile) بدون مراجعة ذكاء اصطناعي.",
+   "ai": false
+  },
+  "draft": {
+   "cv_bullets": [
+    "Built Chat-App-Flutter: Flutter chat client with rooms, private chat, friend requests and notifications, using GetX and Firebase messaging; 70 commits.",
+    "Built Pediatric-Clinic-manager: Flutter clinic app on Supabase with admin, doctor and patient dashboards, appointments, growth charts and messaging; clean architecture…",
+    "Built flutter-arduino-based-syringe-pump: Graduation-project Flutter app that controls an Arduino syringe pump: dose calculation with unit tests, patient records in SQLite…"
+   ],
+   "subject": "Application: Senior Mobile Developer (Flutter) - Baghdad",
+   "message": "Hello AS.solutions (Khana Jobs),\n\nI'm Thanoon Younis Mohammed, a Flutter and Django developer based in Mosul, Iraq. Your post for \"Senior Mobile Developer (Flutter) - Baghdad\" matches work I have already built:\n- Chat-App-Flutter: https://github.com/Thanoon12k/Chat-App-Flutter\n- Pediatric-Clinic-manager: https://github.com/Thanoon12k/Pediatric-Clinic-manager\n- flutter-arduino-based-syringe-pump: https://github.com/Thanoon12k/flutter-arduino-based-syringe-pump\n\nI can share more details about my approach and availability. Portfolio: https://make1it.pythonanywhere.com · GitHub: https://github.com/Thanoon12k\n\nBest regards,\nThanoon Younis Mohammed\nengthanoon1@gmail.com · +964 770 279 0915",
+   "ai": false,
+   "lang": "en",
+   "channel": "form",
+   "contact": null
+  },
+  "manager": {
+   "rank": 2,
+   "rank_score": 98,
+   "note_ar": "اختيار تلقائي بدون مراجعة المدير (ماكو مفتاح API أو انتهت الميزانية)، ويحتاج مراجعة الإعلان والمسودة قبل الإرسال.",
+   "ai": false,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "shown_at": "2026-10-13T02:06:59Z",
+  "reject_reason": "same company as another pick: Senior Mobile Developer (Flutter) - Erbil (Erbil is closer to Mosul)"
  },
  {
   "id": "a1b4e4a61e69",
