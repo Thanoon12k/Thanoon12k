@@ -43,7 +43,7 @@
    - `ANTHROPIC_API_KEY`: من [console.anthropic.com](https://console.anthropic.com) ← API Keys، مع رصيد بسيط (مثلاً 5$).
    - `TELEGRAM_BOT_TOKEN` و `TELEGRAM_CHAT_ID` (اختياري، قسم تلگرام تحت).
    - (اختياري) بتبويب Variables: `RELIEFWEB_APPNAME`، appname مجاني يُطلب من [ReliefWeb](https://apidoc.reliefweb.int/parameters#appname) لوظائف المنظمات بالعراق.
-3. **الموقع**: https://claude.ai/artifact/SVapXSt8B5HC3Ua2CMGL8M (خاص، بس صاحب الحساب يفتحه). الصفحة `docs/index.html` والبيانات `docs/data/*.json` تنرفع عليه سوة، والصفحة تقرا البيانات من جنبها. Claude يحدّثه مرتين باليوم (روتين بحسابك، ~05:50 و~17:50 بتوقيت العراق، بعد تشغيل الوكلاء)، وأي وقت ثاني يكفي طلب «حدث الموقع». ماكو GitHub Pages.
+3. **الموقع**: https://claude.ai/artifact/SVapXSt8B5HC3Ua2CMGL8M (خاص، بس صاحب الحساب يفتحه). الصفحة `docs/index.html` والبيانات `docs/data/*.json` تنرفع عليه سوة، والصفحة تقرا البيانات من جنبها. Claude يحدّثه مرتين باليوم (روتين «Fursa dashboard refresh» بحسابك: 06:44 و18:44 بتوقيت العراق، بعد تشغيل الوكلاء؛ يتعدّل أو يتوقف من صفحة Routines بـ claude.ai)، وأي وقت ثاني يكفي طلب «حدث الموقع». ماكو GitHub Pages.
 4. **أول تشغيل**: تبويب Actions ← *Fursa agents* ← Run workflow. بعدها يشتغل وحده كل 6 ساعات (05:23، 11:23، 17:23، 23:23 بتوقيت العراق).
 5. **الإعدادات** بملف `profile.toml`: المهارات، الكلمات وأوزانها، الميزانية، الموديلات، والمصادر.
 
