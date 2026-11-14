@@ -44,7 +44,6 @@ It all runs from one command, with **zero manual steps**.
 
 **My Facebook page runs itself too.** [Golden Code](https://www.facebook.com/goldencode114) is fully automated: the code designs every post card, an AI agent schedules and publishes through the Graph API, and a script tracks growth and archives every post.
 
-<p align="center"><a href="https://www.facebook.com/goldencode114"><img src="assets/work/golden-code-page.webp" width="90%" alt="Golden Code — self-running Facebook page"></a></p>
 
 <p align="center"><a href="https://github.com/Thanoon12k/My-Work"><img src="assets/pipeline.svg" width="100%" alt="Pipeline: 65 repos → run each app → screenshot → build site → deploy → live portfolio"></a></p>
 
