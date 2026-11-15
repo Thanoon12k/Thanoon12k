@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goals 2026</title>
+<meta name="description" content="A textured board of goal boxes: each goal holds missions, each mission holds checklist steps.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='5' y='9' width='54' height='50' rx='12' fill='%231f1b16'/%3E%3Crect x='3' y='5' width='54' height='50' rx='12' fill='%23ffcf3f' stroke='%231f1b16' stroke-width='4'/%3E%3Cpath d='M3 22h54' stroke='%231f1b16' stroke-width='4'/%3E%3Cpath d='M18 37l8 8 16-17' fill='none' stroke='%231f1b16' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#ffcf3f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3ecdf; --paper-2:#e9dfcc; --ink:#1f1b16; --ink-2:#5a5046; --line:#1f1b16;
+  --card:#fbf7ef; --shadow:#1f1b16; --muted:#8a7e70;
+  --noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --noise-op:.18;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#1b1814; --paper-2:#24201a; --ink:#f1e9dc; --ink-2:#c5b8a6; --line:#f1e9dc;
+    --card:#2a251f; --shadow:#000; --muted:#9a8d7c; --noise-op:.28;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1b1814; --paper-2:#24201a; --ink:#f1e9dc; --ink-2:#c5b8a6; --line:#f1e9dc;
+  --card:#2a251f; --shadow:#000; --muted:#9a8d7c; --noise-op:.28;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"Space Grotesk",system-ui,sans-serif; min-height:100vh; overflow-x:hidden;
+  background-image:radial-gradient(circle at 1px 1px, color-mix(in srgb,var(--ink) 14%,transparent) 1px, transparent 0);
+  background-size:22px 22px;
+}
+body::before{content:"";position:fixed;inset:0;background:var(--noise);opacity:var(--noise-op);pointer-events:none;z-index:0;mix-blend-mode:multiply}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body::before{mix-blend-mode:screen}}
+:root[data-theme="dark"] body::before{mix-blend-mode:screen}
+.wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:28px 16px 80px}
+button{font:inherit;color:inherit;cursor:pointer}
+input,textarea{font:inherit;color:inherit}
+
+/* ---------- header ---------- */
+header.top{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;margin-bottom:28px}
+.brand small{display:inline-block;font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-size:12px;
+  border:2px solid var(--line);padding:4px 10px;border-radius:999px;background:var(--card)}
+h1{font-family:Fraunces,serif;font-weight:800;font-size:clamp(44px,9vw,104px);line-height:.9;margin:14px 0 6px;letter-spacing:-.03em}
+h1 em{font-style:italic;font-weight:500;-webkit-text-stroke:2px var(--ink);color:transparent}
+.tag{color:var(--ink-2);max-width:52ch;margin:0}
+.actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.btn{border:2px solid var(--line);background:var(--card);padding:9px 14px;border-radius:12px;font-weight:700;
+  box-shadow:3px 3px 0 var(--shadow);transition:transform .12s, box-shadow .12s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--shadow)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.btn.primary{background:#ffcf3f;color:#1f1b16}
+.btn.ghost{box-shadow:none;background:transparent}
+.btn.danger{background:#ff7a59;color:#1f1b16}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:14px;margin-bottom:30px}
+.stat{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:5px 5px 0 var(--shadow);position:relative;overflow:hidden}
+.stat .k{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-2);font-weight:700}
+.stat .v{font-family:Fraunces,serif;font-size:40px;font-weight:800;line-height:1.05}
+.stat .v span{font-size:18px;color:var(--muted);font-weight:500}
+.bigbar{height:18px;border:2px solid var(--line);border-radius:999px;margin-top:10px;overflow:hidden;background:var(--paper-2)}
+.bigbar i{display:block;height:100%;width:0;transition:width .6s cubic-bezier(.2,.8,.2,1);
+  background:repeating-linear-gradient(-45deg,#ffcf3f 0 10px,#ffb703 10px 20px);border-right:2px solid var(--line)}
+
+/* ---------- toolbar ---------- */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px}
+.chip{border:2px solid var(--line);background:transparent;border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.toolbar .count{margin-left:auto;color:var(--ink-2);font-size:14px}
+
+/* ---------- goal boxes ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+.box{
+  --c:#ffcf3f; position:relative; text-align:left; border:2.5px solid var(--line); border-radius:20px;
+  background:var(--c); color:#1f1b16; padding:18px; min-height:230px; display:flex; flex-direction:column;
+  box-shadow:7px 7px 0 var(--shadow); transition:transform .18s, box-shadow .18s; overflow:hidden; isolation:isolate;
+  animation:pop .45s cubic-bezier(.2,1.4,.4,1) both; animation-delay:calc(var(--i,0) * 45ms);
+}
+.box:hover{transform:translate(-3px,-3px) rotate(-.4deg);box-shadow:10px 10px 0 var(--shadow)}
+.box:focus-visible{outline:3px dashed var(--ink);outline-offset:4px}
+.box::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.55;background:var(--pat)}
+.box::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--noise);opacity:.35;mix-blend-mode:multiply}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.94)}}
+.box .lid{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.box .icon{font-size:30px;width:54px;height:54px;display:grid;place-items:center;background:#fbf7ef;border:2.5px solid #1f1b16;border-radius:14px;box-shadow:3px 3px 0 #1f1b16;flex:none}
+.box .num{font-family:Fraunces,serif;font-weight:800;font-size:15px;background:#1f1b16;color:#fbf7ef;padding:3px 9px;border-radius:8px}
+.box h3{font-family:Fraunces,serif;font-weight:800;font-size:25px;line-height:1.05;margin:16px 0 6px;letter-spacing:-.01em;overflow-wrap:anywhere}
+.box .meta{font-size:14px;font-weight:500;opacity:.8}
+.box .foot{margin-top:auto;display:flex;align-items:center;gap:12px;padding-top:14px}
+.ring{--p:0;width:58px;height:58px;border-radius:50%;flex:none;display:grid;place-items:center;
+  background:conic-gradient(#1f1b16 calc(var(--p)*1%), #fbf7ef 0);border:2.5px solid #1f1b16}
+.ring b{width:40px;height:40px;border-radius:50%;background:var(--c);display:grid;place-items:center;font-size:13px;border:2px solid #1f1b16}
+.dots{display:flex;flex-wrap:wrap;gap:5px}
+.dots i{width:12px;height:12px;border:2px solid #1f1b16;border-radius:4px;background:#fbf7ef}
+.dots i.on{background:#1f1b16}
+.stamp{position:absolute;right:-8px;top:74px;transform:rotate(14deg);font-family:Fraunces,serif;font-weight:800;
+  font-size:22px;letter-spacing:.08em;color:#c1121f;border:3px solid #c1121f;padding:4px 12px;border-radius:8px;background:#fbf7efcc;
+  animation:stamp .5s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes stamp{from{transform:rotate(14deg) scale(2.2);opacity:0}}
+.box.done{filter:saturate(.9)}
+
+.add-box{border:3px dashed var(--line);border-radius:20px;min-height:230px;background:transparent;display:grid;place-items:center;
+  font-family:Fraunces,serif;font-weight:800;font-size:22px;color:var(--ink-2);transition:background .2s}
+.add-box:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.add-box span{display:block;font-size:54px;line-height:1}
+
+.empty{grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-2)}
+
+/* ---------- drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(20,16,12,.45);backdrop-filter:blur(2px);z-index:20;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(640px,100%);z-index:21;background:var(--paper);border-left:3px solid var(--line);
+  transform:translateX(105%);transition:transform .35s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
+.drawer::before{content:"";position:absolute;inset:0;background:var(--noise);opacity:var(--noise-op);pointer-events:none;mix-blend-mode:multiply}
+.drawer.open{transform:none}
+.dhead{--c:#ffcf3f;position:relative;background:var(--c);color:#1f1b16;border-bottom:3px solid var(--line);padding:18px 18px 16px;overflow:hidden;isolation:isolate}
+.dhead::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.55;background:var(--pat)}
+.dhead .row{display:flex;gap:12px;align-items:center}
+.dhead .icon{font-size:30px;width:56px;height:56px;display:grid;place-items:center;background:#fbf7ef;border:2.5px solid #1f1b16;border-radius:14px;box-shadow:3px 3px 0 #1f1b16;flex:none}
+.dhead input.title{flex:1;min-width:0;background:transparent;border:0;border-bottom:2px dashed transparent;font-family:Fraunces,serif;font-weight:800;font-size:clamp(24px,5vw,32px);color:#1f1b16;padding:2px 0}
+.dhead input.title:focus{outline:none;border-bottom-color:#1f1b16}
+.close{width:42px;height:42px;border-radius:12px;border:2.5px solid #1f1b16;background:#fbf7ef;font-size:20px;font-weight:700;flex:none;color:#1f1b16}
+.dhead .sub{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.swatches,.icons{display:flex;gap:6px;flex-wrap:wrap}
+.sw{width:26px;height:26px;border-radius:8px;border:2.5px solid #1f1b16;padding:0}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 3px #fbf7ef,0 0 0 5px #1f1b16}
+.ic{width:34px;height:34px;border-radius:9px;border:2px solid #1f1b16;background:#fbf7ef;font-size:18px;padding:0;color:#1f1b16}
+.ic[aria-pressed="true"]{background:#1f1b16}
+.pickers{display:none;margin-top:12px;gap:10px;flex-direction:column}
+.pickers.open{display:flex}
+.dhead .pbar{height:12px;border:2px solid #1f1b16;border-radius:99px;background:#fbf7ef;overflow:hidden;flex:1;min-width:120px}
+.dhead .pbar i{display:block;height:100%;background:#1f1b16;transition:width .4s}
+.dhead .pct{font-weight:700;font-size:14px}
+.smallbtn{border:2px solid #1f1b16;background:#fbf7ef;color:#1f1b16;border-radius:10px;padding:5px 10px;font-weight:700;font-size:13px}
+
+.dbody{flex:1;overflow:auto;padding:18px;position:relative}
+.mission{background:var(--card);border:2.5px solid var(--line);border-radius:16px;box-shadow:5px 5px 0 var(--shadow);margin-bottom:18px;overflow:hidden}
+.mission.done{background:repeating-linear-gradient(-45deg,var(--card) 0 12px,color-mix(in srgb,var(--card) 88%,#6ab04c) 12px 24px)}
+.mhead{display:flex;align-items:center;gap:10px;padding:12px 12px 12px 14px;border-bottom:2px dashed color-mix(in srgb,var(--line) 40%,transparent)}
+.mhead .badge{font-family:Fraunces,serif;font-weight:800;font-size:13px;border:2px solid var(--line);border-radius:8px;padding:2px 7px;flex:none}
+.mhead input{flex:1;min-width:0;border:0;background:transparent;font-weight:700;font-size:17px;padding:4px 0;border-bottom:2px dashed transparent}
+.mhead input:focus{outline:none;border-bottom-color:var(--line)}
+.mhead .mp{font-size:13px;font-weight:700;color:var(--ink-2);white-space:nowrap}
+.iconbtn{width:32px;height:32px;border-radius:9px;border:2px solid transparent;background:transparent;display:grid;place-items:center;flex:none;color:var(--ink-2);font-size:16px}
+.iconbtn:hover{border-color:var(--line);color:var(--ink)}
+.mbar{height:6px;background:var(--paper-2)}
+.mbar i{display:block;height:100%;background:#6ab04c;transition:width .4s}
+ul.steps{list-style:none;margin:0;padding:8px 10px}
+.step{display:flex;align-items:center;gap:10px;padding:6px 4px;border-radius:10px}
+.step:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.step input[type=checkbox]{appearance:none;width:24px;height:24px;border:2.5px solid var(--line);border-radius:7px;display:grid;place-items:center;flex:none;background:var(--paper);cursor:pointer;margin:0}
+.step input[type=checkbox]:checked{background:#6ab04c}
+.step input[type=checkbox]:checked::after{content:"✓";color:#fff;font-weight:900;font-size:15px}
+.step input[type=checkbox]:focus-visible{outline:3px dashed var(--ink);outline-offset:2px}
+.step .txt{flex:1;min-width:0;border:0;background:transparent;padding:4px 0;font-size:15px;overflow-wrap:anywhere}
+.step .txt:focus{outline:none;border-bottom:2px dashed var(--line)}
+.step.checked .txt{text-decoration:line-through;text-decoration-thickness:2px;color:var(--muted)}
+.step .iconbtn{opacity:0}
+.step:hover .iconbtn,.step:focus-within .iconbtn{opacity:1}
+@media (hover:none){.step .iconbtn{opacity:.6}}
+form.adder{display:flex;gap:8px;padding:6px 12px 12px}
+form.adder input{flex:1;min-width:0;border:2px dashed color-mix(in srgb,var(--line) 50%,transparent);border-radius:10px;background:transparent;padding:8px 10px}
+form.adder input:focus{outline:none;border-style:solid;border-color:var(--line)}
+form.adder button{border:2px solid var(--line);background:var(--ink);color:var(--paper);border-radius:10px;padding:0 14px;font-weight:700}
+.newmission{background:transparent;border:3px dashed var(--line);border-radius:16px;padding:6px;box-shadow:none}
+.newmission form.adder{padding:6px}
+.newmission input{font-weight:700;font-size:16px}
+.dfoot{padding:12px 18px;border-top:2px solid var(--line);display:flex;justify-content:space-between;gap:8px;position:relative;background:var(--paper-2)}
+.hint{color:var(--ink-2);font-size:13px;margin:4px 2px 16px}
+
+/* toast + confetti */
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,140%);background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:12px;font-weight:700;z-index:40;transition:transform .3s;max-width:calc(100% - 32px);text-align:center}
+.toast.show{transform:translate(-50%,0)}
+.confetti{position:fixed;top:-20px;width:10px;height:14px;z-index:50;pointer-events:none;border:1.5px solid #1f1b16;animation:fall linear forwards}
+@keyframes fall{to{transform:translate(var(--dx),110vh) rotate(var(--r));}}
+
+footer{margin-top:50px;text-align:center;color:var(--ink-2);font-size:13px}
+
+@media (max-width:820px){
+  header.top{grid-template-columns:1fr}
+  .actions{justify-content:flex-start}
+  .stats{grid-template-columns:1fr 1fr}
+  .stats .stat:first-child{grid-column:1/-1}
+}
+@media (max-width:480px){
+  .grid{grid-template-columns:1fr}
+  .stat .v{font-size:32px}
+  .box{min-height:200px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <small>Goals board · 2026</small>
+      <h1>Every goal <em>is a box</em></h1>
+      <p class="tag">Open a box, split it into missions, tick the steps. Fill every box before the year ends.</p>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="addGoal">+ New goal</button>
+      <button class="btn" id="exportBtn" title="Download a backup file">Export</button>
+      <button class="btn" id="importBtn" title="Load a backup file">Import</button>
+      <button class="btn ghost" id="themeBtn" aria-label="Toggle theme">◐</button>
+      <input type="file" id="importFile" accept="application/json" hidden>
+    </div>
+  </header>
+
+  <section class="stats" aria-label="Overall progress">
+    <div class="stat">
+      <div class="k">Overall progress</div>
+      <div class="v" id="sPct">0%</div>
+      <div class="bigbar"><i id="sBar"></i></div>
+    </div>
+    <div class="stat"><div class="k">Goals done</div><div class="v" id="sGoals">0</div></div>
+    <div class="stat"><div class="k">Missions done</div><div class="v" id="sMissions">0</div></div>
+    <div class="stat"><div class="k">Steps done</div><div class="v" id="sSteps">0</div></div>
+  </section>
+
+  <div class="toolbar" role="group" aria-label="Filter goals">
+    <button class="chip" data-f="all" aria-pressed="true">All</button>
+    <button class="chip" data-f="active" aria-pressed="false">In progress</button>
+    <button class="chip" data-f="done" aria-pressed="false">Completed</button>
+    <span class="count" id="count"></span>
+  </div>
+
+  <main class="grid" id="grid"></main>
+
+  <footer>Saved in this browser. Use Export to keep a backup or move it to another device.</footer>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle"></aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+const KEY = 'goals2026.v1';
+const MAX_GOALS = 20;
+const COLORS = ['#ffcf3f','#ff7a59','#7bd389','#62b6ff','#c79bff','#ff9fc6','#f4a261','#2ec4b6','#e9ff70','#b8c0ff'];
+const ICONS = ['🎓','📣','💼','💻','🚀','💪','📚','💰','✈️','🏠','🎨','🧠','❤️','🌱','🏆','🎯','🎸','🕌','📷','⚽'];
+const PATTERNS = [
+  'repeating-linear-gradient(45deg, rgba(0,0,0,.09) 0 2px, transparent 2px 12px)',
+  'radial-gradient(rgba(0,0,0,.14) 1.4px, transparent 1.6px) 0 0/12px 12px',
+  'linear-gradient(rgba(0,0,0,.08) 1px, transparent 1px) 0 0/16px 16px, linear-gradient(90deg, rgba(0,0,0,.08) 1px, transparent 1px) 0 0/16px 16px',
+  'repeating-radial-gradient(circle at 100% 0, transparent 0 10px, rgba(0,0,0,.08) 10px 12px)',
+  'repeating-linear-gradient(-45deg, rgba(0,0,0,.07) 0 6px, transparent 6px 12px), repeating-linear-gradient(45deg, rgba(0,0,0,.05) 0 6px, transparent 6px 12px)',
+  'radial-gradient(circle at 50% 120%, rgba(0,0,0,.1) 0 20%, transparent 21%) 0 0/28px 20px',
+  'repeating-linear-gradient(0deg, rgba(0,0,0,.08) 0 2px, transparent 2px 9px)',
+  'conic-gradient(from 45deg, rgba(0,0,0,.08) 25%, transparent 0 50%, rgba(0,0,0,.08) 0 75%, transparent 0) 0 0/20px 20px'
+];
+
+const uid = () => Math.random().toString(36).slice(2, 10);
+const mk = (title, icon, ci, missions) => ({
+  id: uid(), title, icon, color: COLORS[ci], pattern: ci % PATTERNS.length,
+  missions: missions.map(([t, steps]) => ({ id: uid(), title: t, steps: steps.map(s => ({ id: uid(), text: s, done: false })) }))
+});
+
+function seed(){
+  return { goals: [
+    mk('Complete my Master', '🎓', 0, [
+      ['Finish coursework', ['Pass all remaining courses', 'Submit final assignments', 'Confirm credits with the department']],
+      ['Thesis', ['Pick a topic and supervisor', 'Write the literature review', 'Run experiments', 'Write all chapters', 'Defend the thesis']],
+      ['Publish a paper', ['Choose a target journal', 'Write the draft', 'Submit', 'Answer the reviewers']]
+    ]),
+    mk('Reach 1K followers', '📣', 3, [
+      ['Set up the profile', ['Clear bio and photo', 'Pin the best post', 'Link website and GitHub']],
+      ['Content plan', ['Pick 3 content pillars', 'Post 3 times a week for a month', 'Make 5 short videos']],
+      ['Grow the community', ['Reply to every comment', 'Collaborate with 2 creators', 'Hit 250', 'Hit 500', 'Hit 1,000']]
+    ]),
+    mk('Get employed', '💼', 2, [
+      ['Prepare', ['Update the CV', 'Build a portfolio page', 'Polish LinkedIn']],
+      ['Apply', ['Shortlist 20 companies', 'Send 10 applications', 'Ask 3 people for referrals']],
+      ['Interview', ['Practice 20 coding problems', 'Mock interview', 'Get an offer']]
+    ]),
+    mk('Find first online work', '💻', 1, [
+      ['Get ready', ['Choose a service to sell', 'Create Upwork / Fiverr profiles', 'Make 3 portfolio samples']],
+      ['Land the first client', ['Send 15 proposals', 'Get the first reply', 'Deliver the first job', 'Get a 5-star review']]
+    ])
+  ]};
+}
+
+let state = load();
+let filter = 'all';
+let openId = null;
+
+function load(){
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && Array.isArray(s.goals)) return s; } catch (e) {}
+  return seed();
+}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $ = s => document.querySelector(s);
+
+function mStats(m){ const t = m.steps.length, d = m.steps.filter(s => s.done).length; return { t, d, done: t > 0 && d === t }; }
+function gStats(g){
+  let t = 0, d = 0, md = 0;
+  g.missions.forEach(m => { const s = mStats(m); t += s.t; d += s.d; if (s.done) md++; });
+  return { t, d, md, mt: g.missions.length, pct: t ? Math.round(d / t * 100) : 0, done: g.missions.length > 0 && md === g.missions.length };
+}
+
+/* ---------- board ---------- */
+function renderBoard(){
+  const grid = $('#grid');
+  const list = state.goals.filter(g => filter === 'all' || (filter === 'done') === gStats(g).done);
+  let html = list.map((g, i) => {
+    const s = gStats(g), idx = state.goals.indexOf(g) + 1;
+    const dots = g.missions.map(m => `<i class="${mStats(m).done ? 'on' : ''}"></i>`).join('');
+    return `<button class="box ${s.done ? 'done' : ''}" data-id="${g.id}" style="--c:${g.color};--pat:${PATTERNS[g.pattern % PATTERNS.length]};--i:${i}" aria-label="${esc(g.title)}, ${s.pct}% complete">
+      <div class="lid"><span class="icon">${esc(g.icon)}</span><span class="num">#${String(idx).padStart(2,'0')}</span></div>
+      <h3>${esc(g.title)}</h3>
+      <div class="meta">${s.md}/${s.mt} missions · ${s.d}/${s.t} steps</div>
+      <div class="foot"><div class="ring" style="--p:${s.pct}"><b>${s.pct}%</b></div><div class="dots">${dots}</div></div>
+      ${s.done ? '<span class="stamp">DONE</span>' : ''}
+    </button>`;
+  }).join('');
+  if (state.goals.length < MAX_GOALS && filter !== 'done')
+    html += `<button class="add-box" id="addBox"><div><span>+</span>Add goal</div></button>`;
+  if (!list.length && filter === 'done') html = `<p class="empty">No finished boxes yet. Keep going.</p>`;
+  grid.innerHTML = html;
+  $('#count').textContent = `${state.goals.length} / ${MAX_GOALS} goals`;
+  renderStats();
+}
+
+function renderStats(){
+  let t = 0, d = 0, mt = 0, md = 0, gd = 0;
+  state.goals.forEach(g => { const s = gStats(g); t += s.t; d += s.d; mt += s.mt; md += s.md; if (s.done) gd++; });
+  const pct = t ? Math.round(d / t * 100) : 0;
+  $('#sPct').textContent = pct + '%';
+  $('#sBar').style.width = pct + '%';
+  $('#sGoals').innerHTML = `${gd}<span> / ${state.goals.length}</span>`;
+  $('#sMissions').innerHTML = `${md}<span> / ${mt}</span>`;
+  $('#sSteps').innerHTML = `${d}<span> / ${t}</span>`;
+}
+
+/* ---------- drawer ---------- */
+const goal = () => state.goals.find(g => g.id === openId);
+
+function openGoal(id, focusTitle){
+  openId = id;
+  renderDrawer();
+  $('#drawer').classList.add('open'); $('#scrim').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => {
+    if (focusTitle) { const t = $('#dTitle'); t.focus(); t.select(); }
+    else { const f = $('#drawer .newmission input') ; (f || $('#drawer .close')).focus(); }
+  }, 60);
+}
+function closeDrawer(){
+  const id = openId;
+  openId = null;
+  $('#drawer').classList.remove('open'); $('#scrim').classList.remove('open');
+  document.body.style.overflow = '';
+  renderBoard();
+  const b = document.querySelector(`.box[data-id="${id}"]`); if (b) b.focus();
+}
+
+function renderDrawer(){
+  const g = goal(); if (!g) return;
+  const s = gStats(g);
+  const d = $('#drawer');
+  const pickersOpen = d.querySelector('.pickers.open') ? 'open' : '';
+  d.innerHTML = `
+  <div class="dhead" style="--c:${g.color};--pat:${PATTERNS[g.pattern % PATTERNS.length]}">
+    <div class="row">
+      <span class="icon">${esc(g.icon)}</span>
+      <input class="title" id="dTitle" value="${esc(g.title)}" aria-label="Goal title" maxlength="80">
+      <button class="close" data-act="close" aria-label="Close">✕</button>
+    </div>
+    <div class="sub">
+      <div class="pbar"><i style="width:${s.pct}%"></i></div>
+      <span class="pct">${s.pct}% · ${s.md}/${s.mt} missions</span>
+      <button class="smallbtn" data-act="style">🎨 Style</button>
+    </div>
+    <div class="pickers ${pickersOpen}">
+      <div class="swatches">${COLORS.map(c => `<button class="sw" data-color="${c}" style="background:${c}" aria-label="Color ${c}" aria-pressed="${c === g.color}"></button>`).join('')}
+        <button class="smallbtn" data-act="pattern">Texture ↻</button></div>
+      <div class="icons">${ICONS.map(ic => `<button class="ic" data-icon="${ic}" aria-pressed="${ic === g.icon}">${ic}</button>`).join('')}</div>
+    </div>
+  </div>
+  <div class="dbody">
+    <p class="hint">Missions are the big pieces of this goal. Add steps inside each mission and tick them as you go.</p>
+    ${g.missions.map((m, i) => {
+      const ms = mStats(m);
+      return `<section class="mission ${ms.done ? 'done' : ''}" data-mid="${m.id}">
+        <div class="mhead">
+          <span class="badge">M${i + 1}</span>
+          <input value="${esc(m.title)}" data-edit="mission" aria-label="Mission title" maxlength="100">
+          <span class="mp">${ms.d}/${ms.t}</span>
+          <button class="iconbtn" data-act="up" aria-label="Move mission up" ${i === 0 ? 'disabled' : ''}>↑</button>
+          <button class="iconbtn" data-act="delMission" aria-label="Delete mission">🗑</button>
+        </div>
+        <div class="mbar"><i style="width:${ms.t ? ms.d / ms.t * 100 : 0}%"></i></div>
+        <ul class="steps">${m.steps.map(st => `
+          <li class="step ${st.done ? 'checked' : ''}" data-sid="${st.id}">
+            <input type="checkbox" ${st.done ? 'checked' : ''} aria-label="Done">
+            <input class="txt" value="${esc(st.text)}" data-edit="step" aria-label="Step" maxlength="140">
+            <button class="iconbtn" data-act="delStep" aria-label="Delete step">✕</button>
+          </li>`).join('')}
+        </ul>
+        <form class="adder" data-add="step"><input placeholder="Add a step…" aria-label="New step" maxlength="140"><button>Add</button></form>
+      </section>`;
+    }).join('')}
+    <section class="newmission">
+      <form class="adder" data-add="mission"><input placeholder="+ New mission (e.g. Build portfolio)" aria-label="New mission" maxlength="100"><button>Add</button></form>
+    </section>
+  </div>
+  <div class="dfoot">
+    <button class="btn danger" data-act="delGoal">Delete goal</button>
+    <button class="btn primary" data-act="close">Done</button>
+  </div>`;
+}
+
+function refresh(keepFocusSel){
+  save();
+  const active = document.activeElement;
+  const sel = keepFocusSel || (active && active.closest('form.adder') ? `form.adder[data-add="${active.closest('form.adder').dataset.add}"]` : null);
+  const mid = active && active.closest('[data-mid]') ? active.closest('[data-mid]').dataset.mid : null;
+  renderDrawer(); renderStats();
+  if (sel) {
+    const scope = mid && sel.includes('step') ? document.querySelector(`[data-mid="${mid}"]`) : document;
+    const el = scope && scope.querySelector(sel + ' input'); if (el) el.focus();
+  }
+}
+
+/* ---------- events ---------- */
+$('#grid').addEventListener('click', e => {
+  const b = e.target.closest('.box'); if (b) return openGoal(b.dataset.id);
+  if (e.target.closest('#addBox')) addGoal();
+});
+$('#addGoal').addEventListener('click', addGoal);
+$('#scrim').addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && openId) closeDrawer(); });
+
+function addGoal(){
+  if (state.goals.length >= MAX_GOALS) return toast(`Max ${MAX_GOALS} goals — finish one first!`);
+  const n = state.goals.length;
+  const g = { id: uid(), title: 'New goal', icon: ICONS[(n + 4) % ICONS.length], color: COLORS[n % COLORS.length], pattern: n % PATTERNS.length, missions: [] };
+  state.goals.push(g); save(); renderBoard(); openGoal(g.id, true);
+}
+
+document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+  filter = c.dataset.f;
+  document.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === c));
+  renderBoard();
+}));
+
+const drawer = $('#drawer');
+drawer.addEventListener('click', e => {
+  const g = goal(); if (!g) return;
+  const t = e.target.closest('button'); if (!t) return;
+  const sec = t.closest('[data-mid]');
+  const m = sec && g.missions.find(x => x.id === sec.dataset.mid);
+  if (t.dataset.color) { g.color = t.dataset.color; return refresh(); }
+  if (t.dataset.icon) { g.icon = t.dataset.icon; return refresh(); }
+  switch (t.dataset.act) {
+    case 'close': return closeDrawer();
+    case 'style': drawer.querySelector('.pickers').classList.toggle('open'); return;
+    case 'pattern': g.pattern = (g.pattern + 1) % PATTERNS.length; return refresh();
+    case 'delGoal':
+      if (confirm(`Delete "${g.title}" and all its missions?`)) { state.goals = state.goals.filter(x => x !== g); save(); closeDrawer(); toast('Goal deleted'); }
+      return;
+    case 'delMission':
+      if (!m.steps.length || confirm(`Delete mission "${m.title}"?`)) { g.missions = g.missions.filter(x => x !== m); refresh(); }
+      return;
+    case 'up': { const i = g.missions.indexOf(m); if (i > 0) { g.missions.splice(i, 1); g.missions.splice(i - 1, 0, m); refresh(); } return; }
+    case 'delStep': { const sid = t.closest('[data-sid]').dataset.sid; m.steps = m.steps.filter(s => s.id !== sid); return refresh(); }
+  }
+});
+
+drawer.addEventListener('change', e => {
+  const g = goal(); if (!g) return;
+  if (e.target.type === 'checkbox') {
+    const sec = e.target.closest('[data-mid]'), m = g.missions.find(x => x.id === sec.dataset.mid);
+    const st = m.steps.find(s => s.id === e.target.closest('[data-sid]').dataset.sid);
+    const wasG = gStats(g).done, wasM = mStats(m).done;
+    st.done = e.target.checked;
+    refresh();
+    const f = drawer.querySelector(`[data-sid="${st.id}"] input[type=checkbox]`); if (f) f.focus();
+    if (!wasG && gStats(g).done) { celebrate(120); toast(`🏆 Goal complete: ${g.title}`); }
+    else if (!wasM && mStats(m).done) { celebrate(50); toast(`✅ Mission complete: ${m.title}`); }
+  }
+});
+
+drawer.addEventListener('input', e => {
+  const g = goal(); if (!g) return;
+  const t = e.target;
+  if (t.id === 'dTitle') { g.title = t.value.trim() || 'Untitled goal'; save(); renderStats(); return; }
+  const sec = t.closest('[data-mid]'); if (!sec) return;
+  const m = g.missions.find(x => x.id === sec.dataset.mid);
+  if (t.dataset.edit === 'mission') { m.title = t.value; save(); }
+  if (t.dataset.edit === 'step') { m.steps.find(s => s.id === t.closest('[data-sid]').dataset.sid).text = t.value; save(); }
+});
+drawer.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.target.id === 'dTitle' || e.target.dataset.edit)) e.target.blur(); });
+
+drawer.addEventListener('submit', e => {
+  e.preventDefault();
+  const g = goal(); const f = e.target; const inp = f.querySelector('input');
+  const v = inp.value.trim(); if (!v) return;
+  if (f.dataset.add === 'mission') {
+    g.missions.push({ id: uid(), title: v, steps: [] });
+    refresh();
+    const secs = drawer.querySelectorAll('.mission'); const last = secs[secs.length - 1];
+    if (last) { last.scrollIntoView({ block: 'center', behavior: 'smooth' }); last.querySelector('form.adder input').focus(); }
+  } else {
+    const m = g.missions.find(x => x.id === f.closest('[data-mid]').dataset.mid);
+    m.steps.push({ id: uid(), text: v, done: false });
+    refresh('form.adder[data-add="step"]');
+  }
+});
+
+/* ---------- export / import / theme ---------- */
+$('#exportBtn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = `goals-2026-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  toast('Backup downloaded');
+});
+$('#importBtn').addEventListener('click', () => $('#importFile').click());
+$('#importFile').addEventListener('change', async e => {
+  const file = e.target.files[0]; if (!file) return;
+  try {
+    const data = JSON.parse(await file.text());
+    if (!data || !Array.isArray(data.goals)) throw 0;
+    data.goals = data.goals.slice(0, MAX_GOALS);
+    state = data; save(); renderBoard(); toast('Goals imported');
+  } catch (err) { toast('That file is not a goals backup'); }
+  e.target.value = '';
+});
+const THEME_KEY = 'goals2026.theme';
+function applyTheme(t){ if (t) document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme; }
+try { applyTheme(localStorage.getItem(THEME_KEY)); } catch (e) {}
+$('#themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  applyTheme(next); try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+});
+
+/* ---------- fx ---------- */
+let toastT;
+function toast(msg){ const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2400); }
+function celebrate(n){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  for (let i = 0; i < n; i++) {
+    const c = document.createElement('i'); c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = COLORS[i % COLORS.length];
+    c.style.setProperty('--dx', (Math.random() * 200 - 100) + 'px');
+    c.style.setProperty('--r', (Math.random() * 900 - 450) + 'deg');
+    c.style.animationDuration = (1.6 + Math.random() * 1.6) + 's';
+    c.style.animationDelay = Math.random() * .3 + 's';
+    document.body.appendChild(c); setTimeout(() => c.remove(), 3600);
+  }
+}
+
+renderBoard();
+})();
+</script>
+</body>
+</html>
