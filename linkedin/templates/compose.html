@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit post' if name else 'Compose' }}{% endblock %}
+{% block heading %}{{ 'Edit post' if name else 'New post' }}{% endblock %}
+{% block sub %}<p>Write on the left, see exactly how it looks on LinkedIn on the right.</p>{% endblock %}
+{% block content %}
+<form method="post" enctype="multipart/form-data" id="f">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<div class="grid g2">
+  <div class="card">
+    <label for="body" style="margin-top:0" class="row between"><span>Post text</span><span class="count small" id="count"></span></label>
+    <textarea name="body" id="body" dir="auto" placeholder="Start with a hook: the first 2 lines are all people see before “…see more”.">{{ body }}</textarea>
+    <div class="hint">Tip: short paragraphs, an emoji per point, 3–6 hashtags on the last line.</div>
+    <label for="link">Link <span class="muted" style="font-weight:400">(optional, added at the end, before the hashtags)</span></label>
+    <input name="link" id="link" value="{{ meta.comment }}" placeholder="https://github.com/Thanoon12k/…">
+    <label>Image <span class="muted" style="font-weight:400">(JPG, PNG or GIF · 1200×627 looks best)</span></label>
+    <div class="drop" id="drop">
+      {% if image_url %}<img src="{{ image_url }}" id="dimg" alt="">{% else %}<img id="dimg" alt="" hidden>{% endif %}
+      <span id="dtxt">{{ 'Click or drop to replace the image' if image_url else 'Click or drop an image here' }}</span>
+      <input type="file" name="image" id="image" accept=".jpg,.jpeg,.png,.gif" hidden>
+    </div>
+    {% if image_url %}<label class="row" style="font-weight:500"><input type="checkbox" name="remove_image" id="rm" style="width:auto"> Remove image</label>{% endif %}
+    <label for="title">Title <span class="muted" style="font-weight:400">(only for you, in the queue)</span></label>
+    <input name="title" id="title" value="{{ meta.title }}" placeholder="Taken from the first line if empty">
+    {% if not name %}
+    <label>Add to</label>
+    <div class="chips"><label><input type="radio" name="position" value="end" checked><span>End of queue</span></label><label><input type="radio" name="position" value="top"><span>Top of queue (next)</span></label></div>
+    {% endif %}
+    <div class="row" style="margin-top:22px">
+      <button class="brand" name="action" value="save">{{ 'Save changes' if name else 'Add to queue' }}</button>
+      <button class="li" name="action" value="publish" onclick="return confirm('Publish this post to LinkedIn now?')">Publish now</button>
+      <a class="btn ghost" href="{{ url_for('posts') }}">Cancel</a>
+      {% if name %}<button class="danger" name="action" value="delete" style="margin-left:auto" onclick="return confirm('Delete this post?')">Delete</button>{% endif %}
+    </div>
+  </div>
+  <div><div class="sticky">
+    <div class="muted small" style="margin:0 0 8px;font-weight:600">LIVE PREVIEW</div>
+    <div class="lipost" id="pv" data-body="" data-name="{{ cfg.person_name or 'Your name' }}"
+         data-headline="{{ cfg.headline or 'Full-Stack Developer · Flutter & Django' }}" data-avatar="{{ cfg.picture or '' }}"></div>
+  </div></div>
+</div>
+</form>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='preview.js') }}?v=3"></script>
+<script>
+const $ = id => document.getElementById(id), pv = $('pv'), body = $('body'), link = $('link'), file = $('image'), drop = $('drop'), dimg = $('dimg');
+let img = dimg && !dimg.hidden ? dimg.src : '';
+function update() {
+  const n = body.value.length + (link.value.trim() ? link.value.trim().length + 4 : 0);
+  $('count').textContent = `${n} / 3000`; $('count').classList.toggle('over', n > 3000);
+  pv.dataset.body = body.value; pv.dataset.link = link.value;
+  pv.dataset.img = ($('rm') && $('rm').checked && !file.files.length) ? '' : img;
+  renderLiPost(pv);
+}
+function setFile(f) {
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = e => { img = e.target.result; dimg.src = img; dimg.hidden = false; $('dtxt').textContent = f.name; update(); };
+  r.readAsDataURL(f);
+}
+drop.onclick = () => file.click();
+file.onchange = () => setFile(file.files[0]);
+drop.ondragover = e => { e.preventDefault(); drop.classList.add('over'); };
+drop.ondragleave = () => drop.classList.remove('over');
+drop.ondrop = e => { e.preventDefault(); drop.classList.remove('over'); file.files = e.dataTransfer.files; setFile(file.files[0]); };
+[body, link].forEach(x => x.addEventListener('input', update));
+if ($('rm')) $('rm').onchange = update;
+update();
+</script>
+{% endblock %}

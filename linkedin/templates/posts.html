@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Posts{% endblock %}
+{% block heading %}Posts{% endblock %}
+{% block sub %}<p>The queue publishes top to bottom, one post per posting day.</p>{% endblock %}
+{% block content %}
+<div class="row between">
+  <div class="seg"><a href="{{ url_for('posts') }}" class="{{ 'on' if tab != 'published' }}">Queue · {{ queue|length }}</a><a href="{{ url_for('posts', tab='published') }}" class="{{ 'on' if tab == 'published' }}">Published · {{ published|length }}</a></div>
+  <a class="btn brand" href="{{ url_for('compose') }}" style="margin-bottom:16px">+ New post</a>
+</div>
+<div class="card">
+{% if tab != 'published' %}
+  {% if queue %}
+  <ul class="plist">
+    {% for p in queue %}
+    <li>
+      <span class="n">{{ loop.index }}</span>
+      {% if p.meta.image %}<img class="thumb" src="{{ url_for('image', name=p.meta.image.split('/')[-1]) }}" alt="" loading="lazy">{% else %}<div class="thumb">text only</div>{% endif %}
+      <div style="min-width:0">
+        <div class="t"><a href="{{ url_for('compose', name=p.name) }}">{{ p.meta.title }}</a>{% if loop.first %}<span class="badge next">next</span>{% endif %}</div>
+        <div class="d">{% if p.slot %}📅 {{ p.slot.strftime('%a %-d %b') }} · {% endif %}{{ p.body.split('\n')[0] }}</div>
+      </div>
+      <div class="acts">
+        <form method="post" action="{{ url_for('move') }}" class="row" style="gap:6px">
+          <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="name" value="{{ p.name }}">
+          <button class="icon" name="dir" value="top" title="Move to top" {{ 'disabled' if loop.first }}>⤒</button>
+          <button class="icon" name="dir" value="up" title="Move up" {{ 'disabled' if loop.first }}>↑</button>
+          <button class="icon" name="dir" value="down" title="Move down" {{ 'disabled' if loop.last }}>↓</button>
+        </form>
+        <a class="btn ghost sm" href="{{ url_for('compose', name=p.name) }}">Edit</a>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}<div class="empty"><p>The queue is empty.</p><a class="btn brand" href="{{ url_for('compose') }}">Write a post</a></div>{% endif %}
+{% else %}
+  {% if published %}
+  <ul class="plist">
+    {% for p in published %}
+    <li style="grid-template-columns:72px minmax(0,1fr) auto">
+      {% if p.meta.image %}<img class="thumb" src="{{ url_for('image', name=p.meta.image.split('/')[-1]) }}" alt="" loading="lazy">{% else %}<div class="thumb">text only</div>{% endif %}
+      <div style="min-width:0"><div class="t">{{ p.meta.title }}</div><div class="d">✅ {{ p.meta.published }} · {{ p.body.split('\n')[0] }}</div></div>
+      <div class="acts"><a class="btn ghost sm" href="https://www.linkedin.com/feed/update/{{ p.meta.post_urn }}/" target="_blank" rel="noopener">View on LinkedIn ↗</a></div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}<div class="empty">Nothing published yet.</div>{% endif %}
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Setup{% endblock %}
+{% block heading %}{{ 'Welcome 👋' if first_run else 'Setup' }}{% endblock %}
+{% block sub %}<p>{{ 'Two minutes and you are posting on autopilot.' if first_run else 'Connection, schedule and security.' }}</p>{% endblock %}
+{% block content %}
+{% set has_app = cfg.client_id and cfg.client_secret %}
+{% set connected = days_left is not none and days_left >= 0 %}
+
+{% if first_run %}
+<form method="post" class="card stack"><input type="hidden" name="csrf" value="{{ csrf }}">
+  {% if cfg.setup_code %}<div><label style="margin-top:0">Setup code</label><input name="setup_code" autocomplete="off" inputmode="numeric" placeholder="6 digits from Claude"></div>{% endif %}
+  <div><label>Choose a dashboard password</label><input type="password" name="password" autocomplete="new-password" placeholder="At least 8 characters"></div>
+  <div><label>LinkedIn Client ID</label><input name="client_id" autocomplete="off"></div>
+  <div><label>LinkedIn Client Secret</label><input type="password" name="client_secret" autocomplete="off"></div>
+  <p class="hint">In your LinkedIn developer app → Auth → Authorized redirect URLs, add: <b>{{ redirect_uri }}</b></p>
+  <button class="brand">Save and continue</button>
+</form>
+{% else %}
+
+<div class="card step">
+  <div class="no {{ 'done' if has_app }}">{{ '✓' if has_app else '1' }}</div>
+  <div>
+    <h2>LinkedIn app</h2>
+    <p class="muted small">From <a href="https://www.linkedin.com/developers/apps" target="_blank" rel="noopener">linkedin.com/developers</a> → your app → Auth.</p>
+    <label>Authorized redirect URL (add this in the app)</label>
+    <code class="copy"><span id="ru">{{ redirect_uri }}</span><button type="button" class="ghost sm" onclick="navigator.clipboard.writeText(document.getElementById('ru').innerText);this.textContent='Copied ✓'">Copy</button></code>
+    <form method="post"><input type="hidden" name="csrf" value="{{ csrf }}">
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 14px">
+        <div><label>Client ID</label><input name="client_id" autocomplete="off" placeholder="{{ 'Saved ✓ (leave empty to keep)' if cfg.client_id else '' }}"></div>
+        <div><label>Client Secret</label><input type="password" name="client_secret" autocomplete="off" placeholder="{{ 'Saved ✓ (leave empty to keep)' if cfg.client_secret else '' }}"></div>
+      </div>
+      <button class="ghost sm" style="margin-top:12px">Save app keys</button>
+    </form>
+  </div>
+</div>
+
+<div class="card step">
+  <div class="no {{ 'done' if connected }}">{{ '✓' if connected else '2' }}</div>
+  <div class="row between">
+    <div>
+      <h2>Connect your profile</h2>
+      {% if connected %}<p class="muted small" style="margin:0">Connected as <b>{{ cfg.person_name }}</b>. Login valid for {{ days_left }} more days; LinkedIn requires reconnecting every 60 days.</p>
+      {% else %}<p class="muted small" style="margin:0">LinkedIn asks you to approve, then sends you back here.</p>{% endif %}
+    </div>
+    <form method="post" action="{{ url_for('connect') }}"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="li" {{ 'disabled' if not has_app }}>{{ 'Reconnect' if cfg.access_token else 'Connect LinkedIn' }}</button></form>
+  </div>
+</div>
+
+<div class="card step" id="schedule">
+  <div class="no {{ 'done' if cfg.post_days }}">{{ '✓' if cfg.post_days else '3' }}</div>
+  <div>
+    <h2>Schedule</h2>
+    <p class="muted small">One post from the top of the queue on each day you pick. 2–3 days a week works best on LinkedIn.</p>
+    <form method="post"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="days_form" value="1">
+      <label>Posting days</label>
+      <div class="chips">{% for d in weekdays %}<label><input type="checkbox" name="days" value="{{ d }}" {{ 'checked' if d in cfg.get('post_days', ['Tue','Thu']) }}><span>{{ d }}</span></label>{% endfor %}</div>
+      <label>Time (Iraq)</label>
+      <select name="hour" style="max-width:200px">{% for h in range(6, 23) %}<option value="{{ h }}" {{ 'selected' if h == cfg.get('post_hour_local', 9) }}>{{ '%02d'|format(h) }}:00</option>{% endfor %}</select>
+      <div class="hint">Tuesday–Thursday mornings get the most reach for tech posts.</div>
+      <button class="ghost sm" style="margin-top:12px">Save schedule</button>
+    </form>
+  </div>
+</div>
+
+<div class="card step">
+  <div class="no">4</div>
+  <div>
+    <h2>Preview &amp; security</h2>
+    <form method="post"><input type="hidden" name="csrf" value="{{ csrf }}">
+      <label>Headline shown in post previews</label>
+      <input name="headline" value="{{ cfg.headline or '' }}" placeholder="{{ default_headline }}">
+      <label>New dashboard password <span class="muted" style="font-weight:400">(leave empty to keep)</span></label>
+      <input type="password" name="password" autocomplete="new-password">
+      <details style="margin-top:14px"><summary class="muted small">Advanced</summary>
+        <label>LinkedIn API version (YYYYMM, empty = automatic)</label><input name="api_version" placeholder="{{ cfg.api_version or 'automatic' }}">
+      </details>
+      <button class="ghost sm" style="margin-top:12px">Save</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

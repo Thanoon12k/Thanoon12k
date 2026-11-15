@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Profile makeover{% endblock %}
+{% block heading %}Profile makeover ✨{% endblock %}
+{% block sub %}<p>LinkedIn doesn't let apps edit profiles. Open <a href="https://www.linkedin.com/in/me/" target="_blank" rel="noopener">your profile</a> in another tab and go step by step.</p>{% endblock %}
+{% block content %}
+<div class="card row between"><b id="progress"></b><div style="flex:1;max-width:320px;height:10px;background:var(--surface2);border-radius:99px;overflow:hidden;border:1px solid var(--line)"><div id="bar" style="height:100%;width:0;background:var(--teal);transition:width .3s"></div></div></div>
+{% for s in steps %}{% set si = loop.index %}
+<div class="card kit" id="s{{ si }}">
+  <div class="row between">
+    <h2>{{ si }}. {{ s.title }}</h2>
+    <label class="row" style="margin:0;font-weight:500"><input type="checkbox" class="done" data-k="{{ si }}" style="width:auto"> Done</label>
+  </div>
+  <p class="muted small" style="margin:6px 0">📍 {{ s.where }}</p>
+  {% if s.note %}<p class="small" style="margin:6px 0 0">💡 {{ s.note }}</p>{% endif %}
+  {% if s.banner %}<img src="{{ url_for('image', name='linkedin-banner.png') }}" alt="LinkedIn banner" style="width:100%;border-radius:12px;margin-top:12px;border:1px solid var(--line)">
+  <a class="btn brand sm" style="margin-top:10px" href="{{ url_for('image', name='linkedin-banner.png') }}" download="thanoon-linkedin-banner.png">Download banner</a>{% endif %}
+  {% for label, text in s.blocks %}
+  <div style="margin-top:14px">
+    <div class="row between"><b class="small">{{ label }}</b><button type="button" class="ghost sm copy" data-t="t{{ si }}-{{ loop.index }}">Copy</button></div>
+    <pre id="t{{ si }}-{{ loop.index }}" dir="auto" style="margin-top:6px;background:var(--surface2);padding:12px;border-radius:12px;border:1px solid var(--line)">{{ text }}</pre>
+  </div>
+  {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}
+{% block scripts %}
+<script>
+document.querySelectorAll('.copy').forEach(b => b.onclick = async () => {
+  const el = document.getElementById(b.dataset.t);
+  try { await navigator.clipboard.writeText(el.innerText); }
+  catch (e) { const r = document.createRange(); r.selectNodeContents(el); getSelection().removeAllRanges(); getSelection().addRange(r); document.execCommand('copy'); }
+  b.textContent = 'Copied ✓'; setTimeout(() => b.textContent = 'Copy', 1500);
+});
+const boxes = [...document.querySelectorAll('.done')]; let st = {};
+try { st = JSON.parse(localStorage.getItem('kit') || '{}'); } catch (e) {}
+function upd() {
+  const n = boxes.filter(x => x.checked).length;
+  document.getElementById('progress').textContent = `${n} of ${boxes.length} steps done`;
+  document.getElementById('bar').style.width = `${100 * n / boxes.length}%`;
+  boxes.forEach(x => x.closest('.kit').style.opacity = x.checked ? .55 : 1);
+}
+boxes.forEach(x => { x.checked = !!st[x.dataset.k]; x.onchange = () => { st[x.dataset.k] = x.checked; try { localStorage.setItem('kit', JSON.stringify(st)); } catch (e) {} upd(); }; });
+upd();
+</script>
+{% endblock %}
