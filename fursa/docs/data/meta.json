@@ -1,0 +1,120 @@
+{
+ "updated": "2026-10-13T04:48:52Z",
+ "repo": "Thanoon12k/fursa-agents",
+ "site_url": "https://claude.ai/artifact/SVapXSt8B5HC3Ua2CMGL8M",
+ "mode": "free",
+ "llm_note": "",
+ "models": {
+  "worker": "claude-haiku-5-5",
+  "manager": "claude-opus-5-5"
+ },
+ "usage_month": {
+  "usd": 0.0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "calls": 0,
+  "searches": 0
+ },
+ "budget_usd": 5.0,
+ "counts": {
+  "approved": 6,
+  "rejected": 11,
+  "drafted": 2,
+  "matched": 4,
+  "screened": 9
+ },
+ "user_counts": {},
+ "sources": {
+  "remotive": {
+   "label": "Remotive",
+   "state": "ok",
+   "fetched": 15,
+   "new": 15,
+   "kept": 0,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "remoteok": {
+   "label": "Remote OK",
+   "state": "ok",
+   "fetched": 99,
+   "new": 99,
+   "kept": 0,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "himalayas": {
+   "label": "Himalayas",
+   "state": "ok",
+   "fetched": 59,
+   "new": 55,
+   "kept": 1,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "jobicy": {
+   "label": "Jobicy",
+   "state": "ok",
+   "fetched": 50,
+   "new": 50,
+   "kept": 1,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "weworkremotely": {
+   "label": "We Work Remotely",
+   "state": "ok",
+   "fetched": 60,
+   "new": 52,
+   "kept": 0,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "hackernews": {
+   "label": "Hacker News: Who is hiring",
+   "state": "ok",
+   "fetched": 5,
+   "new": 5,
+   "kept": 1,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "freelancer": {
+   "label": "Freelancer.com",
+   "state": "ok",
+   "fetched": 58,
+   "new": 53,
+   "kept": 8,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "mostaql": {
+   "label": "مستقل Mostaql",
+   "state": "blocked: HTTP 403 (the site refuses requests from GitHub's servers)",
+   "at": "2026-10-13T04:48:52Z"
+  },
+  "khamsat": {
+   "label": "خمسات Khamsat",
+   "state": "blocked: HTTP 403 (the site refuses requests from GitHub's servers)",
+   "at": "2026-10-13T04:48:52Z"
+  },
+  "telegram": {
+   "label": "Telegram",
+   "state": "ok",
+   "fetched": 251,
+   "new": 247,
+   "kept": 5,
+   "at": "2026-10-13T02:06:59Z"
+  },
+  "github_bounties": {
+   "label": "GitHub bounties",
+   "state": "ok",
+   "fetched": 30,
+   "new": 23,
+   "kept": 0,
+   "at": "2026-10-13T02:06:59Z"
+  }
+ },
+ "summary_ar": "شغلة Django صغيرة بـ Freelancer؛ ورفضت مشروع تطبيق تواصل (حجمه أكبر بهواية من ميزانيته) وإعلان مبيعات بالعمولة.",
+ "notice": "",
+ "person": {
+  "name": "Thanoon Younis Mohammed",
+  "github": "Thanoon12k",
+  "website": "https://make1it.pythonanywhere.com",
+  "email": "engthanoon1@gmail.com",
+  "phone": "+964 770 279 0915"
+ }
+}

@@ -1,0 +1,322 @@
+import json
+
+import pytest
+
+from fursa import notify, pipeline, portfolio, sources, status
+from fursa.sources import websearch
+from fursa.store import Store
+
+from .conftest import PORTFOLIO, FakeClaude, fake_source, posting
+
+JOBS = [
+    posting(url="https://jobs.example.com/1", title="Senior Flutter Developer", company="Acme",
+            text="Flutter, Dart, Firebase, REST APIs. Remote worldwide. Send CV to jobs@acme.example or WhatsApp 07700000000"),
+    posting(url="https://jobs.example.com/2", title="Django Backend Developer", company="Beta",
+            text="Python, Django, Django REST framework, PostgreSQL. Remote (EMEA).", location="EMEA"),
+    posting(url="https://jobs.example.com/3", title="PHP Developer", company="Gamma", text="PHP, Laravel, WordPress"),
+    posting(url="https://jobs.example.com/4", title="Flutter Developer", company="Delta", location="USA Only"),
+]
+
+
+@pytest.fixture
+def wired(monkeypatch):
+    sent = []
+    monkeypatch.setattr(sources, "registry", lambda: [fake_source(JOBS)])
+    monkeypatch.setattr(portfolio, "refresh", lambda settings, store, llm=None, repos=None: setattr(store, "portfolio", [dict(r) for r in PORTFOLIO]) or 0)
+    monkeypatch.setattr(notify, "send", lambda settings, text, buttons=None: sent.append(text) or {"message_id": len(sent)})
+    return sent
+
+
+def load(settings):
+    return Store(settings).load()
+
+
+def test_free_mode_runs_without_any_ai(settings, wired):
+    report = pipeline.run(settings)
+    assert report["mode"] == "free" and report["usd"] == 0
+    st = load(settings)
+    by_title = {o["title"]: o for o in st.opps.values()}
+    assert "PHP Developer" not in by_title and "Flutter Developer" not in by_title  # dropped for free by the rules
+    assert by_title["Senior Flutter Developer"]["contacts"] == {"whatsapp": "9647700000000", "email": "jobs@acme.example"}
+    assert by_title["Senior Flutter Developer"]["status"] in ("approved", "drafted", "rejected", "matched")
+    draft = by_title["Senior Flutter Developer"].get("draft") or {}
+    assert "{NAME}" not in json.dumps(draft) and "Thanoon Younis Mohammed" in draft.get("message", "")
+    meta = json.loads((settings.data_dir / "meta.json").read_text())
+    assert meta["mode"] == "free" and meta["usage_month"]["usd"] == 0
+    runs = json.loads((settings.data_dir / "runs.json").read_text())
+    assert len(runs) == 1
+
+
+def test_ai_mode_full_team(settings, wired):
+    settings.anthropic_key = "test-key"
+    claude = FakeClaude()
+    report = pipeline.run(settings, llm_client=claude)
+    assert report["mode"] == "ai" and report["scouted_ai"] == 2 and report["approved"] == 2
+    models = [c["model"] for c in claude.calls]
+    assert models.count("claude-opus-5-5") == 2  # one review + weekly ideas
+    assert all(m == "claude-haiku-5-5" for m in models if m != "claude-opus-5-5")
+
+    st = load(settings)
+    approved = sorted((o for o in st.opps.values() if o["status"] == "approved"), key=lambda o: o["manager"]["rank"])
+    first = approved[0]
+    assert first["scout"]["contact"] is None  # invented contact removed
+    assert [r["name"] for r in first["match"]["repos"]] == ["Pediatric-Clinic-manager", "My-Work"] or \
+        all(r["name"] != "ghost-repo" for r in first["match"]["repos"])
+    assert first["draft"]["message"].startswith("Fixed by manager, Thanoon Younis Mohammed.") and first["draft"]["edited_by_manager"]
+    assert "https://make1it.pythonanywhere.com" in first["draft"]["message"]  # the website rides in every message
+    assert "Thanoon Younis Mohammed" in approved[1]["draft"]["message"]
+    assert len(wired) == 2 and "1/2" in wired[0] and "<blockquote expandable>" in wired[0]  # one message per pick
+    assert st.ideas["ideas"] and st.usage()["usd"] > 0
+
+    # second run: nothing new -> no message, nothing re-announced, no repeated AI work
+    claude.calls.clear()
+    pipeline.run(settings, llm_client=claude)
+    assert len(wired) == 2
+    assert not any(c["model"] == "claude-haiku-5-5" for c in claude.calls)
+    assert len(load(settings).state["telegram"]["messages"]) == 2  # message id -> posting, for replies
+
+
+def test_manager_can_reject_everything_and_no_empty_update_is_sent(settings, wired):
+    settings.anthropic_key = "test-key"
+    pipeline.run(settings, llm_client=FakeClaude(approve=False))
+    st = load(settings)
+    assert not st.items("approved") and wired == []
+
+
+def test_budget_cap_switches_to_free_mode(settings, wired):
+    settings.anthropic_key = "test-key"
+    settings.profile["agents"]["monthly_budget_usd"] = 0.0002  # one Haiku call costs 0.0002
+    claude = FakeClaude()
+    pipeline.run(settings, llm_client=claude)
+    assert len(claude.calls) == 1
+    meta = json.loads((settings.data_dir / "meta.json").read_text())
+    assert "budget" in meta["llm_note"]
+
+
+def test_websearch_source(settings):
+    from types import SimpleNamespace
+
+    from fursa.llm import LLM
+
+    settings.anthropic_key = "test-key"
+    st = load(settings)
+    ctx = SimpleNamespace(settings=settings, store=st, llm=LLM(settings, st, client=FakeClaude()))
+    assert websearch.available(ctx) == (True, "")
+    recs = websearch.fetch(ctx)
+    assert len(recs) == 1 and recs[0]["company"] == "Zain Iraq" and recs[0]["extra"]["verified"] == "search result only"
+    assert st.usage()["searches"] == 4 and st.state["websearch_turn"] == 1
+
+
+def test_status_titles_and_apply(settings):
+    assert status.parse("[fursa] a1b2c3d4e5f6 applied") == ("a1b2c3d4e5f6", "applied")
+    assert status.parse("[FURSA] A1B2C3D4E5F6 Interview please") == ("a1b2c3d4e5f6", "interview")
+    assert status.parse("[fursa] a1b2 applied") is None and status.parse("hello") is None
+    st = load(settings)
+    rec = posting()
+    st.add(rec)
+    assert status.apply(st, rec["id"], "applied", "sent on Monday")
+    assert st.opps[rec["id"]]["user_status"] == "applied" and not status.apply(st, "000000000000", "applied")
+
+
+def test_pick_message_is_safe_html_with_buttons(settings):
+    rec = posting(title="Flutter <script> dev & co")
+    rec.update(id="abc123abc123", elig="yes", match={"repos": [{"name": "moalidaty"}]}, manager={"note_ar": "زين"},
+               draft={"message": "Hello <b>world</b>", "subject": None})
+    text, buttons = notify.pick_message(settings, rec, 1, 2, "ملخص")
+    assert "&lt;script&gt;" in text and "<script>" not in text and "Hello &lt;b&gt;world" in text
+    assert text.startswith("🗂 ملخص") and "1/2" in text and len(text) < 4096
+    assert buttons[-1][1]["url"] == "https://claude.ai/artifact/SVapXSt8B5HC3Ua2CMGL8M#abc123abc123"  # links row comes last
+
+
+def test_telegram_replies_update_the_memory(settings, monkeypatch):
+    settings.telegram_token, settings.telegram_chat = "t", "42"
+    st = load(settings)
+    a, b = posting(url="https://x.example/a"), posting(url="https://x.example/b")
+    st.add(a), st.add(b)
+    st.state["telegram"] = {"offset": 10, "messages": {"500": a["id"]}}
+    calls = []
+
+    def fake_call(settings, method, payload):
+        calls.append((method, payload))
+        return [
+            {"update_id": 11, "message": {"chat": {"id": 42}, "text": "قدّمت", "reply_to_message": {"message_id": 500}}},
+            {"update_id": 12, "message": {"chat": {"id": 42}, "text": f"/interview {b['id']}"}},
+            {"update_id": 13, "message": {"chat": {"id": 99}, "text": f"/ignore {b['id']}"}},  # a stranger: ignored
+            {"update_id": 14, "message": {"chat": {"id": 42}, "text": "شكراً"}},
+        ]
+
+    monkeypatch.setattr(notify, "_call", fake_call)
+    applied = notify.poll(settings, st)
+    assert [(r["id"], s) for r, s in applied] == [(a["id"], "applied"), (b["id"], "interview")]
+    assert st.opps[b["id"]]["user_status"] == "interview" and st.state["telegram"]["offset"] == 14
+    assert calls[0][1]["offset"] == 11
+    assert notify.reply_status("ما تهمني") == "ignored" and notify.reply_status("مقابلة باچر") == "interview"
+    assert notify.reply_status("hello") is None
+    assert notify.reply_status("I can represent the team") is None  # "sent" only as a whole word
+    assert notify.reply_status("وقدمت اليوم") == "applied"
+    assert notify.reply_status("Hello team,\n" + "I applied my skills to many apps. " * 10) is None  # a shared draft
+
+
+def test_store_prune_and_roundtrip(settings):
+    st = load(settings)
+    keep = posting(url="https://x.example/keep")
+    gone = posting(url="https://x.example/gone")
+    st.add(keep), st.add(gone)
+    st.set_status(gone, "rejected")
+    gone["updated"] = "2026-09-01T00:00:00Z"
+    assert st.prune() == 1 and st.known(gone["id"])  # forgotten, but never re-processed
+    st.save(meta={"ok": True})
+    again = load(settings)
+    assert keep["id"] in again.opps and gone["id"] in again.seen
+
+
+def test_picks_found_before_telegram_was_set_up_go_out_once_it_is(settings, wired, monkeypatch):
+    settings.anthropic_key = "test-key"
+    claude = FakeClaude()
+    monkeypatch.setattr(notify, "send", lambda settings, text, buttons=None: None)  # no bot secrets yet
+    pipeline.run(settings, llm_client=claude)
+    approved = load(settings).items("approved")
+    assert len(approved) == 2 and not any(r.get("notified_at") for r in approved)
+
+    sent = []
+    monkeypatch.setattr(notify, "send", lambda settings, text, buttons=None: sent.append(text) or {"message_id": 100 + len(sent)})
+    pipeline.run(settings, llm_client=claude)  # the secrets were added
+    st = load(settings)
+    assert len(sent) == 2 and all(r.get("notified_at") for r in st.items("approved"))
+    pipeline.run(settings, llm_client=claude)
+    assert len(sent) == 2  # never twice
+
+
+def test_one_failed_telegram_message_does_not_block_the_rest(settings, monkeypatch):
+    from fursa import net
+
+    st = load(settings)
+    first, second = posting(url="https://x.example/a"), posting(url="https://x.example/b")
+    calls = []
+
+    def flaky(settings, text, buttons=None):
+        calls.append(text)
+        if len(calls) == 1:
+            raise net.SourceError("Telegram sendMessage failed: Bad Request")
+        return {"message_id": 7}
+
+    monkeypatch.setattr(notify, "send", flaky)
+    sent, errors = notify.announce(settings, st, [first, second])
+    assert sent == 1 and len(errors) == 1 and first["id"] in errors[0]
+    assert first["notify_tries"] == 1 and not first.get("notified_at") and second["notified_at"]
+    assert st.state["telegram"]["messages"] == {"7": second["id"]}
+
+
+def test_rules_review_keeps_one_pick_per_company(settings):
+    from types import SimpleNamespace
+
+    from fursa import manager
+
+    st = load(settings)
+    recs = []
+    for city, fit in (("Erbil", 90), ("Baghdad", 88), ("Remote", 80)):
+        rec = posting(url=f"https://x.example/{city}", title=f"Senior Flutter Developer - {city}",
+                      company="Khana Jobs" if city != "Remote" else "Other Co")
+        rec.update(elig="yes", score=40, match={"fit": fit, "repos": []}, draft={"message": "hi"})
+        st.add(rec)
+        st.set_status(rec, "drafted")
+        recs.append(rec)
+    approved = manager.review(SimpleNamespace(settings=settings, store=st, llm=None), recs)
+    assert [r["title"] for r in approved] == ["Senior Flutter Developer - Erbil", "Senior Flutter Developer - Remote"]
+    assert st.opps[recs[1]["id"]]["status"] == "rejected" and "same company" in st.opps[recs[1]["id"]]["reject_reason"]
+
+
+def test_a_site_that_refuses_github_servers_is_marked_blocked(settings, monkeypatch):
+    import requests
+
+    def refused(ctx):
+        response = requests.Response()
+        response.status_code = 403
+        raise requests.HTTPError("403 Forbidden", response=response)
+
+    from types import SimpleNamespace
+
+    blocked = SimpleNamespace(NAME="blocked_site", LABEL="Blocked board", EVERY_HOURS=1, fetch=refused)
+    monkeypatch.setattr(sources, "registry", lambda: [blocked])
+    monkeypatch.setattr(portfolio, "refresh", lambda settings, store, llm=None, repos=None: 0)
+    report = pipeline.run(settings, collect_only=True)
+    assert report["sources"]["blocked_site"]["state"].startswith("blocked: HTTP 403")
+
+
+def test_start_command_gets_one_how_to_reply(settings, monkeypatch):
+    settings.telegram_token, settings.telegram_chat = "t", "42"
+    st = load(settings)
+    sent = []
+
+    def fake_call(settings, method, payload):
+        if method == "sendMessage":
+            sent.append(payload["text"])
+            return {"message_id": 1}
+        return [{"update_id": 1, "message": {"chat": {"id": 42}, "text": "/start"}},
+                {"update_id": 2, "message": {"chat": {"id": 42}, "text": "/start"}}]
+
+    monkeypatch.setattr(notify, "_call", fake_call)
+    assert notify.poll(settings, st) == [] and st.state["telegram"]["offset"] == 2
+    assert len(sent) == 1 and "قدمت" in sent[0] and "https://claude.ai/artifact/SVapXSt8B5HC3Ua2CMGL8M" in sent[0]
+
+
+def test_platform_proposals_carry_no_contact_details(settings):
+    from fursa import writer
+
+    person = settings.person
+    template = writer.TEMPLATES["en"][1].format(title="Flutter app", team="", repos="- app: https://github.com/Thanoon12k/app")
+    message = writer.finalize(template, person, "en", platform=True)
+    assert person["email"] not in message and person["phone"] not in message
+    assert person["website"].rstrip("/") in message and message.rstrip().endswith(person["name"])
+    ai_text = "Hi!\nPlan: ...\nEmail: {EMAIL}\nWhatsApp: {PHONE}\nContact me at {EMAIL}\n{WEBSITE}\n{NAME} — {PHONE}"
+    assert writer.finalize(ai_text, person, "en", platform=True).split("\n") == ["Hi!", "Plan: ...", person["website"], person["name"]]
+    job = writer.finalize(template, person, "en", platform=False)
+    assert person["email"] in job  # a job application keeps them
+
+
+def test_platform_posts_get_no_direct_contact_buttons(settings, monkeypatch):
+    project = posting(url="https://mostaql.com/project/1300001", title="تطبيق Flutter", kind="freelance",
+                      text="مطلوب مبرمج Flutter لتطبيق متجر، تواصل واتساب 07700000000")
+    monkeypatch.setattr(sources, "registry", lambda: [fake_source([project])])
+    monkeypatch.setattr(portfolio, "refresh", lambda settings, store, llm=None, repos=None: 0)
+    pipeline.run(settings, collect_only=True)
+    assert not load(settings).opps[project["id"]].get("contacts")
+
+
+def test_free_review_waits_twelve_hours_and_drops_weak_drafts(settings, wired):
+    from datetime import timedelta
+
+    pipeline.run(settings)
+    st = load(settings)
+    first = {r["id"] for r in st.items("approved")}
+    weak = posting(url="https://jobs.example.com/weak", title="Flutter Developer", company="Weak Co", text="Flutter.")
+    weak.update(elig="unclear", score=9, match={"fit": 72, "repos": []}, draft={"message": "hi"})
+    st.add(weak)
+    st.set_status(weak, "drafted")
+    st.save()
+    settings.now += timedelta(hours=6)
+    pipeline.run(settings)  # not due yet: nothing reviewed
+    st = load(settings)
+    assert {r["id"] for r in st.items("approved")} == first and st.opps[weak["id"]]["status"] == "drafted"
+    for _ in range(2):
+        settings.now += timedelta(hours=12)
+        pipeline.run(settings)
+    assert load(settings).opps[weak["id"]]["status"] == "rejected"
+
+
+def test_platform_picks_point_to_the_platform(settings):
+    rec = posting(url="https://www.freelancer.com/projects/django/x", kind="freelance")
+    rec.update(id="abc123abc124", draft={"message": "Hello", "subject": None})
+    text, keyboard = notify.pick_message(settings, rec, 1, 1)
+    assert "📋" in text and "📨" not in text
+    assert [b["text"] for row in keyboard for b in row] == ["🔗 الإعلان", "📄 التفاصيل"]
+
+
+def test_dashboard_page_is_ready_to_publish_as_an_artifact():
+    from pathlib import Path
+
+    page = (Path(__file__).resolve().parent.parent / "docs" / "index.html").read_text(encoding="utf-8")
+    assert page.startswith("<title>") and "<title>" in page[:8192]  # the Artifact host reads the name from the top
+    for tag in ("<!doctype", "<html", "<head>", "<body", "</body>", "</html>"):
+        assert tag not in page.lower()  # the host adds the document skeleton
+    assert "fetch(`data/${n}.json`" in page  # data/*.json are published beside the page
